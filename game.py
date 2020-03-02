@@ -1491,7 +1491,6 @@ class Buy():
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    print("test")
     if message.chat.id == ADMIN:
         bot.send_message(text="Админское меню", chat_id=message.chat.id, reply_markup=keyadmin())
     else:
