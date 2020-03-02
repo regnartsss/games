@@ -20,7 +20,7 @@ menu = 0
 barracks = 0
 global lvlrudnic
 
-logging.basicConfig(filename='app.log',  format='%(name)s - %(levelname)s - [%(asctime)s] %(message)s', level = logging.INFO)
+logging.basicConfig(filename='app.txt',  format='%(name)s - %(levelname)s - [%(asctime)s] %(message)s', level = logging.INFO)
 
 def save(key):
     global maps, users, log, comb

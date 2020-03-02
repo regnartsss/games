@@ -1,0 +1,20 @@
+root - INFO - [2020-03-02 10:42:59,201] Запуск игры
+root - INFO - [2020-03-02 10:42:59,216] Чтение файла с картой
+root - INFO - [2020-03-02 10:42:59,226] Чтение файла с пользователями
+root - INFO - [2020-03-02 10:42:59,235] Здоровье, шаги, энергия восстановлены
+TeleBot - ERROR - [2020-03-02 10:43:03,328] A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+TeleBot - ERROR - [2020-03-02 10:43:07,276] A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+TeleBot - ERROR - [2020-03-02 10:43:11,976] A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+TeleBot - ERROR - [2020-03-02 10:43:17,201] A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+TeleBot - ERROR - [2020-03-02 10:43:20,897] A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+TeleBot - ERROR - [2020-03-02 10:43:25,092] A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+root - INFO - [2020-03-02 10:43:45,736] Запуск игры
+root - INFO - [2020-03-02 10:43:45,745] Чтение файла с картой
+root - INFO - [2020-03-02 10:43:45,746] Чтение файла с пользователями
+root - INFO - [2020-03-02 10:43:45,746] Здоровье, шаги, энергия восстановлены

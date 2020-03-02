@@ -1,4 +1,4 @@
-from games import *
+#from games import *
 #import games
 #from games import bot,random,threading,pprint,telebot, time, save
 from keyboard import keyboardmap, keyboard_map

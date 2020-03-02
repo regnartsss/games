@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="365f61d7-4a9b-41aa-abf0-ad93122c4694" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="365f61d7-4a9b-41aa-abf0-ad93122c4694" name="Default Changelist" comment="v0203">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/battle.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/maps.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/maps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/battle_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/battle_game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +80,7 @@
       <recent name="C:\Users\podkopaev.k\PycharmProjects\game" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.games">
+  <component name="RunManager" selected="Python.game">
     <configuration name="buy" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="game" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -236,13 +228,25 @@
       <option name="presentableId" value="Default" />
       <updated>1570751242119</updated>
     </task>
+    <task id="LOCAL-00001" summary="v0203">
+      <created>1583120004772</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583120004772</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="v0203" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0203" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="2765" y="23" key="CommitChangelistDialog2" timestamp="1583119128460">
+    <state x="2765" y="23" key="CommitChangelistDialog2" timestamp="1583120327185">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2765" y="23" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583119128460" />
+    <state x="2765" y="23" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120327185" />
     <state x="2288" y="0" key="DiffContextDialog" timestamp="1583119084388">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -251,10 +255,34 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2907" y="325" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583116160415" />
+    <state x="2992" y="318" key="Github.ShareDialog" timestamp="1583120064540">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2992" y="318" key="Github.ShareDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120064540" />
+    <state width="1362" height="266" key="GridCell.Tab.0.bottom" timestamp="1583120625426">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="266" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120625426" />
+    <state width="1362" height="266" key="GridCell.Tab.0.center" timestamp="1583120625426">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="266" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120625426" />
+    <state width="1362" height="266" key="GridCell.Tab.0.left" timestamp="1583120625425">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="266" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120625425" />
+    <state width="1362" height="266" key="GridCell.Tab.0.right" timestamp="1583120625426">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="266" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120625426" />
     <state x="2628" y="213" key="SettingsEditor" timestamp="1583116180413">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2628" y="213" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583116180413" />
+    <state x="2714" y="158" key="Vcs.Push.Dialog.v2" timestamp="1583120355834">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2714" y="158" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120355834" />
     <state x="2936" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583116194454">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
