@@ -18,3 +18,76 @@ root - INFO - [2020-03-02 10:43:45,736] Запуск игры
 root - INFO - [2020-03-02 10:43:45,745] Чтение файла с картой
 root - INFO - [2020-03-02 10:43:45,746] Чтение файла с пользователями
 root - INFO - [2020-03-02 10:43:45,746] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 14:31:52,516] Запуск игры
+root - INFO - [2020-03-02 14:31:52,537] Чтение файла с картой
+root - INFO - [2020-03-02 14:31:52,550] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:31:52,559] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 14:32:16,598] 808921874 Атака монстра
+root - INFO - [2020-03-02 14:32:16,706] 808921874 Атака монстра, уровень монстра2
+root - INFO - [2020-03-02 14:35:57,842] Запуск игры
+root - INFO - [2020-03-02 14:35:57,852] Чтение файла с картой
+root - INFO - [2020-03-02 14:35:57,852] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:35:57,852] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 14:36:42,501] 808921874 Атака монстра
+root - INFO - [2020-03-02 14:36:42,608] 808921874 Атака монстра, уровень монстра2
+root - INFO - [2020-03-02 14:38:36,276] Запуск игры
+root - INFO - [2020-03-02 14:38:36,287] Чтение файла с картой
+root - INFO - [2020-03-02 14:38:36,287] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:38:36,288] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 14:41:43,523] Запуск игры
+root - INFO - [2020-03-02 14:41:43,553] Чтение файла с картой
+root - INFO - [2020-03-02 14:41:43,557] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:41:43,557] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 14:43:12,880] Запуск игры
+root - INFO - [2020-03-02 14:43:12,897] Чтение файла с картой
+root - INFO - [2020-03-02 14:43:12,897] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:43:12,898] Здоровье, шаги, энергия восстановлены
+TeleBot - ERROR - [2020-03-02 14:43:17,435] A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: query is too old and response timeout expired or query ID is invalid"}']
+TeleBot - ERROR - [2020-03-02 14:43:24,173] A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: query is too old and response timeout expired or query ID is invalid"}']
+root - INFO - [2020-03-02 14:45:07,119] Запуск игры
+root - INFO - [2020-03-02 14:45:07,192] Чтение файла с картой
+root - INFO - [2020-03-02 14:45:07,193] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:45:07,193] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 14:50:34,969] Запуск игры
+root - INFO - [2020-03-02 14:50:34,978] Чтение файла с картой
+root - INFO - [2020-03-02 14:50:34,979] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:50:34,979] Здоровье, шаги, энергия восстановлены
+TeleBot - ERROR - [2020-03-02 14:51:34,217] A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: query is too old and response timeout expired or query ID is invalid"}']
+TeleBot - ERROR - [2020-03-02 14:51:35,700] A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: query is too old and response timeout expired or query ID is invalid"}']
+root - INFO - [2020-03-02 14:52:45,346] Запуск игры
+root - INFO - [2020-03-02 14:52:45,367] Чтение файла с картой
+root - INFO - [2020-03-02 14:52:45,367] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:52:45,368] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 14:53:42,038] Запуск игры
+root - INFO - [2020-03-02 14:53:42,047] Чтение файла с картой
+root - INFO - [2020-03-02 14:53:42,048] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:53:42,048] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 14:53:57,201] 808921874 Новый уровень шагов
+root - INFO - [2020-03-02 14:53:59,556] 808921874 Атака монстра
+root - INFO - [2020-03-02 14:53:59,664] 808921874 Атака монстра, уровень монстра2
+root - INFO - [2020-03-02 14:55:59,418] Запуск игры
+root - INFO - [2020-03-02 14:55:59,427] Чтение файла с картой
+root - INFO - [2020-03-02 14:55:59,427] Чтение файла с пользователями
+root - INFO - [2020-03-02 14:55:59,428] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 15:50:52,505] 808921874 Атака монстра
+root - INFO - [2020-03-02 15:50:52,644] 808921874 Атака монстра, уровень монстра2
+TeleBot - ERROR - [2020-03-02 15:50:56,505] A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: query is too old and response timeout expired or query ID is invalid"}']
+root - INFO - [2020-03-02 15:52:10,370] Запуск игры
+root - INFO - [2020-03-02 15:52:10,386] Чтение файла с картой
+root - INFO - [2020-03-02 15:52:10,387] Чтение файла с пользователями
+root - INFO - [2020-03-02 15:52:10,388] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 15:52:20,725] 808921874 Атака монстра
+root - INFO - [2020-03-02 15:52:20,842] 808921874 Атака монстра, уровень монстра3
+TeleBot - ERROR - [2020-03-02 15:52:26,135] A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: query is too old and response timeout expired or query ID is invalid"}']
+root - INFO - [2020-03-02 15:52:55,142] Запуск игры
+root - INFO - [2020-03-02 15:52:55,152] Чтение файла с картой
+root - INFO - [2020-03-02 15:52:55,154] Чтение файла с пользователями
+root - INFO - [2020-03-02 15:52:55,154] Здоровье, шаги, энергия восстановлены
+root - INFO - [2020-03-02 15:53:16,325] 808921874 Атака монстра
+root - INFO - [2020-03-02 15:53:16,628] 808921874 Атака монстра, уровень монстра3

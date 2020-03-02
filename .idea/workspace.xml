@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="365f61d7-4a9b-41aa-abf0-ad93122c4694" name="Default Changelist" comment="v0203">
+    <list default="true" id="365f61d7-4a9b-41aa-abf0-ad93122c4694" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/battle_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/battle_game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/comb.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/comb.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/maps.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/maps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/users.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,45 +20,6 @@
         <option value="Python Script" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>datet</find>
-      <find>вывод</find>
-      <find>копае</find>
-      <find>move</find>
-      <find>move_used</find>
-      <find>1</find>
-      <find>step</find>
-      <find>&quot;step&quot;</find>
-      <find>выберите де</find>
-      <find>types</find>
-      <find>765333440</find>
-      <find>тут текст</find>
-      <find>копаев</find>
-      <find>шахта</find>
-      <find>спосо</find>
-      <find>logging</find>
-      <find>умер</find>
-      <find>Вы победили и получили 5 опыта</find>
-      <find>Вы победили</find>
-      <find>foor</find>
-      <find>iron</find>
-      <find>железо</find>
-      <find>Железо</find>
-      <find>вы за</find>
-      <find>ssss</find>
-      <find>ans</find>
-      <find>Вы напа</find>
-      <find>бой оконче</find>
-      <find>отправиь</find>
-      <find>вернуть</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>foor</replace>
-      <replace>food</replace>
-      <replace>еда</replace>
-    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="PREVIEW_PUSH_PROTECTED_ONLY" value="true" />
@@ -235,7 +199,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583120004772</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="v0203">
+      <created>1583120910408</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1583120910408</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -243,10 +214,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="v0203" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2765" y="23" key="CommitChangelistDialog2" timestamp="1583120327185">
+    <state x="2765" y="23" key="CommitChangelistDialog2" timestamp="1583120909869">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2765" y="23" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120327185" />
+    <state x="2765" y="23" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120909869" />
     <state x="2288" y="0" key="DiffContextDialog" timestamp="1583119084388">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -259,22 +230,22 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2992" y="318" key="Github.ShareDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120064540" />
-    <state width="1362" height="266" key="GridCell.Tab.0.bottom" timestamp="1583120625426">
+    <state width="1899" height="160" key="GridCell.Tab.0.bottom" timestamp="1583139174834">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1362" height="266" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120625426" />
-    <state width="1362" height="266" key="GridCell.Tab.0.center" timestamp="1583120625426">
+    <state width="1899" height="160" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583139174834" />
+    <state width="1899" height="160" key="GridCell.Tab.0.center" timestamp="1583139174834">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1362" height="266" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120625426" />
-    <state width="1362" height="266" key="GridCell.Tab.0.left" timestamp="1583120625425">
+    <state width="1899" height="160" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583139174834" />
+    <state width="1899" height="160" key="GridCell.Tab.0.left" timestamp="1583139174834">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1362" height="266" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120625425" />
-    <state width="1362" height="266" key="GridCell.Tab.0.right" timestamp="1583120625426">
+    <state width="1899" height="160" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583139174834" />
+    <state width="1899" height="160" key="GridCell.Tab.0.right" timestamp="1583139174834">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1362" height="266" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120625426" />
+    <state width="1899" height="160" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583139174834" />
     <state x="2628" y="213" key="SettingsEditor" timestamp="1583116180413">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -287,5 +258,26 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2936" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583116194454" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../games — копия/games.py</url>
+          <line>172</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../games — копия/games.py</url>
+          <line>207</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/game.py</url>
+          <line>174</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

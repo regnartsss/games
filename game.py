@@ -12,15 +12,15 @@ import requests
 from telebot.types import LabeledPrice, ShippingOption
 import logging
 
-
-
 ADMIN = 765333440
 PATH = find_location()
 menu = 0
 barracks = 0
 global lvlrudnic
 
-logging.basicConfig(filename='app.txt',  format='%(name)s - %(levelname)s - [%(asctime)s] %(message)s', level = logging.INFO)
+logging.basicConfig(filename='app.txt', format='%(name)s - %(levelname)s - [%(asctime)s] %(message)s',
+                    level=logging.INFO)
+
 
 def save(key):
     global maps, users, log, comb
@@ -101,6 +101,7 @@ def start_open():
         with open(PATH + "tmp/" + 'comb.json', 'rb') as f:
             comb = json.load(f)
 
+
 def start_user_default():
     global users
 
@@ -117,12 +118,12 @@ def start_user(message):
     global maps, users, log
     try:
         ref = str(message.text.split(" ")[1])
-        logging.info(str(message.chat.id) + ' Вход по реф ссылке '+ ref)
+        logging.info(str(message.chat.id) + ' Вход по реф ссылке ' + ref)
     except:
         ref = "0"
     date_t = date("all")
     if str(message.chat.id) in users:
-        logging.info(str(message.chat.id) +  'Пользователь уже есть')
+        logging.info(str(message.chat.id) + 'Пользователь уже есть')
 
         bot.send_message(message.chat.id, "Пользователь есть", reply_markup=keyboard_main_menu())
     else:
@@ -153,7 +154,7 @@ def start_user(message):
                                        "ref": ref,
                                        "weapons": {"arm": 0,
                                                    },
-                                       "building":{}
+                                       "building": {}
                                        }
         s = random.randint(1, len(maps))
 
@@ -164,7 +165,7 @@ def start_user(message):
                          text=date("fulltime") + " Зарегистрирован новый пользователь " + str(message.chat.id))
         logging.info(str(message.chat.id) + ' Новый пользователь')
 
-    bot.send_message(message.chat.id, text = start_text, reply_markup=keyboard_start())
+    bot.send_message(message.chat.id, text=start_text, reply_markup=keyboard_start())
 
     save("all")
     #        save("log")
@@ -212,7 +213,7 @@ def buy(message):
         if int(str) <= 0:
             bot.send_message(text="Повторите ввод. Минимальная покупка 1 💎", chat_id=message.chat.id)
             bot.register_next_step_handler(message, buy)
-#            bot.send_message(text="Повторите ввод. Число не корректно", chat_id=message.chat.id, reply_markup=key_buy)
+        #            bot.send_message(text="Повторите ввод. Число не корректно", chat_id=message.chat.id, reply_markup=key_buy)
         else:
             bot.send_message(text="Оплата", chat_id=message.chat.id, reply_markup=keyboard_buy())
             Buy(message).buy_qiwi()
@@ -226,14 +227,22 @@ start_open()
 start_user_default()
 
 
-
 class Maps():
 
     def __init__(self, message, call=""):
         global maps, menu, status, attak
         try:
+
+            self.call = call.data
             self.message_call = call.data
             self.id_call = call.id
+            self.message_call = call.data
+            self.call_id = call.id
+            self.message_call_id = call.message.message_id
+            self.id = message.chat.id
+            self.text = message.text
+            self.first_name = message.from_user.username
+
 
         except:
             pass
@@ -241,9 +250,9 @@ class Maps():
         self.id = message.chat.id
         self.text = message.text
         self.message_id = message.message_id
-        self.user_bot = User(message)
         self.user = users[str(self.id)]
-#        self.battle_bot = Battle(message)
+
+    #        self.battle_bot = Battle(message)
 
     def new_maps(self):  # Прочитать файл
         global maps
@@ -405,7 +414,7 @@ class Maps():
                         y = 7
                         tab.append(telebot.types.InlineKeyboardButton(" ", callback_data=str(start_field)))
                     else:
-#                        pprint(str(start_field))
+                        #                        pprint(str(start_field))
                         if cell == "food":
                             tab.append(telebot.types.InlineKeyboardButton("🍞", callback_data=str(start_field)))
                         elif cell == "wood":
@@ -413,10 +422,10 @@ class Maps():
                         elif cell == "stone":
                             tab.append(telebot.types.InlineKeyboardButton("⛏", callback_data=str(start_field)))
                         elif cell == "enemy":
-#                            if random.randint(1,2) == 1:
-                                tab.append(telebot.types.InlineKeyboardButton("👻", callback_data=str(start_field)))
-#                            else:
-#                                tab.append(telebot.types.InlineKeyboardButton("☠️", callback_data=str(start_field)))
+                            #                            if random.randint(1,2) == 1:
+                            tab.append(telebot.types.InlineKeyboardButton("👻", callback_data=str(start_field)))
+                        #                            else:
+                        #                                tab.append(telebot.types.InlineKeyboardButton("☠️", callback_data=str(start_field)))
 
                         elif cell == str(self.id):
                             tab.append(telebot.types.InlineKeyboardButton("🧛‍♂", callback_data=str(start_field)))
@@ -438,9 +447,9 @@ class Maps():
 
                 keyboard.row(*tab)
             step = telebot.types.InlineKeyboardButton(text="🚶‍♂️Ходов: " + str(users[str(self.id)]["step_used"]),
-                                              callback_data=" ")
+                                                      callback_data=" ")
             energy = telebot.types.InlineKeyboardButton(text="🔋 ️Энергии: " + str(users[str(self.id)]["energy_used"]),
-                                                callback_data=" ")
+                                                        callback_data=" ")
             arena = telebot.types.InlineKeyboardButton(text="Отправиться на поле боя", callback_data="goto_battle")
             keyboard.row(step, energy)
             keyboard.row(arena)
@@ -476,7 +485,7 @@ class Maps():
             bot.send_message(text="Вы мертвы", chat_id=self.id)
 
         elif self.message_call == cell_user:
-            bot.answer_callback_query(self.id_call, 'Это вы')
+            bot.answer_callback_query(self.call_id, 'Это вы')
 
         elif int(self.message_call) == int(cell_user) - 1:
             if value_call == "food" or value_call == "wood" or value_call == "stone":
@@ -545,45 +554,45 @@ class Maps():
                 self.goto_cell(cell_user, position_user=pole)
 
         elif value_call == "null":
-            bot.answer_callback_query(callback_query_id=self.id_call, text='Поле не активно')
+            bot.answer_callback_query(callback_query_id=self.call_id, text='Поле не активно')
         elif value_call == "food":
-            bot.answer_callback_query(callback_query_id=self.id_call, text='Шахта с едам')
+            bot.answer_callback_query(callback_query_id=self.call_id, text='Шахта с едам')
         elif value_call == "wood":
-            bot.answer_callback_query(callback_query_id=self.id_call, text='Шахта с деревом')
+            bot.answer_callback_query(callback_query_id=self.call_id, text='Шахта с деревом')
         elif value_call == "stone":
-            bot.answer_callback_query(callback_query_id=self.id_call, text='Шахта с камнем')
+            bot.answer_callback_query(callback_query_id=self.call_id, text='Шахта с камнем')
         elif value_call == "enemy":
-            bot.answer_callback_query(callback_query_id=self.id_call, text='Страшный монстр')
+            bot.answer_callback_query(callback_query_id=self.call_id, text='Страшный монстр')
         elif value_call == "olduser":
-            bot.answer_callback_query(callback_query_id=self.id_call, text='Город соперника')
+            bot.answer_callback_query(callback_query_id=self.call_id, text='Город соперника')
 
     def goto_cell(self, cell_user, position_user):
         maps[str(cell_user)] = {"resource": "null"}
         maps[str(int(cell_user) + position_user)] = {"id": str(self.id)}
-        self.user_bot.move()
+        self.move()
         bot.edit_message_text(text="Ходите", chat_id=self.id, message_id=self.message_id,
                               reply_markup=self.output_map())
 
     def enemy_write(self, cell_user):
-        r = random.randint(self.user["lvlheroes"]-1, self.user["lvlheroes"])
+        r = random.randint(self.user["lvlheroes"] - 1, self.user["lvlheroes"])
         if r <= 0:
             r = 1
-        logging.info(str(self.id) + ' Атака монстра, уровень монстра'+str(r))
+        logging.info(str(self.id) + ' Атака монстра, уровень монстра' + str(r))
         self.user["enemy_lvl"] = str(r)
         self.user["enemy_healts"] = 50 * r
         self.user["enemy_exr"] = 5 * r
         self.user["enemy_cell"] = str(self.message_call)
         self.user["enemy_hit"] = 10 * r
-#        self.user["enemy_dodge"] = lvlenemy[str(r)]["dodge"]
+        #        self.user["enemy_dodge"] = lvlenemy[str(r)]["dodge"]
 
         bot.send_message(text=textattaka(str(r)), chat_id=self.id, reply_markup=keyboard_battle())
 
-#    def enemy(self, cell_user):
-#        keyboard = telebot.types.InlineKeyboardMarkup()
-#        attak = types.InlineKeyboardButton(text="Атаковать", callback_data="battle_"+str(cell_user))
-#        keyboard.row(attak)
-#        bot.edit_message_text(text="Вы напали на существо", chat_id=self.id, message_id=self.message_id,
-#                              reply_markup=keyboard)
+    #    def enemy(self, cell_user):
+    #        keyboard = telebot.types.InlineKeyboardMarkup()
+    #        attak = types.InlineKeyboardButton(text="Атаковать", callback_data="battle_"+str(cell_user))
+    #        keyboard.row(attak)
+    #        bot.edit_message_text(text="Вы напали на существо", chat_id=self.id, message_id=self.message_id,
+    #                              reply_markup=keyboard)
 
     def rudnic(self, cell_user):
         global maps, menu, res, kol, map_res, lvl
@@ -632,7 +641,8 @@ class Maps():
         else:
             pprint("ошибка")
         save("all")
-        bot.send_message(text="⚡️Вы завершили добычу ⚡️\nСобрано " + str(sum), chat_id=self.id, reply_markup=keyboardmap())
+        bot.send_message(text="⚡️Вы завершили добычу ⚡️\nСобрано " + str(sum), chat_id=self.id,
+                         reply_markup=keyboardmap())
         bot.send_message(text="🚶‍♂️Делайте ход по игровому полю", chat_id=self.id, reply_markup=self.output_map())
 
     def mining(self):
@@ -647,22 +657,22 @@ class Maps():
         except:
             pprint("ячейка занята")
 
-class User():
+    # class User():
 
-    def __init__(self, message, call=""):
-        try:
-            self.message_call = call.data
-            self.call_id = call.id
-            self.message_call_id = call.message.message_id
-#            pprint(self.call_id)
-        except:
-            pass
+    #    def __init__(self, message, call=""):
+    #        try:
+    #            self.message_call = call.data
+    #            self.call_id = call.id
+    #            self.message_call_id = call.message.message_id
+    #            pprint(self.call_id)
+    #        except:
+    #            pass
 
-        self.id = message.chat.id
-        self.text = message.text
-        self.first_name = message.from_user.username
-        self.user = users[str(self.id)]
-#        pprint(self.id)
+    #        self.id = message.chat.id
+    #        self.text = message.text
+    #        self.first_name = message.from_user.username
+    #        self.user = users[str(self.id)]
+    #        pprint(self.id)
 
     def help(self):
         keyboard = telebot.types.InlineKeyboardMarkup()
@@ -679,7 +689,7 @@ class User():
             elif self.message_call == "help_battle":
                 text = "Бой с соперником проходит в пошаговом режиме.\n На каждом ходе у вас есть два очка защиты и два очка нападения.\n "
             keyboard.add(maps, battle)
-            bot.edit_message_text(chat_id=self.id, text=text,message_id=self.message_call_id, reply_markup=keyboard)
+            bot.edit_message_text(chat_id=self.id, text=text, message_id=self.message_id, reply_markup=keyboard)
 
     def new_game(self):
         pprint("test")
@@ -746,16 +756,16 @@ class User():
                  "🏅 Уровень: " + str(level) + "\n" + \
                  "🔋 Энергия: " + str(energy_used) + '/' + str(energy) + "\n" + \
                  "🌟 Опыт: " + str(experience_used) + "/" + str(experience) + "\n" + \
-                 "❤ Здоровье: " + str(healts_used) + "/" + str(healts) + "\n" + "\n" +\
-                 "Урон: " +str(hit)+"\n"+"\n" +\
-                 "🚶‍♂️Ур. ходьбы: " + str(lvlstep) +" ("+ str(wolk_used) + '/' + str(wolk)+")" + "\n"  + \
-                 "🚶‍♂️Ходов по карте: " + str(step_used) + '/' + str(step) + "\n" +  "\n"+\
-                 "💰 Золото: "+str(gold) + "\n"+\
+                 "❤ Здоровье: " + str(healts_used) + "/" + str(healts) + "\n" + "\n" + \
+                 "Урон: " + str(hit) + "\n" + "\n" + \
+                 "🚶‍♂️Ур. ходьбы: " + str(lvlstep) + " (" + str(wolk_used) + '/' + str(wolk) + ")" + "\n" + \
+                 "🚶‍♂️Ходов по карте: " + str(step_used) + '/' + str(step) + "\n" + "\n" + \
+                 "💰 Золото: " + str(gold) + "\n" + \
                  "💎 Алмазы: " + str(iamond) + "\n"
 
         sklad = "Информация о складе\n" + "еда: " + str(food) + "\n" + "Дерево: " + str(
             wood) + "\n" + "Камень: " + str(stone)
-        stat = "Ресурсов: Еда: " + str(food)  + " Дерево: " + str(wood)  + " Камень: " + str(stone)
+        stat = "Ресурсов: Еда: " + str(food) + " Дерево: " + str(wood) + " Камень: " + str(stone)
         if key == "heroes":
             return (heroes)
         elif key == "sklad":
@@ -767,7 +777,7 @@ class User():
         while users[str(self.id)]["energy_used"] < users[str(self.id)]["energy"]:
             time.sleep(60)  # in seconds
             users[str(self.id)]["energy_used"] += 1
-#            bot.send_message(chat_id=self.id, text="У вас появилась энергия " + str(users[str(self.id)]["energy_used"]))
+            #            bot.send_message(chat_id=self.id, text="У вас появилась энергия " + str(users[str(self.id)]["energy_used"]))
             #            self.maps_bot.goto
             save("user")
         if users[str(self.id)]["energy_used"] == users[str(self.id)]["energy"]:
@@ -786,7 +796,7 @@ class User():
         while users[str(self.id)]["step_used"] < users[str(self.id)]["step"]:
             time.sleep(30)  # in seconds
             users[str(self.id)]["step_used"] += 1
-#            bot.send_message(chat_id=self.id, text="У вас появился ход " + str(users[str(self.id)]["step_used"]))
+            #            bot.send_message(chat_id=self.id, text="У вас появился ход " + str(users[str(self.id)]["step_used"]))
             #            self.maps_bot.goto
             save("user")
         if users[str(self.id)]["step_used"] == users[str(self.id)]["step"]:
@@ -833,54 +843,46 @@ class User():
 
     def build(self, data):
         keyboard = telebot.types.InlineKeyboardMarkup()
-        pprint("2")
         if data == "back":
             self.building()
         elif data == "update":
-            pprint("tests")
             #        elif data == "update":
             data_old = self.message_call.split("_")[2]
             pprint(data_old)
-#            if not self.building_update(data_old):
-#                text = "Ресурсов не хватает"
-#                pprint(self.building_update(data_old))
-#             self.build(data=data_old)
-#            else:
-#                text = "Строение улучшено"
+            #            if not self.building_update(data_old):
+            #                text = "Ресурсов не хватает"
+            #                pprint(self.building_update(data_old))
+            #             self.build(data=data_old)
+            #            else:
+            #                text = "Строение улучшено"
             self.user["building"][data_old] += 1
-
             save("users")
-            self.build(data = data_old)
+            self.build(data=data_old)
         else:
-            pprint("3")
             name = buildings[data]["name"]
             lvl = self.user["building"][data]
             new_lvl = lvl + 1
             stone = str(static_buildings(data, new_lvl)[0])
             wood = str(static_buildings(data, new_lvl)[1])
             food = str(static_buildings(data, new_lvl)[2])
-            pprint("4")
-            text = "Строение "+name +" "+ str(lvl)+" уровня\n"
-            text += "Улучшить "+name+" до "+ str(new_lvl)+" уровня за: \n Камень: "+ stone+"\n Дерево: "+ wood +"\n еда: "+ food
-            pprint("5")
-            keyboard.row(telebot.types.InlineKeyboardButton(text="Улучшить", callback_data="build_update_"+data))
-            pprint("6")
+            text = "Строение " + name + " " + str(lvl) + " уровня\n Улучшить " + name + " до " + str(
+                new_lvl) + " уровня за: \n Камень: " + stone + "\n Дерево: " + wood + "\n еда: " + food
+            keyboard.row(telebot.types.InlineKeyboardButton(text="Улучшить", callback_data="build_update_" + data))
             keyboard.row(telebot.types.InlineKeyboardButton(text="Назад", callback_data="build_back"))
 
-
-        bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_call_id, reply_markup=keyboard)
+        bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id, reply_markup=keyboard)
 
     def building_update(self, data):
         pprint("building update")
         lvl = self.user["building"][data]
-        new_lvl = lvl +1
+        new_lvl = lvl + 1
         stone_player = self.user["stone"]
         wood_player = self.user["wood"]
         food_player = self.user["food"]
         stone = static_buildings(data, new_lvl)[0]
         wood = static_buildings(data, new_lvl)[1]
         food = static_buildings(data, new_lvl)[2]
-        text =""
+        text = ""
 
         if stone_player < stone:
             text += "Не хватает камня\n"
@@ -912,8 +914,9 @@ class User():
             bul = {}
 
             for key, value in buildings.items():
-                bul.update({key : 0})
-                tab.append(telebot.types.InlineKeyboardButton(text=buildings[key]["name"] +" 0", callback_data="build_"+key))
+                bul.update({key: 0})
+                tab.append(telebot.types.InlineKeyboardButton(text=buildings[key]["name"] + " 0",
+                                                              callback_data="build_" + key))
                 if i == 3 or i == 6:
                     keyboard.row(*tab)
                     tab = []
@@ -928,7 +931,8 @@ class User():
 
             for key, value in self.user["building"].items():
                 lvl = self.user["building"][key]
-                tab.append(telebot.types.InlineKeyboardButton(text=buildings[key]["name"] + " "+str(lvl), callback_data="build_"+key))
+                tab.append(telebot.types.InlineKeyboardButton(text=buildings[key]["name"] + " " + str(lvl),
+                                                              callback_data="build_" + key))
                 if i == 3 or i == 6:
                     keyboard.row(*tab)
                     tab = []
@@ -945,6 +949,383 @@ class User():
             save("user")
         if users[str(self.id)]["healts_used"] == users[str(self.id)]["healts"]:
             bot.send_message(chat_id=self.id, text="Здоровье восстановлено ")
+
+    # class Battle():
+    #    def __init__(self, message, call=""):
+
+    #        try:
+
+    #            self.call = call.data
+    #            self.call_id = call.id
+    #            self.message_call_id = call.message.message_id
+    #            print(str(self.call))
+    #        except Exception:
+    #            pass
+
+    #        self.id = message.chat.id
+    #        self.text = message.text
+    #        self.first_name = message.from_user.username
+    #        self.user = users[str(self.id)]
+    #        self.maps = Maps(message)
+    #        self.user_bot = User(message)
+    #        self.message_id = message.message_id
+    #        global text, attak
+
+    def congratulation(self, data):
+        if data == "heroes":
+            self.user["experience_used"] += 5
+            r_gold = random.randint(1, 50)
+            self.user["gold"] += r_gold
+            maps[self.user["enemy_cell"]]["resource"] = "null"
+            self.update_statistic(data="experiens")
+            self.energy()
+
+            bot.send_message(text="Бой окончен: ", chat_id=self.id, reply_markup=keyboardmap())
+            bot.send_message(text="Вы победили и получили 5 опыта.\n Вам выпало " + str(r_gold) + " золота",
+                             chat_id=self.id,
+                             reply_markup=self.output_map())
+        elif data == "enemy":
+            threading.Thread(target=self.timer_healts, daemon=True).start()
+            self.energy()
+            bot.send_message(text="Бой окончен: ", chat_id=self.id, reply_markup=keyboardmap())
+            bot.send_message(text="Вы проиграли. Здоровье восстановится через 60 сек.", chat_id=self.id,
+                             reply_markup=self.output_map())
+
+    def attak(self):
+        global users, maps, attak
+        #        pprint(attak)
+        r = random.randrange(1, 3)
+
+        pprint(r)
+        if r == 1:
+            #                self.user["energy_used"] -= 1
+            self.energy()
+            bot.send_message(text="Бой окончен: ", chat_id=self.id, reply_markup=keyboardmap())
+            bot.send_message(text="Вы проиграли", chat_id=self.id, reply_markup=self.output_map())
+        else:
+            self.user["experience_used"] += 5
+            #               self.user["energy_used"] -= 1
+            maps[self.user["enemy_cell"]]["resource"] = "null"
+            self.update_statistic(data="experiens")
+            self.energy()
+            #            pprint("test")
+            #            wea = self.weapons_random()
+            #            weapons = weapons_data[wea]["name"]
+            #            pprint(weapons)
+            #            weapons = ""
+            #            if weapons == "":
+            bot.send_message(text="Бой окончен: ", chat_id=self.id, reply_markup=keyboardmap())
+            bot.send_message(text="Вы победили и получили 5 опыта", chat_id=self.id,
+                             reply_markup=self.output_map())
+        #            else:
+        #                self.user["weapons"]["arm"] = 1
+        #                bot.send_message(text="Вы победили и получили 5 опыта\n Вы нашли "+weapons, chat_id=self.id,
+        #                             reply_markup=self.maps.output_map())
+        #                self.resource(attak)
+
+        pprint("всё ок")
+        save("users")
+
+    def keyboard_attak_new(self):
+        keyboard = telebot.types.InlineKeyboardMarkup()
+        attak = telebot.types.InlineKeyboardButton(text="Атака", callback_data="battle_attak")
+        defence = telebot.types.InlineKeyboardButton(text="Защита", callback_data="battle_defence")
+        keyboard.row(attak, defence)
+        return keyboard
+
+    def att(self):
+        stop = 0
+        cell = self.call.split("_")[1]
+        if self.call == "battle_attak":
+
+            r = random.randint(1, 100)
+            pprint(r)
+            if r < self.user["enemy_dodge"]:
+                text = self.text + " \n⚔️Враг увернулся. Осталось " + str(self.user["enemy_healts"] + "здоовья")
+            else:
+                self.user["enemy_healts"] -= self.user["hit"]
+                text = self.text + " \n⚔️Вы аттаковали врага и нанесли " + str(
+                    self.user["hit"]) + " урона. Осталось " + str(self.user["enemy_healts"]) + " здоовья"
+
+            if self.user["enemy_healts"] <= 0:
+                bot.send_message(text="⏱ Вывод карты ⏱", chat_id=self.id, reply_markup=keyboardmap())
+                stop = 1
+                text = self.text + "\nВы одержали победу 💥 "
+                time.sleep(2)
+                self.user["experience_used"] += 5
+                self.user["healts_used"] = self.user["healts"]
+                maps[self.user["enemy_cell"]]["resource"] = "null"
+                self.update_statistic(data="experiens")
+                self.energy()
+                bot.send_message(text="Вы победили и получили 5 🌕 опыта", chat_id=self.id,
+                                 reply_markup=self.output_map())
+        elif self.call == "battle_defence":
+            text = self.text + "\n🛡 Вы защищаетесь от врага и восстанавливаете здоровье"
+            self.user["healts_used"] += 10
+        else:
+            if maps[cell]["resource"] == "enemy":
+                bot.edit_message_text(text="Выберите дальнейшее действие", chat_id=self.id, message_id=self.message_id,
+                                      reply_markup=self.keyboard_attak_new())
+
+        bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id,
+                              reply_markup=self.keyboard_attak_new())
+        #        time.sleep(1)
+        r = random.randint(1, 2)
+        if r == 1 and stop == 0:
+            self.user["healts_used"] -= self.user["enemy_hit"]
+            text = text + " \n⚔️Враг аттаковал вас и нанес " + str(self.user["enemy_hit"]) + " урона. Осталось " + str(
+                self.user["healts_used"]) + " здоовья"
+            bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id,
+                                  reply_markup=self.keyboard_attak_new())
+        elif r == 2 and stop == 0:
+            text = text + "\n🛡 Враг защищается и восстанавливает здоровье"
+            #            self.user["enemy_healts"] += self.user["enemy_dodge"]
+            bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id,
+                                  reply_markup=self.keyboard_attak_new())
+        if self.user["healts_used"] <= 0:
+            self.update_statistic(data="experiens")
+            self.user["healts_used"] = self.user["healts"]
+            pprint(self.user["healts_used"])
+            save("users")
+            bot.send_message(text="⏱ Вывод карты ⏱", chat_id=self.id, reply_markup=keyboardmap())
+            bot.send_message(text="Вы умерли.", chat_id=self.id,
+                             reply_markup=self.output_map())
+
+    def weapons_random(self):
+        r = random.randint(1, 1)
+        pprint(r)
+        pprint(weapons[str(self.user["lvlheroes"])]["random"])
+        r_r = weapons[str(self.user["lvlheroes"])]["random"]
+        pprint(r_r)
+        if r == 1:  # arm
+            r_a = random.randint(1, r_r)
+            if r_a == 1:
+                return weapons[str(r_r)]["name"]
+        else:
+            return ""
+
+    def attaka_new(self):
+        keyboard = telebot.types.InlineKeyboardMarkup()
+        null = telebot.types.InlineKeyboardButton(text="➖➖", callback_data="null")
+        heroes_head = telebot.types.InlineKeyboardButton(text=fight_text["heroes_head"],
+                                                         callback_data="fight_heroes_head")
+        heroes_left = telebot.types.InlineKeyboardButton(text=fight_text["heroes_handleft"],
+                                                         callback_data="fight_heroes_handleft")
+        heroes_right = telebot.types.InlineKeyboardButton(text=fight_text["heroes_handright"],
+                                                          callback_data="fight_heroes_handright")
+        heroes_breast = telebot.types.InlineKeyboardButton(text=fight_text["heroes_breast"],
+                                                           callback_data="fight_heroes_breast")
+        heroes_legs = telebot.types.InlineKeyboardButton(text=fight_text["heroes_legs"],
+                                                         callback_data="fight_heroes_legs")
+        heroes_foot = telebot.types.InlineKeyboardButton(text=fight_text["heroes_foot"],
+                                                         callback_data="fight_heroes_foot")
+
+        enemy_head = telebot.types.InlineKeyboardButton(text=fight_text["enemy_head"], callback_data="fight_enemy_head")
+        enemy_left = telebot.types.InlineKeyboardButton(text=fight_text["enemy_handleft"],
+                                                        callback_data="fight_enemy_handleft")
+        enemy_right = telebot.types.InlineKeyboardButton(text=fight_text["enemy_handright"],
+                                                         callback_data="fight_enemy_handright")
+        enemy_brest = telebot.types.InlineKeyboardButton(text=fight_text["enemy_breast"],
+                                                         callback_data="fight_enemy_breast")
+        enemy_legs = telebot.types.InlineKeyboardButton(text=fight_text["enemy_legs"], callback_data="fight_enemy_legs")
+        enemy_foot = telebot.types.InlineKeyboardButton(text=fight_text["enemy_foot"], callback_data="fight_enemy_foot")
+
+        text_pole = telebot.types.InlineKeyboardButton(text=fight_text["null"], callback_data="1")
+        healts_used = telebot.types.InlineKeyboardButton(text=self.user["healts_used"], callback_data="1")
+        enemy_healts = telebot.types.InlineKeyboardButton(text=self.user["enemy_healts"], callback_data="1")
+        keyboard.row(text_pole)
+        keyboard.row(heroes_head, null, enemy_head, )
+        keyboard.row(heroes_left, heroes_right, null, null, enemy_left, enemy_right)
+        #        keyboard.row(heroes_left, heroes_breast, heroes_right, enemy_left, enemy_brest,enemy_right)
+        keyboard.row(heroes_breast, null, enemy_brest)
+        keyboard.row(heroes_legs, null, enemy_legs)
+        keyboard.row(heroes_foot, null, enemy_foot)
+        #        keyboard.row(text_pole)
+        keyboard.row(healts_used, enemy_healts)
+        return keyboard
+
+    def fight(self):
+        global fight_text, combat, comb, text_attaka, raund
+
+        if self.text == "Атаковать":
+            fight_text = fight_text_all.copy()
+            combat = {}
+            raund = 0
+            text_attaka = "/-------------------------/"
+            fight_text["null"] = "Защита 2 очка. Аттака 2 очка"
+            bot.send_message(text="Аттака", chat_id=self.id, reply_markup=keyboard_map())
+            bot.send_message(text="Вы аттаковали врага. Выберите какую часть тела защитить и атакуйте врага",
+                             chat_id=self.id, reply_markup=self.attaka_new())
+
+        else:
+            pprint(self.call)
+            pprint(self.message_id)
+            data = self.call.split("_")[1]
+            data_old = self.call.split("_")[2]
+            d = data + "_" + data_old
+            if data == "heroes":
+                if 0 < self.user["defence"] <= 2:
+                    if data_old == "head":
+                        fight_text[d] += " 🛡"
+                        combat[d] = 1
+                        pprint("test")
+                        comb[d] += 1
+                        pprint("test2")
+                    elif data_old == "handleft":
+                        fight_text[d] += " 🛡"
+                        combat[d] = 1
+                        comb[d] += 1
+                    elif data_old == "handright":
+                        fight_text[d] += " 🛡"
+                        combat[d] = 1
+                        comb[d] += 1
+                    elif data_old == "breast":
+                        fight_text[d] += " 🛡"
+                        combat[d] = 1
+                        comb[d] += 1
+                    elif data_old == "legs":
+                        fight_text[d] += " 🛡"
+                        combat[d] = 1
+                        comb[d] += 1
+                    elif data_old == "foot":
+                        fight_text[d] += " 🛡"
+                        combat[d] = 1
+                        comb[d] += 1
+                    self.user["defence"] -= 1
+
+                    bot.answer_callback_query(callback_query_id=self.call_id, text='Защитились')
+                else:
+                    bot.answer_callback_query(callback_query_id=self.call_id, text='Очки защиты законились')
+                    return
+            #   elif self.user["defence"] >2:
+            elif data == "enemy":
+                if 0 < self.user["attaka"] <= 2:
+                    if data_old == "head":
+                        fight_text[d] += " ⚔️"
+                        combat[d] = 1
+                        comb[d] += 1
+                    elif data_old == "handleft":
+                        fight_text[d] += " ⚔️"
+                        combat[d] = 1
+                        comb[d] += 1
+                    elif data_old == "handright":
+                        fight_text[d] += " ⚔️"
+                        combat[d] = 1
+                        comb[d] += 1
+                    elif data_old == "breast":
+                        fight_text[d] += " ⚔️"
+                        combat[d] = 1
+                        comb[d] += 1
+                    elif data_old == "legs":
+                        fight_text[d] += " ⚔️"
+                        combat[d] = 1
+                        comb[d] += 1
+                    elif data_old == "foot":
+                        fight_text[d] += " ⚔️"
+                        combat[d] = 1
+                        comb[d] += 1
+                    self.user["attaka"] -= 1
+
+                    bot.answer_callback_query(callback_query_id=self.call_id, text='Аттаковали')
+                else:
+                    bot.answer_callback_query(callback_query_id=self.call_id, text='Очки аттаки законились')
+                    return
+            save("combat")
+            if self.user["defence"] == 0 and self.user["attaka"] == 0:
+                self.user["attaka"] = 2
+                self.user["defence"] = 2
+
+                text = "Идет бой, ожидайте"
+                fight_text["null"] = text
+                bot.edit_message_text(text=text_attaka, chat_id=self.id, message_id=self.message_id,
+                                      reply_markup=self.attaka_new())
+                text_old = self.combat_battle()
+                raund += 1
+                text_attaka += "\n/----/ Раунд " + str(raund) + " /----/" + text_old + "\n"
+                time.sleep(3)
+                fight_text = fight_text_all.copy()
+                text = "Защита 2 очка. Аттака 2 очка"
+                fight_text["null"] = text
+                if self.user["healts_used"] <= 0:
+                    bot.delete_message(self.id, message_id=self.message_id)
+                    bot.send_message(self.id, text=text_attaka)
+                    self.congratulation("enemy")
+                    print("Герой проиграл")
+                elif self.user["enemy_healts"] <= 0:
+                    bot.delete_message(self.id, message_id=self.message_id)
+                    bot.send_message(self.id, text=text_attaka)
+                    self.congratulation("heroes")
+                    print("Враг проиграл")
+                else:
+                    bot.edit_message_text(text=text_attaka, chat_id=self.id, message_id=self.message_id,
+                                          reply_markup=self.attaka_new())
+
+            else:
+                defence = self.user["defence"]
+                attaka = self.user["attaka"]
+
+                #                    text = "Выберите часть тела для защиты и для аттаки"
+                text = "Защита " + str(defence) + " очка. Аттака " + str(attaka) + " очка"
+                fight_text["null"] = text
+
+                bot.edit_message_text(text=text_attaka, chat_id=self.id, message_id=self.message_id,
+                                      reply_markup=self.attaka_new())
+
+    def combat_battle(self):
+        global combat, comb, her, ene
+        #        pprint(combat)
+        text = ""
+        her, ene = {}, {}
+        for key, value in comb.items():
+            if key.split("_")[0] == "heroes":
+                her[key] = value
+            elif key.split("_")[0] == "enemy":
+                ene[key] = value
+        max_value_her = min(her.values())
+        for k, v in her.items():
+            if v == max_value_her:
+                her[k] = 9999999
+                heroes_attaka = k
+                break
+        max_value_her = min(her.values())
+        for k, v in her.items():
+            if v == max_value_her:
+                heroes_attaka_second = k
+        max_value_ene = max(ene.values())
+        for k, v in ene.items():
+            if v == max_value_ene:
+                ene[k] = 0
+                defence_enemy = k
+        max_value_ene = max(ene.values())
+        for k, v in ene.items():
+            if v == max_value_ene:
+                defence_enemy_second = k
+
+        for key, value in combat.items():
+            if heroes_attaka == key:
+                text += "\n 🛡 Вы отразили аттаку врага в " + fight_trans[heroes_attaka]
+            elif heroes_attaka_second == key:
+                text += "\n 🛡 Вы отразили аттаку врага в " + fight_trans[heroes_attaka_second]
+            elif defence_enemy == key:
+                text += "\n 🛡 Враг отразил вашу аттаку в " + fight_trans[defence_enemy]
+            elif defence_enemy_second == key:
+                text += "\n 🛡 Враг отразил вашу аттаку в " + fight_trans[defence_enemy_second]
+            elif key.split("_")[0] == "heroes":
+                text += "\n ⚔️Враг нанес вам удар -" + str(self.user["enemy_hit"]) + " ♥️"
+                self.user["healts_used"] -= self.user["enemy_hit"]
+            elif key.split("_")[0] == "enemy":
+                text += "\n ⚔️Вы нанесли удар противнику - " + str(self.user["hit"]) + " ♥️"
+                self.user["enemy_healts"] -= self.user["hit"]
+
+        combat = {}
+        return text
+
+    def all_battle(self):
+        text_all_battle = "Вы отправились на поле боя. Ожидайте сражения\n Сражения проводятся в 10:00, 14:00, 18:00"
+        self.user["allbattle"] = 1
+        save("users")
+        bot.delete_message(chat_id=self.id, message_id=self.message_id)
+        bot.send_message(chat_id=self.id, text=text_all_battle, reply_markup=all_battle())
 
 
 class Buy():
@@ -974,7 +1355,7 @@ class Buy():
         pprint(self.user["buy_qiwi_check"])
         pprint(users[str(self.id)]["but_qiwi_date"])
 
-        if  self.user["buy_qiwi_check"] == 0 and date("utctime") < users[str(self.id)]["but_qiwi_date"]:
+        if self.user["buy_qiwi_check"] == 0 and date("utctime") < users[str(self.id)]["but_qiwi_date"]:
             markup_check.add(telebot.types.InlineKeyboardButton(text='Проверить платеж', callback_data="buy_qiwi"))
             text = "Проверить платеж"
             bot.send_message(self.id, text, reply_markup=markup_check)
@@ -988,9 +1369,11 @@ class Buy():
         else:
             pprint("bnbnbnnb")
             markup_buy.add(telebot.types.InlineKeyboardButton(text='Оплатить',
-                                                      url="https://oplata.qiwi.com/create?publicKey=" + publicKey +
-                                                          "&amount=" + str(
-                                                          int(self.text) * 1) + "&comment=" + comment + "&customFields[themeCode]=Konstantyn-PbboM7ch_P&successUrl=https%3A%2F%2Ft.me%2FHeroesLifeBot&lifetime=" + date('buyqiwi')))
+                                                              url="https://oplata.qiwi.com/create?publicKey=" + publicKey +
+                                                                  "&amount=" + str(
+                                                                  int(
+                                                                      self.text) * 1) + "&comment=" + comment + "&customFields[themeCode]=Konstantyn-PbboM7ch_P&successUrl=https%3A%2F%2Ft.me%2FHeroesLifeBot&lifetime=" + date(
+                                                                  'buyqiwi')))
             self.user["buy_qiwi_tranzaction"] = 0
             self.user["buy_qiwi_comment"] = comment
             self.user["buy_qiwi_amount"] = int(self.text)
@@ -998,7 +1381,8 @@ class Buy():
             self.user["but_qiwi_date_up"] = date('buytimeup')
             self.user["buy_qiwi_check"] = 0
             pprint("asdasd")
-            text = "Для покупки "+str(int(self.text))+" 💎 нажмите на кнопку ниже \nПокупка на сумму " + str(int(self.text) * 10) + " руб."
+            text = "Для покупки " + str(int(self.text)) + " 💎 нажмите на кнопку ниже \nПокупка на сумму " + str(
+                int(self.text) * 10) + " руб."
             pprint("zxczxc")
             bot.send_message(self.id, text, reply_markup=markup_buy)
             markup_check.add(telebot.types.InlineKeyboardButton(text='Проверить платеж', callback_data="buy_qiwi"))
@@ -1012,7 +1396,7 @@ class Buy():
 
         comment = str(self.id)
         lastPayments = self.payment_history_last(mylogin, api_access_token, '3', '', '', comment)
-#        pprint(lastPayments)
+        #        pprint(lastPayments)
         #        pprint(lastPayments)
 
         for i in range(len(lastPayments['data'])):
@@ -1023,29 +1407,30 @@ class Buy():
             date = lastPayments['data'][i]['date']
 
             if comment == str(self.id) and status == 'SUCCESS':
-                    if users[str(self.id)]["but_qiwi_date_down"] < date < users[str(self.id)]["but_qiwi_date_up"]:
-                        if  self.user["buy_qiwi_check"] == 0:
-                            pprint("Платеж прошел успешно")
-                            bot.send_message(self.id, "Счет " + str(txnId) + " на сумму " + str(amount) + " руб "+date+". Оплачен",
-                                 reply_markup=keyboard_info())
-                            users[str(self.id)]["but_qiwi_date"] = "0"
-                            self.user["buy_qiwi_check"] = 1
-                            buy_gold = int(amount)
-                            users[str(self.id)]["diamond"] = users[str(self.id)]["diamond"] + buy_gold
-                        else:
-                            bot.send_message(self.id, "Начисление уже было произведено")
-                            break
+                if users[str(self.id)]["but_qiwi_date_down"] < date < users[str(self.id)]["but_qiwi_date_up"]:
+                    if self.user["buy_qiwi_check"] == 0:
+                        pprint("Платеж прошел успешно")
+                        bot.send_message(self.id, "Счет " + str(txnId) + " на сумму " + str(
+                            amount) + " руб " + date + ". Оплачен",
+                                         reply_markup=keyboard_info())
+                        users[str(self.id)]["but_qiwi_date"] = "0"
+                        self.user["buy_qiwi_check"] = 1
+                        buy_gold = int(amount)
+                        users[str(self.id)]["diamond"] = users[str(self.id)]["diamond"] + buy_gold
+                    else:
+                        bot.send_message(self.id, "Начисление уже было произведено")
+                        break
             #       else:
             #            bot.send_message(self.id, "Счет не был оплачен во время")
             else:
-                bot.send_message(self.id, "Счет на сумму " + str(amount) + " руб "+date+". Не оплачен",
+                bot.send_message(self.id, "Счет на сумму " + str(amount) + " руб " + date + ". Не оплачен",
                                  reply_markup=keyboard_main_menu())
 
-#                pprint("Чужой счет " + str(txnId) + " на сумму " + str(amount) + " руб. Оплачен")
-            #            pprint(lastPayments['data'][i]['txnId'])
-            #            pprint(lastPayments['data'][i]['comment'])
-            #            pprint(lastPayments['data'][i]['sum']['amount'])
-#            pprint(lastPayments['data'][i]['date'])
+        #                pprint("Чужой счет " + str(txnId) + " на сумму " + str(amount) + " руб. Оплачен")
+        #            pprint(lastPayments['data'][i]['txnId'])
+        #            pprint(lastPayments['data'][i]['comment'])
+        #            pprint(lastPayments['data'][i]['sum']['amount'])
+        #            pprint(lastPayments['data'][i]['date'])
 
         st = lastPayments['data'][0]['status']
         txnId = lastPayments['data'][0]['txnId']
@@ -1073,8 +1458,8 @@ class Buy():
 
     def buy_tranzzo(self):
         global prices, amount
-        amount =1
-#        prices = [LabeledPrice(label='Working Time Machine', amount=5750)]
+        amount = 1
+        #        prices = [LabeledPrice(label='Working Time Machine', amount=5750)]
         #        pprint(self.text)
         #        print(self.is_int(self.text))
         prices = [LabeledPrice(label='Heroes Life', amount=int(amount) * 1000)]
@@ -1108,376 +1493,8 @@ class Buy():
         return h.json()
 
 
-class Battle():
-    def __init__(self, message, call=""):
-
-        try:
-
-            self.call = call.data
-            self.call_id = call.id
-            self.message_call_id = call.message.message_id
-#            print(str(self.call))
-        except Exception:
-            pass
-
-        self.id = message.chat.id
-        self.text = message.text
-        self.first_name = message.from_user.username
-        self.user = users[str(self.id)]
-        self.maps = Maps(message)
-        self.user_bot = User(message)
-        self.message_id = message.message_id
-        global text, attak
-
-
-    def congratulation(self,data):
-        if data == "heroes":
-            self.user["experience_used"] += 5
-            r_gold = random.randint(1,50)
-            self.user["gold"] += r_gold
-            maps[self.user["enemy_cell"]]["resource"] = "null"
-            self.user_bot.update_statistic(data="experiens")
-            self.user_bot.energy()
-
-            bot.send_message(text="Бой окончен: ", chat_id=self.id, reply_markup=keyboardmap())
-            bot.send_message(text="Вы победили и получили 5 опыта.\n Вам выпало "+str(r_gold)+ " золота", chat_id=self.id,
-                             reply_markup=self.maps.output_map())
-        elif data =="enemy":
-            threading.Thread(target=self.user_bot.timer_healts, daemon=True).start()
-            self.user_bot.energy()
-            bot.send_message(text="Бой окончен: ", chat_id=self.id, reply_markup=keyboardmap())
-            bot.send_message(text="Вы проиграли. Здоровье восстановится через 60 сек.", chat_id=self.id, reply_markup=self.maps.output_map())
-
-    def attak(self):
-        global users, maps, attak
-#        pprint(attak)
-        r = random.randrange(1, 3)
-
-        pprint(r)
-        if r == 1:
-            #                self.user["energy_used"] -= 1
-            self.user_bot.energy()
-            bot.send_message(text="Бой окончен: ", chat_id=self.id, reply_markup=keyboardmap())
-            bot.send_message(text="Вы проиграли", chat_id=self.id, reply_markup=self.maps.output_map())
-        else:
-            self.user["experience_used"] += 5
-            #               self.user["energy_used"] -= 1
-            maps[self.user["enemy_cell"]]["resource"] = "null"
-            self.user_bot.update_statistic(data="experiens")
-            self.user_bot.energy()
-#            pprint("test")
-#            wea = self.weapons_random()
-#            weapons = weapons_data[wea]["name"]
-#            pprint(weapons)
-#            weapons = ""
-#            if weapons == "":
-            bot.send_message(text="Бой окончен: ", chat_id=self.id, reply_markup=keyboardmap())
-            bot.send_message(text="Вы победили и получили 5 опыта", chat_id=self.id,
-                             reply_markup=self.maps.output_map())
-#            else:
-#                self.user["weapons"]["arm"] = 1
-#                bot.send_message(text="Вы победили и получили 5 опыта\n Вы нашли "+weapons, chat_id=self.id,
-#                             reply_markup=self.maps.output_map())
-       #                self.resource(attak)
-
-        pprint("всё ок")
-        save("users")
-
-    def keyboard_attak_new(self):
-        keyboard = telebot.types.InlineKeyboardMarkup()
-        attak = telebot.types.InlineKeyboardButton(text="Атака", callback_data="battle_attak")
-        defence = telebot.types.InlineKeyboardButton(text="Защита", callback_data="battle_defence")
-        keyboard.row(attak, defence)
-        return keyboard
-
-    def att(self):
-        stop = 0
-        cell = self.call.split("_")[1]
-        if self.call == "battle_attak":
-
-                    r = random.randint(1, 100)
-                    pprint(r)
-                    if r < self.user["enemy_dodge"]:
-                        text = self.text + " \n⚔️Враг увернулся. Осталось " + str(self.user["enemy_healts"]+ "здоовья")
-                    else:
-                        self.user["enemy_healts"] -= self.user["hit"]
-                        text = self.text + " \n⚔️Вы аттаковали врага и нанесли "+str(self.user["hit"])+" урона. Осталось "+ str(self.user["enemy_healts"]) + " здоовья"
-
-                    if self.user["enemy_healts"] <= 0:
-                        bot.send_message(text="⏱ Вывод карты ⏱", chat_id=self.id, reply_markup=keyboardmap())
-                        stop = 1
-                        text = self.text + "\nВы одержали победу 💥 "
-                        time.sleep(2)
-                        self.user["experience_used"] += 5
-                        self.user["healts_used"] = self.user["healts"]
-                        maps[self.user["enemy_cell"]]["resource"] = "null"
-                        self.user_bot.update_statistic(data="experiens")
-                        self.user_bot.energy()
-                        bot.send_message(text="Вы победили и получили 5 🌕 опыта", chat_id=self.id,
-                                         reply_markup=self.maps.output_map())
-        elif self.call == "battle_defence":
-            text = self.text + "\n🛡 Вы защищаетесь от врага и восстанавливаете здоровье"
-            self.user["healts_used"] += 10
-        else:
-            if maps[cell]["resource"] == "enemy":
-                bot.edit_message_text(text="Выберите дальнейшее действие", chat_id=self.id, message_id=self.message_id,
-                                      reply_markup=self.keyboard_attak_new())
-
-        bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id, reply_markup=self.keyboard_attak_new())
-#        time.sleep(1)
-        r = random.randint(1, 2)
-        if r == 1 and stop == 0:
-            self.user["healts_used"] -= self.user["enemy_hit"]
-            text = text + " \n⚔️Враг аттаковал вас и нанес "+str(self.user["enemy_hit"])+" урона. Осталось "+str(self.user["healts_used"])+ " здоовья"
-            bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id,
-                                  reply_markup=self.keyboard_attak_new())
-        elif r == 2 and stop == 0:
-            text = text + "\n🛡 Враг защищается и восстанавливает здоровье"
-#            self.user["enemy_healts"] += self.user["enemy_dodge"]
-            bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id,
-                                  reply_markup=self.keyboard_attak_new())
-        if self.user["healts_used"] <= 0:
-            self.user_bot.update_statistic(data="experiens")
-            self.user["healts_used"] = self.user["healts"]
-            pprint(self.user["healts_used"])
-            save("users")
-            bot.send_message(text="⏱ Вывод карты ⏱", chat_id=self.id, reply_markup=keyboardmap())
-            bot.send_message(text="Вы умерли.", chat_id=self.id,
-                             reply_markup=self.maps.output_map())
-
-    def weapons_random(self):
-        r = random.randint(1, 1)
-        pprint(r)
-        pprint(weapons[str(self.user["lvlheroes"])]["random"])
-        r_r = weapons[str(self.user["lvlheroes"])]["random"]
-        pprint(r_r)
-        if r ==1: #arm
-            r_a = random.randint(1, r_r)
-            if r_a == 1:
-                return weapons[str(r_r)]["name"]
-        else: return ""
-
-    def attaka_new(self):
-        keyboard = telebot.types.InlineKeyboardMarkup()
-        null = telebot.types.InlineKeyboardButton(text="➖➖", callback_data="null")
-        heroes_head = telebot.types.InlineKeyboardButton(text=fight_text["heroes_head"], callback_data="fight_heroes_head")
-        heroes_left = telebot.types.InlineKeyboardButton(text=fight_text["heroes_handleft"], callback_data="fight_heroes_handleft")
-        heroes_right = telebot.types.InlineKeyboardButton(text=fight_text["heroes_handright"], callback_data="fight_heroes_handright")
-        heroes_breast = telebot.types.InlineKeyboardButton(text=fight_text["heroes_breast"], callback_data="fight_heroes_breast")
-        heroes_legs = telebot.types.InlineKeyboardButton(text=fight_text["heroes_legs"], callback_data="fight_heroes_legs")
-        heroes_foot = telebot.types.InlineKeyboardButton(text=fight_text["heroes_foot"], callback_data="fight_heroes_foot")
-
-        enemy_head = telebot.types.InlineKeyboardButton(text=fight_text["enemy_head"], callback_data="fight_enemy_head")
-        enemy_left = telebot.types.InlineKeyboardButton(text=fight_text["enemy_handleft"], callback_data="fight_enemy_handleft")
-        enemy_right = telebot.types.InlineKeyboardButton(text=fight_text["enemy_handright"], callback_data="fight_enemy_handright")
-        enemy_brest = telebot.types.InlineKeyboardButton(text=fight_text["enemy_breast"], callback_data="fight_enemy_breast")
-        enemy_legs = telebot.types.InlineKeyboardButton(text=fight_text["enemy_legs"], callback_data="fight_enemy_legs")
-        enemy_foot = telebot.types.InlineKeyboardButton(text=fight_text["enemy_foot"], callback_data="fight_enemy_foot")
-
-
-        text_pole = telebot.types.InlineKeyboardButton(text=fight_text["null"], callback_data="1")
-        healts_used = telebot.types.InlineKeyboardButton(text=self.user["healts_used"] , callback_data="1")
-        enemy_healts = telebot.types.InlineKeyboardButton(text=self.user["enemy_healts"], callback_data="1")
-        keyboard.row(text_pole)
-        keyboard.row(heroes_head,  null, enemy_head,)
-        keyboard.row(heroes_left, heroes_right,null, null,enemy_left, enemy_right)
-#        keyboard.row(heroes_left, heroes_breast, heroes_right, enemy_left, enemy_brest,enemy_right)
-        keyboard.row(heroes_breast, null, enemy_brest)
-        keyboard.row(heroes_legs, null, enemy_legs)
-        keyboard.row(heroes_foot, null, enemy_foot)
-#        keyboard.row(text_pole)
-        keyboard.row(healts_used, enemy_healts)
-        return keyboard
-
-    def fight(self):
-        global fight_text, combat, comb, text_attaka, raund
-
-        if self.text == "Атаковать":
-            fight_text = fight_text_all.copy()
-            combat = {}
-            raund = 0
-            text_attaka = "/-------------------------/"
-            fight_text["null"] = "Защита 2 очка. Аттака 2 очка"
-            bot.send_message(text="Аттака", chat_id=self.id, reply_markup=keyboard_map())
-            bot.send_message(text="Вы аттаковали врага. Выберите какую часть тела защитить и атакуйте врага", chat_id=self.id, reply_markup=self.attaka_new())
-  #      elif self.call == "null":
-  #
-        else:
-                pprint(self.call)
-                data = self.call.split("_")[1]
-                data_old = self.call.split("_")[2]
-                d = data +"_"+ data_old
-                if data == "heroes":
-                    if 0 < self.user["defence"] <= 2:
-                        if data_old =="head":
-                            fight_text[d] +=   " 🛡"
-                            combat[d] = 1
-                            pprint("test")
-                            comb[d] += 1
-                            pprint("test2")
-                        elif data_old =="handleft":
-                            fight_text[d] +=   " 🛡"
-                            combat[d] = 1
-                            comb[d] += 1
-                        elif data_old =="handright":
-                            fight_text[d] +=   " 🛡"
-                            combat[d] = 1
-                            comb[d] += 1
-                        elif data_old == "breast":
-                            fight_text[d] += " 🛡"
-                            combat[d] = 1
-                            comb[d] += 1
-                        elif data_old =="legs":
-                            fight_text[d] +=   " 🛡"
-                            combat[d] = 1
-                            comb[d] += 1
-                        elif data_old =="foot":
-                            fight_text[d] +=   " 🛡"
-                            combat[d] = 1
-                            comb[d] += 1
-                        self.user["defence"] -=1
-
-                        bot.answer_callback_query(callback_query_id=self.call_id, text='Защитились')
-                    else:
-                        bot.answer_callback_query(callback_query_id=self.call_id, text='Очки защиты законились')
-                        return
-                 #   elif self.user["defence"] >2:
-                elif data == "enemy":
-                    if 0 < self.user["attaka"] <= 2:
-                        if data_old =="head":
-                            fight_text[d] +=   " ⚔️"
-                            combat[d] = 1
-                            comb[d] += 1
-                        elif data_old =="handleft":
-                            fight_text[d] +=   " ⚔️"
-                            combat[d] = 1
-                            comb[d] += 1
-                        elif data_old =="handright":
-                            fight_text[d] +=   " ⚔️"
-                            combat[d] = 1
-                            comb[d] += 1
-                        elif data_old == "breast":
-                            fight_text[d] += " ⚔️"
-                            combat[d] = 1
-                            comb[d] += 1
-                        elif data_old =="legs":
-                            fight_text[d] +=   " ⚔️"
-                            combat[d] = 1
-                            comb[d] += 1
-                        elif data_old =="foot":
-                            fight_text[d] +=   " ⚔️"
-                            combat[d] = 1
-                            comb[d] += 1
-                        self.user["attaka"] -=1
-
-                        bot.answer_callback_query(callback_query_id=self.call_id, text='Аттаковали')
-                    else:
-                        bot.answer_callback_query(callback_query_id=self.call_id, text='Очки аттаки законились')
-                        return
-                save("combat")
-                if self.user["defence"] == 0 and self.user["attaka"] == 0:
-                    self.user["attaka"] = 2
-                    self.user["defence"] = 2
-
-                    text = "Идет бой, ожидайте"
-                    fight_text["null"] = text
-                    bot.edit_message_text(text=text_attaka, chat_id=self.id, message_id=self.message_call_id,
-                                          reply_markup=self.attaka_new())
-                    text_old = self.combat_battle()
-                    raund += 1
-                    text_attaka += "\n/----/ Раунд "+str(raund)+" /----/" + text_old +"\n"
-                    time.sleep(3)
-                    fight_text = fight_text_all.copy()
-                    text = "Защита 2 очка. Аттака 2 очка"
-                    fight_text["null"] = text
-                    if self.user["healts_used"] <= 0:
-                        bot.delete_message(self.id, message_id=self.message_id)
-                        bot.send_message(self.id, text=text_attaka)
-                        self.congratulation("enemy")
-                        print("Герой проиграл")
-                    elif self.user["enemy_healts"] <= 0:
-                        bot.delete_message(self.id, message_id=self.message_id)
-                        bot.send_message(self.id, text=text_attaka)
-                        self.congratulation("heroes")
-                        print("Враг проиграл")
-                    else:
-                        bot.edit_message_text(text=text_attaka, chat_id=self.id, message_id=self.message_call_id,
-                                          reply_markup=self.attaka_new())
-
-                else:
-                    defence = self.user["defence"]
-                    attaka = self.user["attaka"]
-
-#                    text = "Выберите часть тела для защиты и для аттаки"
-                    text = "Защита "+str(defence)+" очка. Аттака "+str(attaka)+" очка"
-                    fight_text["null"] = text
-
-                    bot.edit_message_text(text=text_attaka, chat_id=self.id, message_id=self.message_call_id, reply_markup=self.attaka_new())
-
-    def combat_battle(self):
-        global combat, comb , her,ene
-#        pprint(combat)
-        text = ""
-        her,ene = {},{}
-        for key, value in comb.items():
-            if key.split("_")[0] == "heroes":
-                her[key] = value
-            elif key.split("_")[0] == "enemy":
-                ene[key] = value
-
-        max_value_her = min(her.values())
-        for k, v in her.items():
-                 if v == max_value_her:
-                     her[k] = 9999999
-                     heroes_attaka = k
-                     break
-
-        max_value_her = min(her.values())
-        for k, v in her.items():
-                 if v == max_value_her:
-                     heroes_attaka_second = k
-
-
-        max_value_ene = max(ene.values())
-        for k, v in ene.items():
-                 if v == max_value_ene:
-                     ene[k] = 0
-                     defence_enemy = k
-        max_value_ene = max(ene.values())
-        for k, v in ene.items():
-                 if v == max_value_ene:
-                     defence_enemy_second = k
-
-        for key, value in combat.items():
-
-            if heroes_attaka == key:
-                text += "\n 🛡 Вы отразили аттаку врага в "+ fight_trans[heroes_attaka]
-            elif heroes_attaka_second == key:
-                text += "\n 🛡 Вы отразили аттаку врага в "+ fight_trans[heroes_attaka_second]
-            elif defence_enemy == key:
-                text += "\n 🛡 Враг отразил вашу аттаку в "+fight_trans[defence_enemy]
-            elif defence_enemy_second == key:
-                text += "\n 🛡 Враг отразил вашу аттаку в "+fight_trans[defence_enemy_second]
-            elif key.split("_")[0] == "heroes":
-                text += "\n ⚔️Враг нанес вам удар -"+ str(self.user["enemy_hit"])+" ♥️"
-                self.user["healts_used"] -= self.user["enemy_hit"]
-            elif key.split("_")[0] == "enemy":
-                text += "\n ⚔️Вы нанесли удар противнику - "+str(self.user["hit"])+" ♥️"
-                self.user["enemy_healts"] -= self.user["hit"]
-
-        combat = {}
-        return text
-
-    def all_battle(self):
-        text_all_battle = "Вы отправились на поле боя. Ожидайте сражения\n Сражения проводятся в 10:00, 14:00, 18:00"
-        self.user["allbattle"] = 1
-        save("users")
-        bot.delete_message(chat_id=self.id, message_id=self.message_id)
-        bot.send_message(chat_id=self.id, text=text_all_battle, reply_markup=all_battle())
-
 @bot.message_handler(commands=['start'])
 def start_message(message):
-
     if message.chat.id == ADMIN:
         bot.send_message(text="Админское меню", chat_id=message.chat.id, reply_markup=keyadmin())
     else:
@@ -1496,23 +1513,19 @@ def got_payment(message):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     global menu, status, barracks
-    pprint("test1")
-    user_bot = User(message)
     maps_bot = Maps(message)
     buy_bot = Buy(message)
-    battle_bot = Battle(message)
-    pprint("test2")
     if message.chat.id == ADMIN:
         if message.text == "Создать карту":
             maps_bot.new_maps()
         elif message.text == "Кол-во ячеек":
             maps_bot.statistika()
-        elif message.text == "Новая атака":
-            battle_bot.new_attaka()
+#        elif message.text == "Новая атака":
+#            maps_bot.new_attaka()
         elif message.text == "Бой":
             users[str(message.chat.id)]["defence"] = 2
             users[str(message.chat.id)]["attaka"] = 2
-            battle_bot.fight()
+            maps_bot.fight()
 
 
     else:
@@ -1531,7 +1544,7 @@ def send_text(message):
             menu = "rudnic"
             status = "open"
             bot.send_message(text=start_text_mining, chat_id=message.chat.id, reply_markup=keyboard_map())
-#            bot.send_message(text="rjgfnm", chat_id=message.chat.id, reply_markup=keyboard_map())
+            #            bot.send_message(text="rjgfnm", chat_id=message.chat.id, reply_markup=keyboard_map())
             maps_bot.mining()
         elif message.text == 'Назад':
             if menu == "dom" or menu == "rudnic":
@@ -1554,12 +1567,12 @@ def send_text(message):
 
         elif message.text == 'Герой':
             menu = "heroes"
-            bot.send_message(text=user_bot.info_heroes("heroes"), chat_id=message.chat.id)
+            bot.send_message(text=maps_bot.info_heroes("heroes"), chat_id=message.chat.id)
         elif message.text == 'Склад':
             menu = "sklad"
 
-            user_bot.build()
-            bot.send_message(text=user_bot.info_heroes("sklad"), chat_id=message.chat.id, reply_markup=keyboardback())
+            maps_bot.build()
+            bot.send_message(text=maps_bot.info_heroes("sklad"), chat_id=message.chat.id, reply_markup=keyboardback())
 
 
         elif message.text == "Меню игрока":
@@ -1581,31 +1594,31 @@ def send_text(message):
         elif message.text == "Атаковать":
             users[str(message.chat.id)]["defence"] = 2
             users[str(message.chat.id)]["attaka"] = 2
-#            bot.send_message(text="Бой", chat_id=message.chat.id, reply_markup=keyboardback())
-            battle_bot.fight()
-         #   battle_bot.attak()
-            #bot.send_message(text="Выберите действие: Атаковать или Защищаться", chat_id=message.chat.id, reply_markup=battle_bot.keyboard_attak_new())
+            #            bot.send_message(text="Бой", chat_id=message.chat.id, reply_markup=keyboardback())
+            maps_bot.fight()
+        #   battle_bot.attak()
+        # bot.send_message(text="Выберите действие: Атаковать или Защищаться", chat_id=message.chat.id, reply_markup=battle_bot.keyboard_attak_new())
 
         elif message.text == "Отступить":
-#            bot.send_message(text="Бой", chat_id=message.chat.id, reply_markup=keyboardback())
+            #            bot.send_message(text="Бой", chat_id=message.chat.id, reply_markup=keyboardback())
             bot.send_message(text="⏱ Вывод карты ⏱", chat_id=message.chat.id, reply_markup=keyboardmap())
             time.sleep(2)
             bot.send_message(text="Делайте ход по игровому полю", chat_id=message.chat.id,
-                         reply_markup=maps_bot.output_map())
+                             reply_markup=maps_bot.output_map())
 
 
         elif message.text == "Казарма":
             barracks = 1
             menu = "barracks"
-            user_bot.build()
+            maps_bot.build()
             #            bot.send_message(text="Казарма", chat_id=message.chat.id, reply_markup=keyboardbarracks())
-            user_bot.barracks("all")
+            maps_bot.barracks("all")
 
         elif barracks == 1:
             if message.text == "Обучить лучника":
-                user_bot.barracks("archer")
+                maps_bot.barracks("archer")
             elif message.text == "Да":
-                user_bot.barracks("yes")
+                maps_bot.barracks("yes")
 
             elif message.text == "Нет":
                 save("all")
@@ -1614,7 +1627,7 @@ def send_text(message):
         elif message.text == "Строения":
             menu = "building"
             bot.send_message(text="Будет добавлено в следующем обновлении", chat_id=message.chat.id)
-            user_bot.building()
+            maps_bot.building()
 
         elif message.text == "⚙ Настройки":
             menu = "info"
@@ -1629,14 +1642,15 @@ def send_text(message):
 
         elif message.text == "Помочь проекту":
             menu = "feedback"
-            bot.send_message(text=textsell+"Выберите платежную систему", chat_id=message.chat.id, reply_markup=keyboard_buy())
+            bot.send_message(text=textsell + "Выберите платежную систему", chat_id=message.chat.id,
+                             reply_markup=keyboard_buy())
 
 
         elif message.text == "QIWI":
             menu = "QIWI"
             bot.send_message(text=textbuy, chat_id=message.chat.id, reply_markup=keyboarddel())
             bot.register_next_step_handler(message, buy)
-#
+        #
         elif message.text == "Оплата QIWI":
             buy_bot.buy_qiwi()
             bot.send_message(text=textbuy, chat_id=message.chat.id, reply_markup=keyboard_info())
@@ -1645,19 +1659,20 @@ def send_text(message):
             menu = "Tranzzo"
             buy_bot.buy_tranzzo()
         elif message.text == "Всё понятно":
-            user_bot.new_game()
+            maps_bot.new_game()
 
         #            bot.send_message(message.chat.id, "Начнем игру", reply_markup=keyboard_main_menu())
         elif message.text == "Чат":
-            bot.send_message(message.chat.id, "Чат предназначен для общения, предложения идей и выявления багов @heroeslifeg")
+            bot.send_message(message.chat.id,
+                             "Чат предназначен для общения, предложения идей и выявления багов @heroeslifeg")
         elif message.text == "Пригласить":
             bot.send_message(message.chat.id,
                              "Для приглашения друга отправть ему ссылку ниже. И получи 10 💎 за каждый взятый им уровень")
-            bot.send_message(message.chat.id,  "https://telegram.me/heroeslifebot?start="+str(message.chat.id))
+            bot.send_message(message.chat.id, "https://telegram.me/heroeslifebot?start=" + str(message.chat.id))
 
         elif message.text == "Помощь":
-#            bot.send_message(chat_id=message.chat.id, text=text_help)
-            user_bot.help()
+            #            bot.send_message(chat_id=message.chat.id, text=text_help)
+            maps_bot.help()
         else:
             pprint(message.text)
 
@@ -1665,24 +1680,22 @@ def send_text(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
     maps_bot = Maps(message=call.message, call=call)
-    battle_bot = Battle(message=call.message, call=call)
     buy_bot = Buy(message=call.message, call=call)
-    user_bot = User(message=call.message, call=call)
 
     if call.data.split("_")[0] == "battle":
-        battle_bot.attak()
+        maps_bot.attak()
     elif call.data.split("_")[0] == "build":
-        user_bot.build(data = call.data.split("_")[1])
+        maps_bot.build(data=call.data.split("_")[1])
     elif call.data.split("_")[0] == "fight":
-        battle_bot.fight()
+        maps_bot.fight()
     elif call.data == "buy_qiwi":
         buy_bot.buy_check_qiwi()
     elif call.data == "null":
         bot.answer_callback_query(callback_query_id=call.id, text='Не активное поле')
-    elif call.data.split("_")[0] =="help":
-        user_bot.help()
+    elif call.data.split("_")[0] == "help":
+        maps_bot.help()
     elif call.data == "goto_battle":
-        battle_bot.all_battle()
+        maps_bot.all_battle()
     else:
         maps_bot.goto()
 
