@@ -10,8 +10,10 @@ publicKey = '48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQh
 provider_token = "535936410:LIVE:1089789060_e7e9f8ef-74dc-4011-be12-c84cc861b72d" #Tranzzo
 
 try:
+
     apihelper.proxy = {'https': 'socks5://N2cAqr:oStNVN@45.133.226.158:8000'}
     bot = telebot.TeleBot(TOKEN, threaded=False)
+
 except Exception as e:
     print(e)
 

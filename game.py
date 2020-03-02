@@ -1,4 +1,4 @@
-from config import bot, find_location, telebot, publicKey, provider_token
+from config import *
 import battle_game
 from keyboard import *
 from data import *
@@ -234,19 +234,15 @@ class Maps():
         try:
 
             self.call = call.data
-            self.message_call = call.data
-            self.id_call = call.id
-            self.message_call = call.data
-            self.call_id = call.id
+            self.call_id= call.id
             self.message_call_id = call.message.message_id
-            self.id = message.chat.id
-            self.text = message.text
-            self.first_name = message.from_user.username
+
 
 
         except:
             pass
         #        self.user_bot = User(message)
+        self.first_name = message.from_user.username
         self.id = message.chat.id
         self.text = message.text
         self.message_id = message.message_id
@@ -484,7 +480,7 @@ class Maps():
         elif users[str(self.id)]["healts_used"] <= 0:
             bot.send_message(text="Вы мертвы", chat_id=self.id)
 
-        elif self.message_call == cell_user:
+        elif self.call== cell_user:
             bot.answer_callback_query(self.call_id, 'Это вы')
 
         elif int(self.message_call) == int(cell_user) - 1:
@@ -661,7 +657,7 @@ class Maps():
 
     #    def __init__(self, message, call=""):
     #        try:
-    #            self.message_call = call.data
+    #            self.call= call.data
     #            self.call_id = call.id
     #            self.message_call_id = call.message.message_id
     #            pprint(self.call_id)
@@ -684,9 +680,9 @@ class Maps():
             bot.send_message(chat_id=self.id, text=text, reply_markup=keyboard)
 
         else:
-            if self.message_call == "help_maps":
+            if self.call== "help_maps":
                 text = "На карте вы можете добывать ресурсы и воевать против монстров.\n На карте распологаются ресурсы: еда, камень, дерево. Они вам понадобятся для постройки у улучшения вашего города."
-            elif self.message_call == "help_battle":
+            elif self.call== "help_battle":
                 text = "Бой с соперником проходит в пошаговом режиме.\n На каждом ходе у вас есть два очка защиты и два очка нападения.\n "
             keyboard.add(maps, battle)
             bot.edit_message_text(chat_id=self.id, text=text, message_id=self.message_id, reply_markup=keyboard)
@@ -1495,6 +1491,7 @@ class Buy():
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
+    print("test")
     if message.chat.id == ADMIN:
         bot.send_message(text="Админское меню", chat_id=message.chat.id, reply_markup=keyadmin())
     else:
@@ -1512,6 +1509,7 @@ def got_payment(message):
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
+    print("test")
     global menu, status, barracks
     maps_bot = Maps(message)
     buy_bot = Buy(message)
