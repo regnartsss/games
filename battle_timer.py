@@ -118,8 +118,8 @@ def battle():
     else:
         print("Всё закончено")
         null += 1
-        while null < 5:
-            job(data="old")
+#        while null < 1:
+#            job(data="old")
     print(allbattle)
 
 def rand():
@@ -131,21 +131,20 @@ def rand():
     elif r == 3:
         key = "cavalry"
     return key
+
 def shed():
 #    schedule.every(10).minutes.do(job)
-
-    schedule.every().day.at("12:30k").do(job)
-    schedule.every().day.at("13:00").do(job)
-    schedule.every().day.at("14:00").do(job)
+    schedule.every().day.at("14:42").do(job)
+    schedule.every().day.at("14:43").do(job)
+    schedule.every().day.at("14:44").do(job)
     schedule.every().day.at("15:00").do(job)
 
     while True:
         schedule.run_pending()
         time.sleep(1)
 
-
 #start()
-job()
+#job()
 #Thread(target=shed(), args=()).start()
 
 

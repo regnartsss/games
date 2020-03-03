@@ -11,6 +11,7 @@ import threading
 import requests
 from telebot.types import LabeledPrice, ShippingOption
 import logging
+from battle_timer import shed
 
 ADMIN = 765333440
 PATH = find_location()
@@ -106,7 +107,7 @@ def start_user_default():
     global users
 
     for key, value in users.items():
-        value["healts_used"] = value["healts"]
+        value["health_used"] = value["health"]
         value["step_used"] = value["step"]
         value["energy_used"] = value["energy"]
     logging.info('Здоровье, шаги, энергия восстановлены')
@@ -141,8 +142,8 @@ def start_user(message):
                                        "wolk_used": 0,  # Надо пройти
                                        "wolk": 0,  # Пройдено
                                        "lvlheroes": 1,
-                                       "healts": 0,
-                                       "healts_used": 0,
+                                       "health": 0,
+                                       "health_used": 0,
                                        "wood": 0,
                                        "stone": 0,
                                        "food": 0,
@@ -222,9 +223,13 @@ def buy(message):
         bot.send_message(text="Повторите ввод. Число не корректно", chat_id=message.chat.id)
         bot.register_next_step_handler(message, buy)
 
+def all_battle():
+    threading.Thread(target=shed).start()
+
 
 start_open()
 start_user_default()
+all_battle()
 
 
 class Maps():
@@ -232,23 +237,16 @@ class Maps():
     def __init__(self, message, call=""):
         global maps, menu, status, attak
         try:
-
             self.call = call.data
-            self.call_id= call.id
-            self.message_call_id = call.message.message_id
-
-
-
+            self.call_id = call.id
+            self.call_message_id = call.message.message_id
         except:
             pass
-        #        self.user_bot = User(message)
         self.first_name = message.from_user.username
         self.id = message.chat.id
         self.text = message.text
         self.message_id = message.message_id
         self.user = users[str(self.id)]
-
-    #        self.battle_bot = Battle(message)
 
     def new_maps(self):  # Прочитать файл
         global maps
@@ -469,21 +467,21 @@ class Maps():
             except:
                 continue
         try:
-            value_call = maps[str(self.message_call)]["resource"]
+            value_call = maps[str(self.call)]["resource"]
         except:
             try:
-                value_call = self.message_call.split("_")[1]
+                value_call = self.call.split("_")[1]
             except:
                 value_call = "null"
         if users[str(self.id)]["step_used"] == 0:
             bot.send_message(text="У вас нет ходов", chat_id=self.id)
-        elif users[str(self.id)]["healts_used"] <= 0:
+        elif users[str(self.id)]["health_used"] <= 0:
             bot.send_message(text="Вы мертвы", chat_id=self.id)
 
-        elif self.call== cell_user:
+        elif self.call == cell_user:
             bot.answer_callback_query(self.call_id, 'Это вы')
 
-        elif int(self.message_call) == int(cell_user) - 1:
+        elif int(self.call) == int(cell_user) - 1:
             if value_call == "food" or value_call == "wood" or value_call == "stone":
                 bot.delete_message(self.id, message_id=self.message_id)
                 self.rudnic(cell_user)
@@ -501,7 +499,7 @@ class Maps():
             else:
                 self.goto_cell(cell_user, position_user=-1)
 
-        elif int(self.message_call) == int(cell_user) + 1:
+        elif int(self.call) == int(cell_user) + 1:
             if value_call == "food" or value_call == "wood" or value_call == "stone":
                 bot.delete_message(self.id, message_id=self.message_id)
                 self.rudnic(cell_user)
@@ -517,7 +515,7 @@ class Maps():
             else:
                 self.goto_cell(cell_user, position_user=1)
 
-        elif int(self.message_call) == int(cell_user) - pole:
+        elif int(self.call) == int(cell_user) - pole:
             if value_call == "food" or value_call == "wood" or value_call == "stone":
                 bot.delete_message(self.id, message_id=self.message_id)
                 self.rudnic(cell_user)
@@ -533,7 +531,7 @@ class Maps():
             else:
                 self.goto_cell(cell_user, position_user=- pole)
 
-        elif int(self.message_call) == int(cell_user) + pole:
+        elif int(self.call) == int(cell_user) + pole:
             if value_call == "food" or value_call == "wood" or value_call == "stone":
                 bot.delete_message(self.id, message_id=self.message_id)
                 self.rudnic(cell_user)
@@ -575,9 +573,9 @@ class Maps():
             r = 1
         logging.info(str(self.id) + ' Атака монстра, уровень монстра' + str(r))
         self.user["enemy_lvl"] = str(r)
-        self.user["enemy_healts"] = 50 * r
+        self.user["enemy_health"] = 50 * r
         self.user["enemy_exr"] = 5 * r
-        self.user["enemy_cell"] = str(self.message_call)
+        self.user["enemy_cell"] = str(self.call)
         self.user["enemy_hit"] = 10 * r
         #        self.user["enemy_dodge"] = lvlenemy[str(r)]["dodge"]
 
@@ -592,10 +590,10 @@ class Maps():
 
     def rudnic(self, cell_user):
         global maps, menu, res, kol, map_res, lvl
-        map_res = self.message_call
-        res = maps[str(self.message_call)]["resource"]
-        kol = maps[str(self.message_call)]["number"]
-        lvl = maps[str(self.message_call)]["lvl"]
+        map_res = self.call
+        res = maps[str(self.call)]["resource"]
+        kol = maps[str(self.call)]["number"]
+        lvl = maps[str(self.call)]["lvl"]
         timer = self.time(kol // lvlrudnic[lvl])
         menu = "rudnic"
         bot.send_message(text=text_mining(res, lvl, kol, timer), chat_id=self.id, reply_markup=keyrudnic())
@@ -659,7 +657,7 @@ class Maps():
     #        try:
     #            self.call= call.data
     #            self.call_id = call.id
-    #            self.message_call_id = call.message.message_id
+    #            self.call_id = call.message.message_id
     #            pprint(self.call_id)
     #        except:
     #            pass
@@ -680,9 +678,9 @@ class Maps():
             bot.send_message(chat_id=self.id, text=text, reply_markup=keyboard)
 
         else:
-            if self.call== "help_maps":
+            if self.call == "help_maps":
                 text = "На карте вы можете добывать ресурсы и воевать против монстров.\n На карте распологаются ресурсы: еда, камень, дерево. Они вам понадобятся для постройки у улучшения вашего города."
-            elif self.call== "help_battle":
+            elif self.call == "help_battle":
                 text = "Бой с соперником проходит в пошаговом режиме.\n На каждом ходе у вас есть два очка защиты и два очка нападения.\n "
             keyboard.add(maps, battle)
             bot.edit_message_text(chat_id=self.id, text=text, message_id=self.message_id, reply_markup=keyboard)
@@ -699,8 +697,8 @@ class Maps():
         self.user["experience"] = lvlexperience[self.user["lvlheroes"]]
         self.user["energy"] = lvlenergy[self.user["lvlheroes"]]
         self.user["energy_used"] = lvlenergy[self.user["lvlheroes"]]
-        self.user["healts"] = lvlhealts[self.user["lvlheroes"]]
-        self.user["healts_used"] = lvlhealts[self.user["lvlheroes"]]
+        self.user["health"] = lvlhealth[self.user["lvlheroes"]]
+        self.user["health_used"] = lvlhealth[self.user["lvlheroes"]]
         save("users")
         logging.info(str(self.id) + ' Выставлены стартовые параметры')
 
@@ -719,8 +717,8 @@ class Maps():
                 logging.info(str(self.id) + ' Новый уровень героя')
                 self.user["lvlheroes"] += 1
                 self.user["experience"] = lvlexperience[self.user["lvlheroes"]]
-                self.user["healts"] = lvlhealts[self.user["lvlheroes"]]
-                self.user["healts_used"] = self.user["healts"]
+                self.user["health"] = lvlhealth[self.user["lvlheroes"]]
+                self.user["health_used"] = self.user["health"]
                 self.user["energy"] = lvlenergy[self.user["lvlheroes"]]
         save("users")
 
@@ -729,8 +727,8 @@ class Maps():
         username = self.user["username"]
         #        date = self.user["date"]
         level = self.user["lvlheroes"]
-        healts = self.user["healts"]
-        healts_used = self.user["healts_used"]
+        health = self.user["health"]
+        health_used = self.user["health_used"]
         experience = self.user["experience"]
         wood = self.user["wood"]
         stone = self.user["stone"]
@@ -752,7 +750,7 @@ class Maps():
                  "🏅 Уровень: " + str(level) + "\n" + \
                  "🔋 Энергия: " + str(energy_used) + '/' + str(energy) + "\n" + \
                  "🌟 Опыт: " + str(experience_used) + "/" + str(experience) + "\n" + \
-                 "❤ Здоровье: " + str(healts_used) + "/" + str(healts) + "\n" + "\n" + \
+                 "❤ Здоровье: " + str(health_used) + "/" + str(health) + "\n" + "\n" + \
                  "Урон: " + str(hit) + "\n" + "\n" + \
                  "🚶‍♂️Ур. ходьбы: " + str(lvlstep) + " (" + str(wolk_used) + '/' + str(wolk) + ")" + "\n" + \
                  "🚶‍♂️Ходов по карте: " + str(step_used) + '/' + str(step) + "\n" + "\n" + \
@@ -843,7 +841,7 @@ class Maps():
             self.building()
         elif data == "update":
             #        elif data == "update":
-            data_old = self.message_call.split("_")[2]
+            data_old = self.call.split("_")[2]
             pprint(data_old)
             #            if not self.building_update(data_old):
             #                text = "Ресурсов не хватает"
@@ -937,13 +935,13 @@ class Maps():
 
         bot.send_message(text="Здесь вы можете улучшить ващи постройки", chat_id=self.id, reply_markup=keyboard)
 
-    def timer_healts(self):
-        while users[str(self.id)]["healts_used"] < users[str(self.id)]["healts"]:
+    def timer_health(self):
+        while users[str(self.id)]["health_used"] < users[str(self.id)]["health"]:
             time.sleep(60)  # in seconds
-            users[str(self.id)]["healts_used"] = users[str(self.id)]["healts"]
+            users[str(self.id)]["health_used"] = users[str(self.id)]["health"]
 
             save("user")
-        if users[str(self.id)]["healts_used"] == users[str(self.id)]["healts"]:
+        if users[str(self.id)]["health_used"] == users[str(self.id)]["health"]:
             bot.send_message(chat_id=self.id, text="Здоровье восстановлено ")
 
     # class Battle():
@@ -953,7 +951,7 @@ class Maps():
 
     #            self.call = call.data
     #            self.call_id = call.id
-    #            self.message_call_id = call.message.message_id
+    #            self.call_id = call.message.message_id
     #            print(str(self.call))
     #        except Exception:
     #            pass
@@ -981,7 +979,7 @@ class Maps():
                              chat_id=self.id,
                              reply_markup=self.output_map())
         elif data == "enemy":
-            threading.Thread(target=self.timer_healts, daemon=True).start()
+            threading.Thread(target=self.timer_health, daemon=True).start()
             self.energy()
             bot.send_message(text="Бой окончен: ", chat_id=self.id, reply_markup=keyboardmap())
             bot.send_message(text="Вы проиграли. Здоровье восстановится через 60 сек.", chat_id=self.id,
@@ -1037,19 +1035,19 @@ class Maps():
             r = random.randint(1, 100)
             pprint(r)
             if r < self.user["enemy_dodge"]:
-                text = self.text + " \n⚔️Враг увернулся. Осталось " + str(self.user["enemy_healts"] + "здоовья")
+                text = self.text + " \n⚔️Враг увернулся. Осталось " + str(self.user["enemy_health"] + "здоовья")
             else:
-                self.user["enemy_healts"] -= self.user["hit"]
+                self.user["enemy_health"] -= self.user["hit"]
                 text = self.text + " \n⚔️Вы аттаковали врага и нанесли " + str(
-                    self.user["hit"]) + " урона. Осталось " + str(self.user["enemy_healts"]) + " здоовья"
+                    self.user["hit"]) + " урона. Осталось " + str(self.user["enemy_health"]) + " здоовья"
 
-            if self.user["enemy_healts"] <= 0:
+            if self.user["enemy_health"] <= 0:
                 bot.send_message(text="⏱ Вывод карты ⏱", chat_id=self.id, reply_markup=keyboardmap())
                 stop = 1
                 text = self.text + "\nВы одержали победу 💥 "
                 time.sleep(2)
                 self.user["experience_used"] += 5
-                self.user["healts_used"] = self.user["healts"]
+                self.user["health_used"] = self.user["health"]
                 maps[self.user["enemy_cell"]]["resource"] = "null"
                 self.update_statistic(data="experiens")
                 self.energy()
@@ -1057,7 +1055,7 @@ class Maps():
                                  reply_markup=self.output_map())
         elif self.call == "battle_defence":
             text = self.text + "\n🛡 Вы защищаетесь от врага и восстанавливаете здоровье"
-            self.user["healts_used"] += 10
+            self.user["health_used"] += 10
         else:
             if maps[cell]["resource"] == "enemy":
                 bot.edit_message_text(text="Выберите дальнейшее действие", chat_id=self.id, message_id=self.message_id,
@@ -1068,20 +1066,20 @@ class Maps():
         #        time.sleep(1)
         r = random.randint(1, 2)
         if r == 1 and stop == 0:
-            self.user["healts_used"] -= self.user["enemy_hit"]
+            self.user["health_used"] -= self.user["enemy_hit"]
             text = text + " \n⚔️Враг аттаковал вас и нанес " + str(self.user["enemy_hit"]) + " урона. Осталось " + str(
-                self.user["healts_used"]) + " здоовья"
+                self.user["health_used"]) + " здоовья"
             bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id,
                                   reply_markup=self.keyboard_attak_new())
         elif r == 2 and stop == 0:
             text = text + "\n🛡 Враг защищается и восстанавливает здоровье"
-            #            self.user["enemy_healts"] += self.user["enemy_dodge"]
+            #            self.user["enemy_health"] += self.user["enemy_dodge"]
             bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id,
                                   reply_markup=self.keyboard_attak_new())
-        if self.user["healts_used"] <= 0:
+        if self.user["health_used"] <= 0:
             self.update_statistic(data="experiens")
-            self.user["healts_used"] = self.user["healts"]
-            pprint(self.user["healts_used"])
+            self.user["health_used"] = self.user["health"]
+            pprint(self.user["health_used"])
             save("users")
             bot.send_message(text="⏱ Вывод карты ⏱", chat_id=self.id, reply_markup=keyboardmap())
             bot.send_message(text="Вы умерли.", chat_id=self.id,
@@ -1127,8 +1125,8 @@ class Maps():
         enemy_foot = telebot.types.InlineKeyboardButton(text=fight_text["enemy_foot"], callback_data="fight_enemy_foot")
 
         text_pole = telebot.types.InlineKeyboardButton(text=fight_text["null"], callback_data="1")
-        healts_used = telebot.types.InlineKeyboardButton(text=self.user["healts_used"], callback_data="1")
-        enemy_healts = telebot.types.InlineKeyboardButton(text=self.user["enemy_healts"], callback_data="1")
+        health_used = telebot.types.InlineKeyboardButton(text=self.user["health_used"], callback_data="1")
+        enemy_health = telebot.types.InlineKeyboardButton(text=self.user["enemy_health"], callback_data="1")
         keyboard.row(text_pole)
         keyboard.row(heroes_head, null, enemy_head, )
         keyboard.row(heroes_left, heroes_right, null, null, enemy_left, enemy_right)
@@ -1137,7 +1135,7 @@ class Maps():
         keyboard.row(heroes_legs, null, enemy_legs)
         keyboard.row(heroes_foot, null, enemy_foot)
         #        keyboard.row(text_pole)
-        keyboard.row(healts_used, enemy_healts)
+        keyboard.row(health_used, enemy_health)
         return keyboard
 
     def fight(self):
@@ -1242,12 +1240,12 @@ class Maps():
                 fight_text = fight_text_all.copy()
                 text = "Защита 2 очка. Аттака 2 очка"
                 fight_text["null"] = text
-                if self.user["healts_used"] <= 0:
+                if self.user["health_used"] <= 0:
                     bot.delete_message(self.id, message_id=self.message_id)
                     bot.send_message(self.id, text=text_attaka)
                     self.congratulation("enemy")
                     print("Герой проиграл")
-                elif self.user["enemy_healts"] <= 0:
+                elif self.user["enemy_health"] <= 0:
                     bot.delete_message(self.id, message_id=self.message_id)
                     bot.send_message(self.id, text=text_attaka)
                     self.congratulation("heroes")
@@ -1270,7 +1268,7 @@ class Maps():
     def combat_battle(self):
         global combat, comb, her, ene
         #        pprint(combat)
-        text = ""
+        text, h_a, h_a_s, d_e, d_e_s = "", 0, 0, 0, 0
         her, ene = {}, {}
         for key, value in comb.items():
             if key.split("_")[0] == "heroes":
@@ -1281,37 +1279,37 @@ class Maps():
         for k, v in her.items():
             if v == max_value_her:
                 her[k] = 9999999
-                heroes_attaka = k
+                h_a = k
                 break
         max_value_her = min(her.values())
         for k, v in her.items():
             if v == max_value_her:
-                heroes_attaka_second = k
+                h_a_s = k
         max_value_ene = max(ene.values())
         for k, v in ene.items():
             if v == max_value_ene:
                 ene[k] = 0
-                defence_enemy = k
+                d_e = k
         max_value_ene = max(ene.values())
         for k, v in ene.items():
             if v == max_value_ene:
-                defence_enemy_second = k
+                d_e_s = k
 
         for key, value in combat.items():
-            if heroes_attaka == key:
-                text += "\n 🛡 Вы отразили аттаку врага в " + fight_trans[heroes_attaka]
-            elif heroes_attaka_second == key:
-                text += "\n 🛡 Вы отразили аттаку врага в " + fight_trans[heroes_attaka_second]
-            elif defence_enemy == key:
-                text += "\n 🛡 Враг отразил вашу аттаку в " + fight_trans[defence_enemy]
-            elif defence_enemy_second == key:
-                text += "\n 🛡 Враг отразил вашу аттаку в " + fight_trans[defence_enemy_second]
+            if h_a == key:
+                text += "\n 🛡 Вы отразили аттаку врага в " + fight_trans[h_a]
+            elif h_a_s == key:
+                text += "\n 🛡 Вы отразили аттаку врага в " + fight_trans[h_a_s]
+            elif d_e == key:
+                text += "\n 🛡 Враг отразил вашу аттаку в " + fight_trans[d_e]
+            elif d_e_s == key:
+                text += "\n 🛡 Враг отразил вашу аттаку в " + fight_trans[d_e_s]
             elif key.split("_")[0] == "heroes":
                 text += "\n ⚔️Враг нанес вам удар -" + str(self.user["enemy_hit"]) + " ♥️"
-                self.user["healts_used"] -= self.user["enemy_hit"]
+                self.user["health_used"] -= self.user["enemy_hit"]
             elif key.split("_")[0] == "enemy":
                 text += "\n ⚔️Вы нанесли удар противнику - " + str(self.user["hit"]) + " ♥️"
-                self.user["enemy_healts"] -= self.user["hit"]
+                self.user["enemy_health"] -= self.user["hit"]
 
         combat = {}
         return text
@@ -1320,7 +1318,7 @@ class Maps():
         text_all_battle = "Вы отправились на поле боя. Ожидайте сражения\n Сражения проводятся в 10:00, 14:00, 18:00"
         self.user["allbattle"] = 1
         save("users")
-        bot.delete_message(chat_id=self.id, message_id=self.message_id)
+        bot.delete_message(chat_id=self.id, message_id=self.call_message_id)
         bot.send_message(chat_id=self.id, text=text_all_battle, reply_markup=all_battle())
 
 
@@ -1517,8 +1515,8 @@ def send_text(message):
             maps_bot.new_maps()
         elif message.text == "Кол-во ячеек":
             maps_bot.statistika()
-#        elif message.text == "Новая атака":
-#            maps_bot.new_attaka()
+        #        elif message.text == "Новая атака":
+        #            maps_bot.new_attaka()
         elif message.text == "Бой":
             users[str(message.chat.id)]["defence"] = 2
             users[str(message.chat.id)]["attaka"] = 2
