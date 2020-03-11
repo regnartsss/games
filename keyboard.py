@@ -87,7 +87,7 @@ def keyboard_info():
 def keyboard_buy():
     keyboard = telebot.types.ReplyKeyboardMarkup(True, False)
     keyboard.row("Tranzzo")
-    keyboard.row("QIWI")
+#    keyboard.row("QIWI")
     keyboard.row("Назад")
     return keyboard
 
@@ -101,7 +101,7 @@ def key_buy():
     keyboard.row("Оплата QIWI")
     return keyboard
 
-def all_battle():
+def keyboard_battle_back():
     keyboard = telebot.types.ReplyKeyboardMarkup(True, False)
     keyboard.row("Покинуть поле боя")
     return keyboard

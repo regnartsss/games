@@ -8,25 +8,33 @@ import json
 from datetime import datetime, timedelta
 from pprint import pprint
 import threading
-import requests
-from telebot.types import LabeledPrice, ShippingOption
+from buy import buy_amount, buy_tranzzo, succefull_tranzzo
+
 import logging
 from battle_timer import shed
+import timeit
 
-ADMIN = 765333440
-PATH = find_location()
+ADMIN = 7653334401
+
 menu = 0
 barracks = 0
+
 global lvlrudnic
 
 logging.basicConfig(filename='app.txt', format='%(name)s - %(levelname)s - [%(asctime)s] %(message)s',
                     level=logging.INFO)
 
 
-def save(key):
-    global maps, users, log, comb
-    if key == "all":
+def find_location():
+    return os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))).replace('\\', '/') + '/'
 
+
+PATH = find_location()
+
+
+def save(key):
+    global maps, users, log, comb, allbattle
+    if key == "all":
         with open(PATH + "tmp/" + 'maps.json', 'w', encoding="utf-16") as f:
             json.dump(maps, f)
         with open(PATH + "tmp/" + 'maps.json', 'rb') as f:
@@ -37,36 +45,31 @@ def save(key):
         with open(PATH + "tmp/" + 'users.json', 'rb') as f:
             users = json.load(f)
     elif key == "maps":
-
         with open(PATH + "tmp/" + 'maps.json', 'w', encoding="utf-16") as f:
             json.dump(maps, f)
         with open(PATH + "tmp/" + 'maps.json', 'rb') as f:
             maps = json.load(f)
     elif key == "users":
-
         with open(PATH + "tmp/" + 'users.json', 'w', encoding="utf-16") as f:
             json.dump(users, f)
         with open(PATH + "tmp/" + 'users.json', 'rb') as f:
             users = json.load(f)
-
     elif key == "combat":
-
         with open(PATH + "tmp/" + 'comb.json', 'w', encoding="utf-16") as f:
             json.dump(comb, f)
         with open(PATH + "tmp/" + 'comb.json', 'rb') as f:
             comb = json.load(f)
-
-
-    elif key == "log":
-        file_log = open(PATH + "tmp/" + 'log.txt', "w")
-        file_log.write(log)
-        file_log.close()
+    elif key == "allbattle":
+        with open(PATH + "tmp/" + 'allbattle.json', 'w', encoding="utf-16") as f:
+            json.dump(allbattle, f)
+        with open(PATH + "tmp/" + 'allbattle.json', 'rb') as f:
+            allbattle = json.load(f)
 
 
 def start_open():
     logging.info("Запуск игры")
 
-    global maps, users, comb
+    global maps, users, comb, allbattle
 
     maps = {}
     try:
@@ -102,6 +105,16 @@ def start_open():
         with open(PATH + "tmp/" + 'comb.json', 'rb') as f:
             comb = json.load(f)
 
+    allbattle = {}
+    try:
+        with open(PATH + "tmp/" + 'allbattle.json', 'rb') as f:
+            allbattle = json.load(f)
+    except:
+        with open(PATH + "tmp/" + 'allbattle.json', 'w', encoding="utf-16") as f:
+            json.dump(allbattle, f)
+        with open(PATH + "tmp/" + 'allbattle.json', 'rb') as f:
+            allbattle = json.load(f)
+
 
 def start_user_default():
     global users
@@ -111,6 +124,56 @@ def start_user_default():
         value["step_used"] = value["step"]
         value["energy_used"] = value["energy"]
     logging.info('Здоровье, шаги, энергия восстановлены')
+    save("users")
+
+
+def check_users():
+    global users
+    for key, value in users.items():
+        #         users[key]["avatar"]= "👶"
+        #         users[key]["nik_name"]= "player"
+        #         users[key]["free_name"]= 0
+        users[key]["building"]["castle"] = 1
+        #        try:
+        #       print(str(key)+" " + str(value))
+        """   
+        print(value["id"])
+        print(value["username"])
+        print(value["date"])
+        print(value["avatar"])
+        print(value["nik_name"])
+        print(value["free_name"])
+        print(value["energy"])
+        print(value["energy_used"])
+        print(value["step"])
+        print(value["step_used"])
+        print(value["lvlstep"])
+        print(value["wolk_used"])
+        print(value["wolk"])
+        print(value["lvlheroes"])
+        print(value["health"])
+        print(value["health_used"])
+        print(value["wood"])
+        print(value["stone"])
+        print(value["iron"])
+        print(value["food"])
+        print(value["gold"])
+        print(value["diamond"])
+        print(value["experience"])
+        print(value["experience_used"])
+        print(value["hit"])
+        print(value["ref"])
+        print(value["weapons"])
+        print(value["building"])
+
+       except Exception as n:
+           k = str(n)[1:-1]
+           pprint(k)
+           users[key][k] = ""
+#            print(users[key])
+           check_users()
+           continue
+       """
     save("users")
 
 
@@ -134,6 +197,9 @@ def start_user(message):
         users[str(message.chat.id)] = {"id": message.chat.id,
                                        "username": message.from_user.first_name,
                                        "date": str(date_t),
+                                       "avatar": "👶",
+                                       "nik_name": "player",
+                                       "free_name": 0,
                                        "energy": 0,  # Энергия
                                        "energy_used": 0,  # Энергия истраченная
                                        "step": 0,  # Ходов
@@ -146,6 +212,7 @@ def start_user(message):
                                        "health_used": 0,
                                        "wood": 0,
                                        "stone": 0,
+                                       "iron": 0,
                                        "food": 0,
                                        "gold": 0,
                                        "diamond": 0,
@@ -153,10 +220,11 @@ def start_user(message):
                                        "experience_used": 0,  # Энергия истрачено
                                        "hit": 20,
                                        "ref": ref,
-                                       "weapons": {"arm": 0,
-                                                   },
-                                       "building": {}
+                                       "weapons": {"arm": ""},
+                                       "building": {},
+                                       "farm_time": datetime.now().strftime("%Y:%m:%d:%H:%M:%S")
                                        }
+
         s = random.randint(1, len(maps))
 
         maps[str(s)] = {"id": str(message.chat.id)}
@@ -207,29 +275,16 @@ def please(message):
         pprint("test")
 
 
-def buy(message):
-    str = message.text
-    try:
-        pprint(int(str))
-        if int(str) <= 0:
-            bot.send_message(text="Повторите ввод. Минимальная покупка 1 💎", chat_id=message.chat.id)
-            bot.register_next_step_handler(message, buy)
-        #            bot.send_message(text="Повторите ввод. Число не корректно", chat_id=message.chat.id, reply_markup=key_buy)
-        else:
-            bot.send_message(text="Оплата", chat_id=message.chat.id, reply_markup=keyboard_buy())
-            Buy(message).buy_qiwi()
-    except ValueError:
-
-        bot.send_message(text="Повторите ввод. Число не корректно", chat_id=message.chat.id)
-        bot.register_next_step_handler(message, buy)
-
 def all_battle():
     threading.Thread(target=shed).start()
 
 
 start_open()
 start_user_default()
-all_battle()
+
+
+# all_battle()
+# check_users()
 
 
 class Maps():
@@ -272,13 +327,13 @@ class Maps():
         save("maps")
 
     def resource(self, n):
-        r = random.randint(1, 15)
+        r = random.randint(1, 20)
         if r == 1:
             self.resource_res(old_res="wood", n=n)
         elif r == 2:
             self.resource_res(old_res="stone", n=n)
         elif r == 3:
-            self.resource_res(old_res="food", n=n)
+            self.resource_res(old_res="iron", n=n)
         elif r == 4:
             maps[str(n)] = {"resource": "enemy"}
         elif r >= 5:
@@ -328,7 +383,7 @@ class Maps():
                     elif maps[str(key)]["lvl"] == 5:
                         s5 = s5 + 1
                     s = s + 1
-                elif maps[str(key)]["resource"] == "food":
+                elif maps[str(key)]["resource"] == "iron":
                     if maps[str(key)]["lvl"] == 1:
                         i1 = i1 + 1
                     elif maps[str(key)]["lvl"] == 2:
@@ -349,15 +404,13 @@ class Maps():
         pprint("www")
         text = "дерево " + str(w) + " \nlvl 1: " + str(w1) + " \nlvl 2: " + str(w2) + " \nlvl 3: " + str(
             w3) + " \nlvl 4: " + str(w4) + " \nlvl 5: " + str(w5) \
-               + "\nеда " + str(i) + " \nlvl 1: " + str(i1) + " \nlvl 2: " + str(i2) + " \nlvl 3: " + str(
+               + "\nжелезо " + str(i) + " \nlvl 1: " + str(i1) + " \nlvl 2: " + str(i2) + " \nlvl 3: " + str(
             i3) + " \nlvl 4: " + str(i4) + " \nlvl 5: " + str(i5) \
                + "\nкамень " + str(s) + " \nlvl 1: " + str(s1) + " \nlvl 2: " + str(s2) + " \nlvl 3: " + str(
             s3) + " \nlvl 4: " + str(s4) + " \nlvl 5: " + str(s5) \
                + "\nигроков " + str(u) + "\nПустых ячеек " + str(n) + "\nВрагов " + str(e)
         pprint(text)
         bot.send_message(chat_id=self.id, text=text)
-
-    #        pprint("дерево "+str(w)+"\nеда "+str(i)+"\nкамень "+str(s)+"\nигроков "+str(u)+"\nПустых ячеек "+str(n))
 
     def output_map(self):
         try:
@@ -409,8 +462,8 @@ class Maps():
                         tab.append(telebot.types.InlineKeyboardButton(" ", callback_data=str(start_field)))
                     else:
                         #                        pprint(str(start_field))
-                        if cell == "food":
-                            tab.append(telebot.types.InlineKeyboardButton("🍞", callback_data=str(start_field)))
+                        if cell == "iron":
+                            tab.append(telebot.types.InlineKeyboardButton("⚒", callback_data=str(start_field)))
                         elif cell == "wood":
                             tab.append(telebot.types.InlineKeyboardButton("🌲", callback_data=str(start_field)))
                         elif cell == "stone":
@@ -422,9 +475,11 @@ class Maps():
                         #                                tab.append(telebot.types.InlineKeyboardButton("☠️", callback_data=str(start_field)))
 
                         elif cell == str(self.id):
-                            tab.append(telebot.types.InlineKeyboardButton("🧛‍♂", callback_data=str(start_field)))
+                            tab.append(
+                                telebot.types.InlineKeyboardButton(self.user["avatar"], callback_data=str(start_field)))
                         elif cell != "null":
-                            tab.append(telebot.types.InlineKeyboardButton("🏰", callback_data=str(start_field)))
+                            tab.append(telebot.types.InlineKeyboardButton(users[str(cell)]["avatar"],
+                                                                          callback_data=str(start_field)))
                         elif start_field == int(cell_user) - 1:
                             tab.append(telebot.types.InlineKeyboardButton("⬅", callback_data=str(start_field)))
                         elif start_field == int(cell_user) - pole:
@@ -444,9 +499,9 @@ class Maps():
                                                       callback_data=" ")
             energy = telebot.types.InlineKeyboardButton(text="🔋 ️Энергии: " + str(users[str(self.id)]["energy_used"]),
                                                         callback_data=" ")
-            arena = telebot.types.InlineKeyboardButton(text="Отправиться на поле боя", callback_data="goto_battle")
+            #        arena = telebot.types.InlineKeyboardButton(text="Отправиться на поле боя", callback_data="gotobattle")
             keyboard.row(step, energy)
-            keyboard.row(arena)
+            #            keyboard.row(arena)
             #        keyboard.row(types.InlineKeyboardButton("Вернуться в город", callback_data="Вернуться в город"))
 
             save("all")
@@ -482,7 +537,7 @@ class Maps():
             bot.answer_callback_query(self.call_id, 'Это вы')
 
         elif int(self.call) == int(cell_user) - 1:
-            if value_call == "food" or value_call == "wood" or value_call == "stone":
+            if value_call == "iron" or value_call == "wood" or value_call == "stone":
                 bot.delete_message(self.id, message_id=self.message_id)
                 self.rudnic(cell_user)
             elif value_call == "enemy":
@@ -500,7 +555,7 @@ class Maps():
                 self.goto_cell(cell_user, position_user=-1)
 
         elif int(self.call) == int(cell_user) + 1:
-            if value_call == "food" or value_call == "wood" or value_call == "stone":
+            if value_call == "iron" or value_call == "wood" or value_call == "stone":
                 bot.delete_message(self.id, message_id=self.message_id)
                 self.rudnic(cell_user)
             elif value_call == "enemy":
@@ -516,7 +571,7 @@ class Maps():
                 self.goto_cell(cell_user, position_user=1)
 
         elif int(self.call) == int(cell_user) - pole:
-            if value_call == "food" or value_call == "wood" or value_call == "stone":
+            if value_call == "iron" or value_call == "wood" or value_call == "stone":
                 bot.delete_message(self.id, message_id=self.message_id)
                 self.rudnic(cell_user)
             elif value_call == "enemy":
@@ -532,7 +587,7 @@ class Maps():
                 self.goto_cell(cell_user, position_user=- pole)
 
         elif int(self.call) == int(cell_user) + pole:
-            if value_call == "food" or value_call == "wood" or value_call == "stone":
+            if value_call == "iron" or value_call == "wood" or value_call == "stone":
                 bot.delete_message(self.id, message_id=self.message_id)
                 self.rudnic(cell_user)
             elif value_call == "enemy":
@@ -549,7 +604,7 @@ class Maps():
 
         elif value_call == "null":
             bot.answer_callback_query(callback_query_id=self.call_id, text='Поле не активно')
-        elif value_call == "food":
+        elif value_call == "iron":
             bot.answer_callback_query(callback_query_id=self.call_id, text='Шахта с едам')
         elif value_call == "wood":
             bot.answer_callback_query(callback_query_id=self.call_id, text='Шахта с деревом')
@@ -605,7 +660,7 @@ class Maps():
         global maps, users, res, kol, map_res, status, lvl
         timer = int(kol) // lvlrudnic[lvl]
         ss = 1
-        sum = 0
+        sum, text = 0, ""
         lvl_timer = lvlrudnic[lvl]
         kol_timer = kol
         sell = map_res
@@ -615,6 +670,7 @@ class Maps():
             if status == "close" + str(self.id):
                 pprint("close")
                 i = 0
+
                 break
             elif sum >= kol_timer:
                 break
@@ -628,14 +684,22 @@ class Maps():
             summa = users[str(self.id)][res] + sum
             users[str(self.id)][res] = summa
             self.cell()
+            text = "⚡️Вы завершили добычу ⚡️\nСобрано " + str(sum)
         elif int(maps[str(sell)]["number"]) - int(sum) >= 0:
             maps[str(sell)]["number"] = maps[str(sell)]["number"] - sum
             summa = sum + users[str(self.id)][res]
             users[str(self.id)][res] = summa
+            text = "⚡️Вы завершили добычу ⚡️\nСобрано " + str(sum)
         else:
             pprint("ошибка")
+        print(users[str(self.id)][res])
+        print(buildings["storage"][self.user["building"]["storage"]]["capacity"])
+
+        if self.user[res] > buildings["storage"][self.user["building"]["storage"]]["capacity"]:
+            self.user[res] = buildings["storage"][self.user["building"]["storage"]]["capacity"]
+            text = "⚡️Вы завершили добычу ⚡ \nСклад полон"
         save("all")
-        bot.send_message(text="⚡️Вы завершили добычу ⚡️\nСобрано " + str(sum), chat_id=self.id,
+        bot.send_message(text=text, chat_id=self.id,
                          reply_markup=keyboardmap())
         bot.send_message(text="🚶‍♂️Делайте ход по игровому полю", chat_id=self.id, reply_markup=self.output_map())
 
@@ -732,7 +796,7 @@ class Maps():
         experience = self.user["experience"]
         wood = self.user["wood"]
         stone = self.user["stone"]
-        food = self.user["food"]
+        iron = self.user["iron"]
         iamond = self.user["diamond"]
         energy = self.user["energy"]
         energy_used = self.user["energy_used"]
@@ -744,7 +808,8 @@ class Maps():
         experience_used = self.user["experience_used"]
         hit = self.user["hit"]
         gold = self.user["gold"]
-        print(self.user)
+        food = self.start_farm()
+        #       print(self.user)
         heroes = "Информация о герое\n" + "id: " + str(id) + "\n" + \
                  "👤 Имя: " + str(username) + "\n" + \
                  "🏅 Уровень: " + str(level) + "\n" + \
@@ -757,9 +822,10 @@ class Maps():
                  "💰 Золото: " + str(gold) + "\n" + \
                  "💎 Алмазы: " + str(iamond) + "\n"
 
-        sklad = "Информация о складе\n" + "еда: " + str(food) + "\n" + "Дерево: " + str(
+        sklad = "Информация о складе\n" + "Железо: " + str(iron) + "\n" + "Дерево: " + str(
             wood) + "\n" + "Камень: " + str(stone)
-        stat = "Ресурсов: Еда: " + str(food) + " Дерево: " + str(wood) + " Камень: " + str(stone)
+        stat = "⚒: " + str(iron) + " 🌲: " + str(wood) + " ⛏: " + str(stone) + " 🌽: " + str(food) + " 💰: " + str(gold)
+        #       print("rer")
         if key == "heroes":
             return (heroes)
         elif key == "sklad":
@@ -774,8 +840,9 @@ class Maps():
             #            bot.send_message(chat_id=self.id, text="У вас появилась энергия " + str(users[str(self.id)]["energy_used"]))
             #            self.maps_bot.goto
             save("user")
-        if users[str(self.id)]["energy_used"] == users[str(self.id)]["energy"]:
-            bot.send_message(chat_id=self.id, text="Энергия восстановилась " + str(users[str(self.id)]["energy_used"]))
+
+    #        if users[str(self.id)]["energy_used"] == users[str(self.id)]["energy"]:
+    #            bot.send_message(chat_id=self.id, text="Энергия восстановилась " + str(users[str(self.id)]["energy_used"]))
 
     def energy(self):
         if users[str(self.id)]["energy_used"] == users[str(self.id)]["energy"]:
@@ -790,11 +857,10 @@ class Maps():
         while users[str(self.id)]["step_used"] < users[str(self.id)]["step"]:
             time.sleep(30)  # in seconds
             users[str(self.id)]["step_used"] += 1
-            #            bot.send_message(chat_id=self.id, text="У вас появился ход " + str(users[str(self.id)]["step_used"]))
-            #            self.maps_bot.goto
             save("user")
-        if users[str(self.id)]["step_used"] == users[str(self.id)]["step"]:
-            bot.send_message(chat_id=self.id, text="Ходы восстановились " + str(users[str(self.id)]["step_used"]))
+
+    #        if users[str(self.id)]["step_used"] == users[str(self.id)]["step"]:
+    #            bot.send_message(chat_id=self.id, text="Ходы восстановились " + str(users[str(self.id)]["step_used"]))
 
     def move(self):
         if users[str(self.id)]["step_used"] == users[str(self.id)]["step"]:
@@ -809,6 +875,32 @@ class Maps():
         #            pprint(users[str(self.id)]["move_used"])
         self.update_statistic(data="step")
 
+    def start_farm(self):
+        global users
+        farm_time_old = datetime.now().strftime("%Y:%m:%d:%H:%M:%S")
+        a = farm_time_old.split(':')
+        aa = datetime(int(a[0]), int(a[1]), int(a[2]), int(a[3]), int(a[4]), int(a[5]))
+        farm_time = self.user["farm_time"]
+        b = farm_time.split(':')
+        bb = datetime(int(b[0]), int(b[1]), int(b[2]), int(b[3]), int(b[4]), int(b[5]))
+        ss = (aa - bb).seconds
+        lvl_farm = self.user["building"]["farm"]
+        num_farm = buildings["farm"][lvl_farm]["production"]
+        num_farm = num_farm * ss
+        lvl_storage = self.user["building"]["storage"]
+        num_storage = buildings["storage"][lvl_storage]["capacity"]
+        #    print(num_storage)
+        #    print(num_farm)
+        self.user["food"] += num_farm
+        if self.user["food"] > num_storage:
+            #            print("Склад полон")
+            self.user["food"] = num_storage
+        else:
+            self.user["food"] += num_farm
+        self.user["farm_time"] = farm_time_old
+        save("users")
+        return self.user["food"]
+
     def barracks(self, barr):
         global users
         try:
@@ -822,14 +914,14 @@ class Maps():
         elif barr == "archer":
             wood = archer["1"]["wood"]
             stone = archer["1"]["stone"]
-            food = archer["1"]["food"]
+            iron = archer["1"]["iron"]
             pprint("test")
-            text = "Обучить за " + str(wood) + " " + str(stone) + " " + str(food)
+            text = "Обучить за " + str(wood) + " " + str(stone) + " " + str(iron)
             bot.send_message(text=text, chat_id=self.id, reply_markup=keyboaryesno())
         elif barr == "yes":
             users[str(self.id)]["wood"] = str(int(users[str(self.id)]["wood"]) - archer["1"]["wood"])
             users[str(self.id)]["stone"] = str(int(users[str(self.id)]["stone"]) - archer["1"]["stone"])
-            users[str(self.id)]["food"] = str(int(users[str(self.id)]["food"]) - archer["1"]["food"])
+            users[str(self.id)]["iron"] = str(int(users[str(self.id)]["iron"]) - archer["1"]["iron"])
             users[str(self.id)]["archer"] = arc + 1
             bot.send_message(text="Вы обучили лучника \n Общее кол-во " + str(users[str(self.id)]["archer"]),
                              chat_id=self.id, reply_markup=keyboaryesno())
@@ -838,31 +930,97 @@ class Maps():
     def build(self, data):
         keyboard = telebot.types.InlineKeyboardMarkup()
         if data == "back":
+            #            bot.delete_message(chat_id=self.id, message_id=self.message_id)
             self.building()
         elif data == "update":
-            #        elif data == "update":
-            data_old = self.call.split("_")[2]
-            pprint(data_old)
-            #            if not self.building_update(data_old):
-            #                text = "Ресурсов не хватает"
-            #                pprint(self.building_update(data_old))
-            #             self.build(data=data_old)
-            #            else:
-            #                text = "Строение улучшено"
-            self.user["building"][data_old] += 1
-            save("users")
-            self.build(data=data_old)
+            build = self.call.split("_")[2]
+            text_stone, text_wood, text_iron, text_food = self.building_update(build)
+            if text_stone == "✅" and text_wood == "✅" and text_iron == "✅" and text_food == "✅":
+                if build == "storage" and self.user["building"]["castle"] <= self.user["building"]["storage"]:
+                    bot.answer_callback_query(callback_query_id=self.call_id, text="Увеличьте уровень 🏤 замка")
+                    self.user["building"]["temp"] = "storage"
+                    self.build(data="castle")
+                elif build == "farm" and self.user["building"]["storage"] <= self.user["building"]["farm"]:
+                    bot.answer_callback_query(callback_query_id=self.call_id, text="Увеличьте уровень 🏚склада")
+                    self.user["building"]["temp"] = "farm"
+                    self.build(data="storage")
+                elif build == "barracks" and self.user["building"]["farm"] <= self.user["building"]["barracks"]:
+                    bot.answer_callback_query(callback_query_id=self.call_id, text="Увеличте уровень фермы")
+                    self.user["building"]["temp"] = "barracks"
+                    self.build(data="farm")
+                elif build == "shooting " and self.user["building"]["barracks"] <= self.user["building"]["shooting "]:
+                    bot.answer_callback_query(callback_query_id=self.call_id, text="Увеличте уровень казармы")
+                    self.user["building"]["temp"] = "shooting "
+                    self.build(data="barracks")
+                elif build == "stable" and self.user["building"]["shooting "] <= self.user["building"]["stable"]:
+                    bot.answer_callback_query(callback_query_id=self.call_id, text="Увеличте уровень стрельбы")
+                    self.user["building"]["temp"] = "stable"
+                    self.build(data="shooting ")
+                elif build == "wall" and self.user["building"]["stable"] <= self.user["building"]["wall"]:
+                    bot.answer_callback_query(callback_query_id=self.call_id, text="Увеличте уровень конюшны")
+                    self.user["building"]["temp"] = "wall"
+                    self.build(data="stable")
+                elif build == "castle" and self.user["building"]["wall"] < self.user["building"]["castle"]:
+                    bot.answer_callback_query(callback_query_id=self.call_id, text="Увеличте уровень 🧱 стены")
+                    self.user["building"]["temp"] = "castle"
+                    self.build(data="wall")
+                else:
+
+                    print("все ресурсы есть")
+                    self.user["building"][build] += 1
+                    new_lvl = self.user["building"][build]
+                    pprint(new_lvl)
+                    num_stone, num_wood, num_iron, num_food = static_buildings(build, new_lvl)
+                    #                        print(num_stone)
+                    self.user["wood"] -= num_wood
+                    self.user["stone"] -= num_stone
+                    self.user["iron"] -= num_iron
+                    self.user["food"] -= num_food
+                    try:
+                        buil = self.user["building"]["temp"]
+                        if build == "":
+                            self.build(data=build)
+                        else:
+                            self.user["building"].pop("temp")
+                            self.build(data=buil)
+                    except:
+                        self.build(data=build)
+
+                    #                save
+                    #    print(data_old)
+
+                    #    if data_old != "":
+                    #        self.build(data=data_old)
+                    #    else:
+
+
+            else:
+                #                print("не хватает ресуров")
+                bot.answer_callback_query(callback_query_id=self.call_id, text="Не хватает ресуров")
+
+        #        elif data == "market" or data == "wall" or data == "shooting " or data == "stable" or data == "barracks" or data == "castle":
+        #            bot.answer_callback_query(callback_query_id=self.call_id, text='Не активно, ожидайте обновление')
+
         else:
+
             name = buildings[data]["name"]
             lvl = self.user["building"][data]
             new_lvl = lvl + 1
-            stone = str(static_buildings(data, new_lvl)[0])
-            wood = str(static_buildings(data, new_lvl)[1])
-            food = str(static_buildings(data, new_lvl)[2])
+            num_stone, num_wood, num_iron, num_food = static_buildings(data, new_lvl)
+            text_stone, text_wood, text_iron, text_food = self.building_update(data)
+            stone = str(num_stone) + text_stone
+            wood = str(num_wood) + text_wood
+            iron = str(num_iron) + text_iron
+            food = str(num_food) + text_food
             text = "Строение " + name + " " + str(lvl) + " уровня\n Улучшить " + name + " до " + str(
-                new_lvl) + " уровня за: \n Камень: " + stone + "\n Дерево: " + wood + "\n еда: " + food
-            keyboard.row(telebot.types.InlineKeyboardButton(text="Улучшить", callback_data="build_update_" + data))
+                new_lvl) + " уровня за: \n Камень: " + stone + "\n Дерево: " + wood + "\n Железо: " + iron + "\n Еда: " + food
+            keyboard.row(telebot.types.InlineKeyboardButton(text="Улучшить",
+                                                            callback_data="build_update_" + data))
             keyboard.row(telebot.types.InlineKeyboardButton(text="Назад", callback_data="build_back"))
+            if data == "storage":
+                text += "\nВместимость ресурсов: " + str(buildings[data][lvl]["capacity"])
+            elif data == "farm":
+                text += "\nПроизводство ресурсов: " + str(buildings[data][lvl]["production"]) + " шт\с"
 
         bot.edit_message_text(text=text, chat_id=self.id, message_id=self.message_id, reply_markup=keyboard)
 
@@ -872,25 +1030,26 @@ class Maps():
         new_lvl = lvl + 1
         stone_player = self.user["stone"]
         wood_player = self.user["wood"]
+        iron_player = self.user["iron"]
         food_player = self.user["food"]
         stone = static_buildings(data, new_lvl)[0]
         wood = static_buildings(data, new_lvl)[1]
-        food = static_buildings(data, new_lvl)[2]
-        text = ""
-
+        iron = static_buildings(data, new_lvl)[2]
+        food = static_buildings(data, new_lvl)[3]
+        text_stone, text_wood, text_iron, text_food = "✅", "✅", "✅", "✅"
         if stone_player < stone:
-            text += "Не хватает камня\n"
-            pprint("Не хватает камня")
+            text_stone = "⛔️"
+        #           pprint("Не хватает камня")
         if wood_player < wood:
-            text += "Не хватает дерева\n"
-            pprint("Не хватает дерева")
+            text_wood = "⛔️ "
+        #          pprint("Не хватает дерева")
+        if iron_player < iron:
+            text_iron = "⛔️"
+        #           pprint("Не хватает железа")
         if food_player < food:
-            text += "Не хватает еды\n"
-            pprint("Не хватает еды")
-        if not text:
-            return
-        else:
-            return text
+            text_food = "⛔️"
+        #           pprint("Не хватает еды")
+        return text_stone, text_wood, text_iron, text_food
 
     def translator(self):
         if self.text == "Склад":
@@ -900,40 +1059,38 @@ class Maps():
         return bul
 
     def building(self):
-        keyboard = telebot.types.InlineKeyboardMarkup()
-        keyboard.row(telebot.types.InlineKeyboardButton(text=self.info_heroes(key="stat"), callback_data=" "))
         if self.user["building"] == {}:
-            i = 1
-            tab = []
             bul = {}
 
             for key, value in buildings.items():
                 bul.update({key: 0})
-                tab.append(telebot.types.InlineKeyboardButton(text=buildings[key]["name"] + " 0",
-                                                              callback_data="build_" + key))
-                if i == 3 or i == 6:
-                    keyboard.row(*tab)
-                    tab = []
-                i += 1
-            keyboard.row(*tab)
             self.user["building"] = bul
+            self.user["building"]["castle"] = 1
             save("users")
+        elif self.text == "Строения":
+            bot.send_message(text="Здесь вы можете улучшить ваши постройки", chat_id=self.id,
+                             reply_markup=self.print_building())
 
         else:
-            i = 1
-            tab = []
+            bot.edit_message_text(text="Здесь вы можете улучшить ваши постройки", chat_id=self.id,
+                                  message_id=self.message_id, reply_markup=self.print_building())
 
-            for key, value in self.user["building"].items():
-                lvl = self.user["building"][key]
-                tab.append(telebot.types.InlineKeyboardButton(text=buildings[key]["name"] + " " + str(lvl),
-                                                              callback_data="build_" + key))
-                if i == 3 or i == 6:
-                    keyboard.row(*tab)
-                    tab = []
-                i += 1
-            keyboard.row(*tab)
-
-        bot.send_message(text="Здесь вы можете улучшить ващи постройки", chat_id=self.id, reply_markup=keyboard)
+    def print_building(self):
+        keyboard = telebot.types.InlineKeyboardMarkup()
+        keyboard.row(telebot.types.InlineKeyboardButton(text=self.info_heroes(key="stat"), callback_data=" "))
+        i = 1
+        tab = []
+        for key, value in self.user["building"].items():
+            lvl = self.user["building"][key]
+            tab.append(telebot.types.InlineKeyboardButton(text=buildings[key]["name"] + " " + str(lvl),
+                                                          callback_data="build_" + key))
+            if i == 1 or i == 4 or i == 7:
+                keyboard.row(*tab)
+                tab = []
+            i += 1
+        keyboard.row(*tab)
+        keyboard.row(telebot.types.InlineKeyboardButton(text="🎪 Рынок", callback_data="build_market"))
+        return keyboard
 
     def timer_health(self):
         while users[str(self.id)]["health_used"] < users[str(self.id)]["health"]:
@@ -943,27 +1100,6 @@ class Maps():
             save("user")
         if users[str(self.id)]["health_used"] == users[str(self.id)]["health"]:
             bot.send_message(chat_id=self.id, text="Здоровье восстановлено ")
-
-    # class Battle():
-    #    def __init__(self, message, call=""):
-
-    #        try:
-
-    #            self.call = call.data
-    #            self.call_id = call.id
-    #            self.call_id = call.message.message_id
-    #            print(str(self.call))
-    #        except Exception:
-    #            pass
-
-    #        self.id = message.chat.id
-    #        self.text = message.text
-    #        self.first_name = message.from_user.username
-    #        self.user = users[str(self.id)]
-    #        self.maps = Maps(message)
-    #        self.user_bot = User(message)
-    #        self.message_id = message.message_id
-    #        global text, attak
 
     def congratulation(self, data):
         if data == "heroes":
@@ -1314,202 +1450,158 @@ class Maps():
         combat = {}
         return text
 
+    def keyboard_all_battle(self):
+        keyboard = telebot.types.InlineKeyboardMarkup()
+        archer_50 = telebot.types.InlineKeyboardButton(text="50 🏹", callback_data="gotobattle_archer_50")
+        archer_100 = telebot.types.InlineKeyboardButton(text="100 🏹", callback_data="gotobattle_archer_100")
+        archer_500 = telebot.types.InlineKeyboardButton(text="500 🏹", callback_data="gotobattle_archer_500")
+        archer_all = telebot.types.InlineKeyboardButton(text="Всех 🏹", callback_data="gotobattle_archer_all")
+        warrior_50 = telebot.types.InlineKeyboardButton(text="50 ⚔️", callback_data="gotobattle_warrior_50")
+        warrior_100 = telebot.types.InlineKeyboardButton(text="100 ⚔️", callback_data="gotobattle_warrior_100")
+        warrior_500 = telebot.types.InlineKeyboardButton(text="500 ⚔️", callback_data="gotobattle_warrior_500")
+        warrior_all = telebot.types.InlineKeyboardButton(text="Всех ⚔️", callback_data="gotobattle_warrior_all")
+        cavalry_50 = telebot.types.InlineKeyboardButton(text="50 🐴", callback_data="gotobattle_cavalry_50")
+        cavalry_100 = telebot.types.InlineKeyboardButton(text="100 🐴", callback_data="gotobattle_cavalry_100")
+        cavalry_500 = telebot.types.InlineKeyboardButton(text="500 🐴", callback_data="gotobattle_cavalry_500")
+        cavalry_all = telebot.types.InlineKeyboardButton(text="Всех 🐴", callback_data="gotobattle_cavalry_all")
+        goto = telebot.types.InlineKeyboardButton(text="Отправить", callback_data="gotobattle_goto")
+        keyboard.row(archer_50, warrior_50, cavalry_50)
+        keyboard.row(archer_100, warrior_100, cavalry_100)
+        keyboard.row(archer_500, warrior_500, cavalry_500)
+        keyboard.row(archer_all, warrior_all, cavalry_all)
+        keyboard.row(goto)
+        return keyboard
+
+    def number_warrior(self, data=""):
+        global allbattle
+        archer = str(self.user["archer"])
+        warrior = str(self.user["warrior"])
+        cavalry = str(self.user["cavalry"])
+        archer_allbattle = str(allbattle[self.id]["archer"])
+        warrior_allbattle = str(allbattle[self.id]["warrior"])
+        cavalry_allbattle = str(allbattle[self.id]["cavalry"])
+        if data == "":
+            text = "У вас в городе\n лучников🏹: " + archer + " воинов⚔: " + warrior + " кавалерии🐴:" + cavalry + \
+                   "\n На поле боя\n лучников🏹: " + archer_allbattle + " воинов⚔: " + warrior_allbattle + " кавалерии🐴:" + cavalry_allbattle
+        elif data == "battle":
+            text = "На поле боя:\n лучников🏹: " + archer_allbattle + " воинов⚔: " + warrior_allbattle + " кавалерии🐴:" + cavalry_allbattle + "\n🗡🔥⚡️Ожидайте сражения ⚡🔥🗡"
+
+        return text
+
     def all_battle(self):
-        text_all_battle = "Вы отправились на поле боя. Ожидайте сражения\n Сражения проводятся в 10:00, 14:00, 18:00"
-        self.user["allbattle"] = 1
-        save("users")
-        bot.delete_message(chat_id=self.id, message_id=self.call_message_id)
-        bot.send_message(chat_id=self.id, text=text_all_battle, reply_markup=all_battle())
+        global allbattle
+        if self.call == "gotobattle":
+            text_all = "Вы отправились на поле боя. \n Сражения проводятся в 10:00, 14:00, 18:00\n" \
+                       " Выберите кол-во воинов для отправки на войну\n "
+            bot.send_message(text=text_all, chat_id=self.id, reply_markup=keyboard_battle_back())
 
+            allbattle[self.id] = {"archer": 0, "warrior": 0, "cavalry": 0}
+            #            save("users")
+            bot.delete_message(chat_id=self.id, message_id=self.call_message_id)
+            bot.send_message(chat_id=self.id, text=self.number_warrior(), reply_markup=self.keyboard_all_battle())
+        elif self.call.split("_")[1] == "archer":
+            text_koll = self.warrior_schet(data="archer")
+        elif self.call.split("_")[1] == "warrior":
+            text_koll = self.warrior_schet(data="warrior")
+        elif self.call.split("_")[1] == "cavalry":
+            text_koll = self.warrior_schet(data="cavalry")
+        elif self.call.split("_")[1] == "goto":
+            allbattle[self.id] = {"archer": allbattle[self.id]["archer"], "warrior": allbattle[self.id]["warrior"],
+                                  "cavalry": allbattle[self.id]["cavalry"]}
+            #            self.user["archer"] -= allbattle[self.id]["archer"]
+            #            self.user["warrior"] -= allbattle[self.id]["warrior"]
+            #            self.user["cavalry"] -= allbattle[self.id]["cavalry"]
+            text_koll = self.number_warrior(data="battle")
+            bot.delete_message(self.id, message_id=self.message_id)
+            bot.send_message(self.id, text_koll)
+            save("allbattle")
+            save("users")
 
-class Buy():
-    global amount, user
-
-    def __init__(self, message="", call=""):
-        self.id = message.chat.id
-        self.text = message.text
-        self.first_name = message.from_user.username
-        self.user = users[str(self.id)]
-
-    def buy_qiwi(self):
-        global amount
-        pprint("asdasdasdasdasd")
-        markup_buy = telebot.types.InlineKeyboardMarkup()
-        markup_check = telebot.types.InlineKeyboardMarkup()
-        comment = str(self.id)
         try:
-            pprint(users[str(self.id)]["but_qiwi_date"])
+            bot.edit_message_text(text=text_koll, chat_id=self.id, message_id=self.message_id,
+                                  reply_markup=self.keyboard_all_battle())
         except:
-            self.user["but_qiwi_date"] = "0"
-            self.user["but_qiwi_date_down"] = "0"
-        try:
-            pprint(self.user["buy_qiwi_check"])
-        except:
-            self.user["buy_qiwi_check"] = 1
-        pprint(self.user["buy_qiwi_check"])
-        pprint(users[str(self.id)]["but_qiwi_date"])
+            pass
 
-        if self.user["buy_qiwi_check"] == 0 and date("utctime") < users[str(self.id)]["but_qiwi_date"]:
-            markup_check.add(telebot.types.InlineKeyboardButton(text='Проверить платеж', callback_data="buy_qiwi"))
-            text = "Проверить платеж"
-            bot.send_message(self.id, text, reply_markup=markup_check)
-
-        elif self.user["but_qiwi_date_down"] > date("utctime"):
-            bot.send_message(self.id,
-                             text="Вы уже создали счет на оплату, оплатите его или повторите попытку через час")
-            markup_check.add(telebot.types.InlineKeyboardButton(text='Проверить платеж', callback_data="buy_qiwi"))
-            text = "Проверить платеж"
-            bot.send_message(self.id, text, reply_markup=markup_check)
+    def warrior_schet(self, data):
+        number = self.call.split("_")[2]
+        pprint(number)
+        text_koll = self.number_warrior()
+        if self.user[data] <= 0:
+            bot.answer_callback_query(callback_query_id=self.call_id, text='У вас нет ' + data)
+            return
+        #          text_koll = self.number_warrior()
+        elif number == "all":
+            allbattle[self.id][data] = self.user[data]
+            self.user[data] = 0
+            text_koll = self.number_warrior()
         else:
-            pprint("bnbnbnnb")
-            markup_buy.add(telebot.types.InlineKeyboardButton(text='Оплатить',
-                                                              url="https://oplata.qiwi.com/create?publicKey=" + publicKey +
-                                                                  "&amount=" + str(
-                                                                  int(
-                                                                      self.text) * 1) + "&comment=" + comment + "&customFields[themeCode]=Konstantyn-PbboM7ch_P&successUrl=https%3A%2F%2Ft.me%2FHeroesLifeBot&lifetime=" + date(
-                                                                  'buyqiwi')))
-            self.user["buy_qiwi_tranzaction"] = 0
-            self.user["buy_qiwi_comment"] = comment
-            self.user["buy_qiwi_amount"] = int(self.text)
-            self.user["but_qiwi_date_down"] = date('buytimedown')
-            self.user["but_qiwi_date_up"] = date('buytimeup')
-            self.user["buy_qiwi_check"] = 0
-            pprint("asdasd")
-            text = "Для покупки " + str(int(self.text)) + " 💎 нажмите на кнопку ниже \nПокупка на сумму " + str(
-                int(self.text) * 10) + " руб."
-            pprint("zxczxc")
-            bot.send_message(self.id, text, reply_markup=markup_buy)
-            markup_check.add(telebot.types.InlineKeyboardButton(text='Проверить платеж', callback_data="buy_qiwi"))
-            text = "Проверить платеж"
-            bot.send_message(self.id, text, reply_markup=markup_check)
-        save("users")
-
-    def buy_check_qiwi(self):
-        api_access_token = '9f5335d8b6e7d3bfdc336db48a160a17'
-        mylogin = '79233044552'
-
-        comment = str(self.id)
-        lastPayments = self.payment_history_last(mylogin, api_access_token, '3', '', '', comment)
-        #        pprint(lastPayments)
-        #        pprint(lastPayments)
-
-        for i in range(len(lastPayments['data'])):
-            comment = lastPayments['data'][i]['comment']
-            status = lastPayments['data'][i]['status']
-            txnId = lastPayments['data'][i]['txnId']
-            amount = lastPayments['data'][i]['sum']['amount']
-            date = lastPayments['data'][i]['date']
-
-            if comment == str(self.id) and status == 'SUCCESS':
-                if users[str(self.id)]["but_qiwi_date_down"] < date < users[str(self.id)]["but_qiwi_date_up"]:
-                    if self.user["buy_qiwi_check"] == 0:
-                        pprint("Платеж прошел успешно")
-                        bot.send_message(self.id, "Счет " + str(txnId) + " на сумму " + str(
-                            amount) + " руб " + date + ". Оплачен",
-                                         reply_markup=keyboard_info())
-                        users[str(self.id)]["but_qiwi_date"] = "0"
-                        self.user["buy_qiwi_check"] = 1
-                        buy_gold = int(amount)
-                        users[str(self.id)]["diamond"] = users[str(self.id)]["diamond"] + buy_gold
-                    else:
-                        bot.send_message(self.id, "Начисление уже было произведено")
-                        break
-            #       else:
-            #            bot.send_message(self.id, "Счет не был оплачен во время")
+            if self.user[data] - int(number) < 0:
+                bot.answer_callback_query(callback_query_id=self.call_id, text='У вас нет столько воинов ' + data)
+                return
+            #            text_koll = self.number_warrior()
             else:
-                bot.send_message(self.id, "Счет на сумму " + str(amount) + " руб " + date + ". Не оплачен",
-                                 reply_markup=keyboard_main_menu())
+                pprint("qwe")
+                allbattle[self.id][data] += int(number)
+                self.user[data] -= int(number)
+                text_koll = self.number_warrior()
+        return text_koll
 
-        #                pprint("Чужой счет " + str(txnId) + " на сумму " + str(amount) + " руб. Оплачен")
-        #            pprint(lastPayments['data'][i]['txnId'])
-        #            pprint(lastPayments['data'][i]['comment'])
-        #            pprint(lastPayments['data'][i]['sum']['amount'])
-        #            pprint(lastPayments['data'][i]['date'])
+    def troop_return(self):
+        try:
 
-        st = lastPayments['data'][0]['status']
-        txnId = lastPayments['data'][0]['txnId']
-        s = lastPayments['data'][0]['sum']['amount']
-        commentId = lastPayments['data'][0]['comment']
-        comment = users[str(self.id)]["buy_qiwi_comment"]
-        save("all")
+            self.user["archer"] += allbattle[str(self.id)]["archer"]
+            self.user["warrior"] += allbattle[str(self.id)]["warrior"]
+            self.user["cavalry"] += allbattle[str(self.id)]["cavalry"]
+            allbattle.pop(str(self.id))
+            save("users")
+            save("allbattle")
+        except:
+            print("Ошибка")
 
-    """
-        if users[str(self.id)]["buy_qiwi_tranzaction"] == txnId:
-            bot.send_message(self.id, 'Нет выставленных счетов на оплату')
+        bot.send_message(text="Вернуться", chat_id=self.id, reply_markup=keyboardmap())
+        bot.send_message(text="Делайте ход по игровому полю", chat_id=self.id,
+                         reply_markup=self.output_map())
 
-        elif st == 'SUCCESS' and comment == commentId:
-            bot.send_message(self.id, 'Ура! Спасибо за оплату! Заказ на сумму '+str(s)+' руб.')
-            buy_gold = int(s)
-            users[str(self.id)]["gold"] = users[str(self.id)]["gold"] + buy_gold
-            users[str(self.id)]["buy_qiwi_tranzaction"] = txnId
-            save("all")
+    def keyboard_shop(self):
+        keyboard = telebot.types.InlineKeyboardMarkup()
+        rename = telebot.types.InlineKeyboardButton(text="Изменить имя", callback_data="shop_rename")
+        changeavatar = telebot.types.InlineKeyboardButton(text="Изменить аватар", callback_data="shop_avatar")
+        keyboard.add(rename)
+        keyboard.add(changeavatar)
+        return keyboard
 
-        else:
-            bot.send_message(self.id, "Платеж не прошел, оплатите счет")
-
-        pprint(st)
-    """
-
-    def buy_tranzzo(self):
-        global prices, amount
-        amount = 1
-        #        prices = [LabeledPrice(label='Working Time Machine', amount=5750)]
-        #        pprint(self.text)
-        #        print(self.is_int(self.text))
-        prices = [LabeledPrice(label='Heroes Life', amount=int(amount) * 1000)]
-        #    bot.send_message(message.chat.id, "Нажмите для оплаты /buy")
-        bot.send_invoice(self.id, title='Покупка золота в Heroes Life',
-                         description='Для оплаты нажмите на кнопку ниже.',
-                         provider_token=provider_token,
-                         currency='rub',
-                         #                     photo_url='http://erkelzaar.tsudao.com/models/perrotta/TIME_MACHINE.jpg',
-                         #                     photo_height=512,  # !=0/None or picture won't be shown
-                         ##                     photo_width=512,
-                         #                    photo_size=512,
-                         is_flexible=False,  # True If you need to set up Shipping Fee
-                         prices=prices,
-                         start_parameter='time-machine-example',
-                         invoice_payload='Heroes Life'
-                         )
-
-    def buy_user(self, message):
-        global users
-        buy_gold = message.successful_payment.total_amount / 1000
-        buy_gold = (str(buy_gold)).split(".")[0]
-        users[str(self.id)]["diamond"] = users[str(self.id)]["diamond"] + int(buy_gold)
-        save("all")
-
-    def payment_history_last(self, my_login, api_access_token, rows_num, next_TxnId, next_TxnDate, txnID):
-        s = requests.Session()
-        s.headers['authorization'] = 'Bearer ' + api_access_token
-        parameters = {'rows': rows_num, 'nextTxnId': next_TxnId, 'nextTxnDate': next_TxnDate, 'txnID': txnID}
-        h = s.get('https://edge.qiwi.com/payment-history/v2/persons/' + my_login + '/payments', params=parameters)
-        return h.json()
+    def shop(self):
+        print("ff")
+        if self.text == "/shop" or self.text == "Магазин":
+            bot.send_message(chat_id=self.id, text="Магазин. Для подробной информации о товаре, нажмите на него",
+                             reply_markup=self.keyboard_shop())
 
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start', 'shop'])
 def start_message(message):
+    print("command")
     if message.chat.id == ADMIN:
         bot.send_message(text="Админское меню", chat_id=message.chat.id, reply_markup=keyadmin())
-    else:
+    elif message.text == "/start":
         start_user(message)
+    elif message.text == "/shop":
+        #        maps_bot = Maps(message)
+        Maps(message).shop()
 
 
 @bot.message_handler(content_types=['successful_payment'])
 def got_payment(message):
-    bot.send_message(message.chat.id,
-                     'Ура! Спасибо за оплату! Мы выполним ваш заказ как можно быстрее! '
-                     'Оставайтесь на связи. '.format(
-                         message.successful_payment.total_amount / 1000, message.successful_payment.currency),
-                     parse_mode='Markdown', reply_markup=keyboard_main_menu())
+    global users
+    succefull_tranzzo(message)
+    with open(PATH + "tmp/" + 'users.json', 'rb') as f:
+        users = json.load(f)
 
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
-    print("test")
-    global menu, status, barracks
+    global menu, status, barracks, allbattle
     maps_bot = Maps(message)
-    buy_bot = Buy(message)
     if message.chat.id == ADMIN:
         if message.text == "Создать карту":
             maps_bot.new_maps()
@@ -1521,8 +1613,6 @@ def send_text(message):
             users[str(message.chat.id)]["defence"] = 2
             users[str(message.chat.id)]["attaka"] = 2
             maps_bot.fight()
-
-
     else:
         if message.text == 'Карта 🗺' or message.text == "На карту 🗺":
             bot.send_message(text="⏱ Вывод карты ⏱", chat_id=message.chat.id, reply_markup=keyboardmap())
@@ -1534,6 +1624,8 @@ def send_text(message):
             bot.send_message(text="Город", chat_id=message.chat.id, reply_markup=keyboard_main_menu())
         elif message.text == 'Вернуться в город':
             menu = "dom"
+
+            bot.delete_message(chat_id=message.chat.id, message_id=message.message_id - 1)
             bot.send_message(text="Домой", chat_id=message.chat.id, reply_markup=keyboard_main_menu())
         elif message.text == 'Копать':
             menu = "rudnic"
@@ -1554,109 +1646,78 @@ def send_text(message):
             elif menu == "feedback" or menu == "help":
                 menu = "info"
                 bot.send_message(text="Назад", chat_id=message.chat.id, reply_markup=keyboard_info())
-            elif menu == "QIWI":
-                menu = "feedback"
-                bot.send_message(text="Назад", chat_id=message.chat.id, reply_markup=keyboard_buy())
+            #           elif menu == "QIWI":
+            #               menu = "feedback"
+            #               bot.send_message(text="Назад", chat_id=message.chat.id, reply_markup=keyboard_buy())
             else:
                 bot.send_message(text="Назад", chat_id=message.chat.id, reply_markup=keyboardmenu())
-
         elif message.text == 'Герой':
             menu = "heroes"
             bot.send_message(text=maps_bot.info_heroes("heroes"), chat_id=message.chat.id)
         elif message.text == 'Склад':
             menu = "sklad"
-
             maps_bot.build()
             bot.send_message(text=maps_bot.info_heroes("sklad"), chat_id=message.chat.id, reply_markup=keyboardback())
-
-
         elif message.text == "Меню игрока":
             bot.send_message(text="Меню игрока", chat_id=message.chat.id, reply_markup=keyboardmenu())
-
         elif message.text == "Вернуться на карту 🗺":
             status = "close" + str(message.chat.id)
             bot.send_message(text="Вернуться", chat_id=message.chat.id, reply_markup=keyboardmap())
-
-
-
         elif message.text == "Покинуть поле боя":
-            users[str(message.chat.id)]["allbattle"] = 0
-            save("users")
-            bot.send_message(text="Вернуться", chat_id=message.chat.id, reply_markup=keyboardmap())
-            bot.send_message(text="Делайте ход по игровому полю", chat_id=message.chat.id,
-                             reply_markup=maps_bot.output_map())
-
+            maps_bot.troop_return()
         elif message.text == "Атаковать":
             users[str(message.chat.id)]["defence"] = 2
             users[str(message.chat.id)]["attaka"] = 2
-            #            bot.send_message(text="Бой", chat_id=message.chat.id, reply_markup=keyboardback())
             maps_bot.fight()
-        #   battle_bot.attak()
-        # bot.send_message(text="Выберите действие: Атаковать или Защищаться", chat_id=message.chat.id, reply_markup=battle_bot.keyboard_attak_new())
-
         elif message.text == "Отступить":
-            #            bot.send_message(text="Бой", chat_id=message.chat.id, reply_markup=keyboardback())
             bot.send_message(text="⏱ Вывод карты ⏱", chat_id=message.chat.id, reply_markup=keyboardmap())
             time.sleep(2)
             bot.send_message(text="Делайте ход по игровому полю", chat_id=message.chat.id,
                              reply_markup=maps_bot.output_map())
-
-
         elif message.text == "Казарма":
             barracks = 1
             menu = "barracks"
             maps_bot.build()
-            #            bot.send_message(text="Казарма", chat_id=message.chat.id, reply_markup=keyboardbarracks())
             maps_bot.barracks("all")
-
         elif barracks == 1:
             if message.text == "Обучить лучника":
                 maps_bot.barracks("archer")
             elif message.text == "Да":
                 maps_bot.barracks("yes")
-
             elif message.text == "Нет":
                 save("all")
                 barracks = 0
                 bot.send_message(text="Казарма", chat_id=message.chat.id, reply_markup=keyboardbarracks())
-        elif message.text == "Строения":
+        elif message.text == "Строения":  # Cтроения
             menu = "building"
-            bot.send_message(text="Будет добавлено в следующем обновлении", chat_id=message.chat.id)
+            #            bot.send_message(text="Будет добавлено в следующем обновлении", chat_id=message.chat.id)
             maps_bot.building()
-
         elif message.text == "⚙ Настройки":
             menu = "info"
             bot.send_message(text=texthelp, chat_id=message.chat.id, reply_markup=keyboard_info())
-
         elif message.text == "Обратная связь":
             menu = "feedback"
             bot.send_message(
                 text="Напишите ваши пожелания или найденные ошибки. \n Если нажали случайно, введите 'нет'",
                 chat_id=message.chat.id, reply_markup=keyboard_info())
             bot.register_next_step_handler(message, please)
-
         elif message.text == "Помочь проекту":
             menu = "feedback"
             bot.send_message(text=textsell + "Выберите платежную систему", chat_id=message.chat.id,
                              reply_markup=keyboard_buy())
-
-
-        elif message.text == "QIWI":
-            menu = "QIWI"
-            bot.send_message(text=textbuy, chat_id=message.chat.id, reply_markup=keyboarddel())
-            bot.register_next_step_handler(message, buy)
+        #       elif message.text == "QIWI":
+        #           menu = "QIWI"
+        #           bot.send_message(text=textbuy, chat_id=message.chat.id, reply_markup=keyboarddel())
+        #           bot.register_next_step_handler(message, buy)
         #
-        elif message.text == "Оплата QIWI":
-            buy_bot.buy_qiwi()
-            bot.send_message(text=textbuy, chat_id=message.chat.id, reply_markup=keyboard_info())
-
+        #       elif message.text == "Оплата QIWI":
+        #           buy_bot.buy_qiwi()
+        #           bot.send_message(text=textbuy, chat_id=message.chat.id, reply_markup=keyboard_info())
         elif message.text == "Tranzzo":
             menu = "Tranzzo"
-            buy_bot.buy_tranzzo()
+            buy_amount(message)
         elif message.text == "Всё понятно":
             maps_bot.new_game()
-
-        #            bot.send_message(message.chat.id, "Начнем игру", reply_markup=keyboard_main_menu())
         elif message.text == "Чат":
             bot.send_message(message.chat.id,
                              "Чат предназначен для общения, предложения идей и выявления багов @heroeslifeg")
@@ -1664,9 +1725,7 @@ def send_text(message):
             bot.send_message(message.chat.id,
                              "Для приглашения друга отправть ему ссылку ниже. И получи 10 💎 за каждый взятый им уровень")
             bot.send_message(message.chat.id, "https://telegram.me/heroeslifebot?start=" + str(message.chat.id))
-
         elif message.text == "Помощь":
-            #            bot.send_message(chat_id=message.chat.id, text=text_help)
             maps_bot.help()
         else:
             pprint(message.text)
@@ -1674,22 +1733,22 @@ def send_text(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
+    print(call.data)
     maps_bot = Maps(message=call.message, call=call)
-    buy_bot = Buy(message=call.message, call=call)
-
+    #   buy_bot = Buy(message=call.message, call=call)
     if call.data.split("_")[0] == "battle":
         maps_bot.attak()
     elif call.data.split("_")[0] == "build":
         maps_bot.build(data=call.data.split("_")[1])
     elif call.data.split("_")[0] == "fight":
         maps_bot.fight()
-    elif call.data == "buy_qiwi":
-        buy_bot.buy_check_qiwi()
+    #   elif call.data == "buy_qiwi":
+    #       buy_bot.buy_check_qiwi()
     elif call.data == "null":
         bot.answer_callback_query(callback_query_id=call.id, text='Не активное поле')
     elif call.data.split("_")[0] == "help":
         maps_bot.help()
-    elif call.data == "goto_battle":
+    elif call.data.split("_")[0] == "gotobattle":
         maps_bot.all_battle()
     else:
         maps_bot.goto()

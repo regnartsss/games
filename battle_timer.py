@@ -9,52 +9,52 @@ def find_location():
     return os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))).replace('\\', '/') + '/'
 PATH = find_location()
 
-with open(PATH + "tmp/" + 'users.json', 'rb') as f:
-    users = json.load(f)
-#print(users)
-allbattle = {}
+
+
 null = 0
+def save_battle():
+    global allbattle
+    with open(PATH + "tmp/" + 'allbattle.json', 'w', encoding="utf-16") as f:
+        json.dump(allbattle, f)
+    with open(PATH + "tmp/" + 'allbattle.json', 'rb') as f:
+        allbattle = json.load(f)
+
+def open_start():
+    global allbattle
+    with open(PATH + "tmp/" + 'allbattle.json', 'rb') as f:
+        allbattle = json.load(f)
+
 def job(data=""):
     global users, allbattle, lvl, kol, ran, max
+    open_start()
 
     lvl = {}
     kol = 0
     ran = []
     i = 1
-#    print(users)
-    if data == "old":
-        for key, value in users.items():
-            if value['allbattle'] == 1:
-                print(str(key) + " Игрок участвует")
-                lvl[i] = key
-                ran.append(i)
-#                allbattle[key] = {"archer": value["archer"], "warrior": value["warrior"], "cavalry": value["cavalry"]}
-                #            allbattle[key]['battle'] = 0
-                i += 1
-            else:
+    for key, value in allbattle.items():
+        null=0
+        for key_old, value_old in value.items():
+            if (key_old == "archer" and value_old > 0) or (key_old == "warrior" and value_old > 0) or (
+                    key_old == "cavalry" and value_old > 0):
                 pass
-    else:
-        for key, value in users.items():
-            if value['allbattle'] == 1:
-                print(str(key) + " Игрок участвует")
-                lvl[i] = key
-                ran.append(i)
-                allbattle[key] = {"archer": value["archer"], "warrior": value["warrior"], "cavalry": value["cavalry"]}
-    #            allbattle[key]['battle'] = 0
-                i += 1
+#                print("Воины есть")
             else:
-                pass
-            #print(str(key) + " Игрок не участвует")
+                null += 1
+#                print("нет воинов")
+#        print(null)
+        if null < 3:
+            ran.append(i)
+            lvl[i] = {"name":key, "data":value}
+            i += 1
 
-
+#    print(lvl)
     max = len(lvl)
     if max % 2 == 0:
         battle()
     else:
+        lvl[i] = {"name": 123456789, "data": {"archer": 500, "warrior": 500, "cavalry": 500}}
         ran.append(i)
-        allbattle[123456789] = {"archer": 1, "warrior": 1, "cavalry": 1}
-        allbattle[123456789]['battle'] = 0
-        lvl[i] = 123456789
         battle()
 
   #  randi()
@@ -65,62 +65,90 @@ def koll(example, old):
 
 def battle():
     global lvl, allbattle, kol, ran, max, null
+#    print(ran)
+    if len(ran) > 0:
+        numberheroes = random.choice(ran)
+        selectionher = rand()
+        numberarmyher = lvl[numberheroes]["data"][selectionher]
+        heroes = str(lvl[numberheroes]["name"])
+        if numberarmyher >= 0:
+            if lvl[numberheroes]["data"]["archer"] > 0:
+                selectionher = "archer"
+                numberarmyher = lvl[numberheroes]["data"]["archer"]
+            elif lvl[numberheroes]["data"]["warrior"] > 0:
+                selectionher = "warrior"
+                numberarmyher = lvl[numberheroes]["data"]["warrior"]
+            elif lvl[numberheroes]["data"]["cavalry"] > 0:
+                selectionher = "cavalry"
+                numberarmyher = lvl[numberheroes]["data"]["cavalry"]
+            else:
+                print("У игрока нет войск "+ str(numberheroes))
+        lvl.pop(numberheroes)
+        ran.remove(numberheroes)
+    #    print(ran)
+        numberenemy = random.choice(ran)
+        selection = rand()
+        numberarmy = lvl[numberenemy]["data"][selection]
+        enemy = str(lvl[numberenemy]["name"])
+        if numberarmy >= 0:
+            if lvl[numberenemy]["data"]["archer"] > 0:
+                selection = "archer"
+                numberarmy = lvl[numberenemy]["data"]["archer"]
+            elif lvl[numberenemy]["data"]["warrior"] > 0:
+                selection = "warrior"
+                numberarmy = lvl[numberenemy]["data"]["warrior"]
+            elif lvl[numberenemy]["data"]["cavalry"] > 0:
+                selection = "cavalry"
+                numberarmy = lvl[numberenemy]["data"]["cavalry"]
+            else:
+                print("У игрока нет войск " + str(numberenemy))
+        lvl.pop(numberenemy)
+        ran.remove(numberenemy)
+    #    print(ran)
+        print("Нападает "+heroes+ " войска "+selectionher+" колличество "+str(numberarmyher))
+        print("Защищает " + enemy + " войска " + selection + " колличество " + str(numberarmy))
 
-    if kol != max and len(ran)>0:
-            heroes = random.choice(ran)
-            her = lvl[heroes]
- #       if allbattle[her]['battle'] == 0:
-            keyher = rand()
-            kolher = koll(her, keyher)
-            if kolher == 0:
-                kolher = koll(her, keyher)
-#            allbattle[her]['battle'] = 1
-            lvl.pop(heroes)
-            ran.remove(heroes)
-            print("Игрок " +str(her)+" Участвует " +keyher+ " в колличестве "+ str(allbattle[her][keyher]))
-
-            enemy = random.choice(ran)
- #           if heroes != enemy:
-            keyenem = rand()
-            enem = lvl[enemy]
-            kolenem = koll(enem, keyenem)
-#            allbattle[enem]['battle'] = 1
-            if kolenem == 0:
-                kolenem = koll(enem, keyenem)
-            lvl.pop(enemy)
-            ran.remove(enemy)
-            print("Враг " +str(enem)+" Участвует " + keyenem + " в колличестве " + str(allbattle[enem][keyenem]))
-            koef = kolher / kolenem
-            print(koef)
-            if  koef > 1:
-                    itog = int((kolher - kolenem)/koef)
-                    itog = kolher - itog
-                    print("Вернулось "+ str(itog))
-                    allbattle[her][keyher] = itog
-                    allbattle[enem][keyenem] = 0
-            elif 1 > koef >= 0:
-                    itog = int((kolenem - kolher)*koef)
-                    print(itog)
-        #            itog = kolenem - itog
-                    print("Вы убили "+str(itog) + " вернулось 0")
-                    allbattle[her][keyher] = 0
-                    allbattle[enem][keyenem] = allbattle[enem][keyenem] - itog
-            elif koef == 1:
-                    itog = int(kolher - kolher*0.75)
-                    print("Вернулось "+ str(itog))
-                    allbattle[her][keyher] = itog
-                    allbattle[enem][keyenem] = itog
-            kol += 1
-            battle()
-      #  else:
-      #      print("Игрок участвовал")
-      #      battle()
+        koef = numberarmyher / numberarmy
+        print(koef)
+        if koef > 1:
+            print(">1")
+            itog = int((numberarmyher - numberarmy) / koef)
+            itog = numberarmyher - itog
+            print("Вернулось " + str(itog))
+            try:
+                allbattle[heroes][selectionher] = itog
+            except: pass
+            try:
+                allbattle[enemy][selection] = 0
+            except: pass
+        elif 1 > koef >= 0:
+            print("1>koef>0")
+            itog = int((numberarmy - numberarmyher)*koef)
+            print(itog)
+            print("Вы убили "+str(itog) + " вернулось 0")
+            try:
+                allbattle[heroes][selectionher] = 0
+            except:pass
+            try:
+                allbattle[enemy][selection] -= itog
+            except:pass
+        elif koef == 1:
+            itog = int(numberarmyher - numberarmy * 0.75)
+            if heroes == '123456789':
+                allbattle[enemy][selection] = itog
+            elif enemy == '123456789':
+                allbattle[heroes][selectionher] = itog
+            else:
+                allbattle[heroes][selectionher] = itog
+                allbattle[enemy][selection] = itog
+        save_battle()
+        battle()
     else:
         print("Всё закончено")
-        null += 1
-#        while null < 1:
-#            job(data="old")
-    print(allbattle)
+    #    null += 1
+    #        while null < 1:
+    #            job(data="old")
+
 
 def rand():
     r = random.randint(1, 3)
@@ -134,10 +162,10 @@ def rand():
 
 def shed():
 #    schedule.every(10).minutes.do(job)
-    schedule.every().day.at("14:42").do(job)
-    schedule.every().day.at("14:43").do(job)
-    schedule.every().day.at("14:44").do(job)
-    schedule.every().day.at("15:00").do(job)
+    schedule.every().day.at("22:22").do(job)
+    schedule.every().day.at("22:23").do(job)
+    schedule.every().day.at("22:24").do(job)
+    schedule.every().day.at("22:25").do(job)
 
     while True:
         schedule.run_pending()
