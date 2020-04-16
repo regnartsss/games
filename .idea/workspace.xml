@@ -5,36 +5,24 @@
     <option name="CUSTOM_SCOPE_NAME" value="All Places" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="365f61d7-4a9b-41aa-abf0-ad93122c4694" name="Default Changelist" comment="v16 04">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/1111.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/222.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/777.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/battle_enemy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tower_battle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/game.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="365f61d7-4a9b-41aa-abf0-ad93122c4694" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app_old.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config_old.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/req.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/texting.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/texting.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/build.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/field.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/hero.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/resource.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/statistics.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/tower.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/tower_old.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/warrior.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/weapons.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/battle_game.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/battle_timer.py" beforeDir="false" afterPath="$PROJECT_DIR$/battle_timer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy.py" beforeDir="false" afterPath="$PROJECT_DIR$/buy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/farm.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ii.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/map.py" beforeDir="false" afterPath="$PROJECT_DIR$/map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/timer_battle.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/comb.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/comb.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/maps.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/maps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/users — копия.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/users.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/Новая папка/maps.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/Новая папка/users.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -276,7 +264,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587024948977</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="v17 04">
+      <created>1587056912630</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1587056912630</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -285,7 +280,8 @@
     <MESSAGE value="v0303" />
     <MESSAGE value="v1103" />
     <MESSAGE value="v16 04" />
-    <option name="LAST_COMMIT_MESSAGE" value="v16 04" />
+    <MESSAGE value="v17 04" />
+    <option name="LAST_COMMIT_MESSAGE" value="v17 04" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Inspections" timestamp="1586686455862">
@@ -320,10 +316,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="679" y="146" key="#config/0.0.1920.1040@0.0.1920.1040" timestamp="1586173035044" />
-    <state x="469" y="165" key="CommitChangelistDialog2" timestamp="1587056575006">
+    <state x="469" y="165" key="CommitChangelistDialog2" timestamp="1587056912157">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="469" y="165" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587056575006" />
+    <state x="469" y="165" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587056912157" />
     <state x="2389" y="165" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587024946513" />
     <state x="2288" y="0" key="DiffContextDialog" timestamp="1583119084388">
       <screen x="1920" y="0" width="1920" height="1040" />
@@ -333,10 +329,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="694" y="314" key="EnvironmentVariablesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586168402647" />
-    <state x="987" y="325" key="FileChooserDialogImpl" timestamp="1587056622656">
+    <state x="987" y="325" key="FileChooserDialogImpl" timestamp="1587056693038">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="987" y="325" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1587056622656" />
+    <state x="987" y="325" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1587056693038" />
     <state x="987" y="325" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587009260176" />
     <state x="2907" y="325" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761816499" />
     <state x="2992" y="318" key="Github.ShareDialog" timestamp="1583120064540">
@@ -412,9 +408,10 @@
     </state>
     <state x="537" y="190" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586367396494" />
     <state x="2628" y="213" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583200655329" />
-    <state x="2714" y="158" key="Vcs.Push.Dialog.v2" timestamp="1587024953650">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="794" y="158" key="Vcs.Push.Dialog.v2" timestamp="1587056961912">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="794" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587056961912" />
     <state x="2714" y="158" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587024953650" />
     <state x="606" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1585922085498">
       <screen x="0" y="0" width="1920" height="1040" />
