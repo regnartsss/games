@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="8" />
+    <option name="CUSTOM_SCOPE_NAME" value="All Places" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="365f61d7-4a9b-41aa-abf0-ad93122c4694" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/farm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/1111.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/222.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/777.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/battle_enemy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tower_battle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/game.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/battle_game.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/battle_timer.py" beforeDir="false" afterPath="$PROJECT_DIR$/battle_timer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buy.py" beforeDir="false" afterPath="$PROJECT_DIR$/buy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/farm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ii.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/keyboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/map.py" beforeDir="false" afterPath="$PROJECT_DIR$/map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/timer_battle.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tmp/comb.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/comb.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tmp/maps.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/maps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/users — копия.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tmp/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/Новая папка/maps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/Новая папка/users.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,26 +54,40 @@
     <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="ProjectId" id="1YYMFWo1KtYIGXySVVIXP728fg8" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../snmpvs" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="game" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="game" />
+      </console-settings>
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\podkopaev.k\PycharmProjects\games_v3" />
+      <recent name="C:\Users\podkopaev.k\PycharmProjects\games_v2" />
+      <recent name="C:\Users\podkopaev.k\PycharmProjects\games_test\tmp" />
       <recent name="C:\Users\podkopaev.k\Desktop" />
       <recent name="C:\Users\podkopaev.k\PycharmProjects\game" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.game">
-    <configuration name="battle_timer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.game_test">
+    <configuration name="222" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="game" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -66,7 +99,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/battle_timer.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/222.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -75,7 +108,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="farm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="777" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="game" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -87,7 +120,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/farm.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/777.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="battle_enemy" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="game" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/battle_enemy.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -117,7 +171,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="games" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="game_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="game" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -129,7 +183,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/games.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/game_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -138,7 +192,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="ii" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="hook-Crypto" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="game" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -146,32 +200,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Desktop" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ii.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="timer_battle" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="game" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tmp" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tmp/timer_battle.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Desktop/hook-Crypto.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -182,11 +215,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.farm" />
-        <item itemvalue="Python.battle_timer" />
-        <item itemvalue="Python.games" />
-        <item itemvalue="Python.timer_battle" />
-        <item itemvalue="Python.ii" />
+        <item itemvalue="Python.game_test" />
+        <item itemvalue="Python.battle_enemy" />
+        <item itemvalue="Python.222" />
+        <item itemvalue="Python.777" />
+        <item itemvalue="Python.hook-Crypto" />
       </list>
     </recent_temporary>
   </component>
@@ -229,80 +262,130 @@
       <option name="project" value="LOCAL" />
       <updated>1583225280630</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="v1103">
+      <created>1583920469757</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1583920469757</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="v0203" />
     <MESSAGE value="v0203-1" />
     <MESSAGE value="v0303" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0303" />
+    <MESSAGE value="v1103" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1103" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1920" y="0" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1583810704653">
+    <state x="552" y="178" key="#Inspections" timestamp="1586686455862">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Inspections/0.0.1920.1040@0.0.1920.1040" timestamp="1586686455862" />
+    <state x="552" y="178" key="#Notifications" timestamp="1586169797181">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1586169797181" />
+    <state x="552" y="178" key="#Scopes" timestamp="1586170763112">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Scopes/0.0.1920.1040@0.0.1920.1040" timestamp="1586170763112" />
+    <state x="2334" y="207" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586740898289">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="414" y="207" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586168471991" />
+    <state x="2334" y="207" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586740898289" />
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585934463034">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1585183871314" />
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1585934463034" />
     <state x="1920" y="0" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583810704653" />
-    <state x="2765" y="23" key="CommitChangelistDialog2" timestamp="1583225279711">
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585980163065">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585980163065" />
+    <state x="2610" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1585107334132" />
+    <state x="679" y="146" key="#config" timestamp="1586173035044">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="679" y="146" key="#config/0.0.1920.1040@0.0.1920.1040" timestamp="1586173035044" />
+    <state x="2765" y="23" key="CommitChangelistDialog2" timestamp="1583920469034">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2765" y="23" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583225279711" />
+    <state x="2765" y="23" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583920469034" />
     <state x="2288" y="0" key="DiffContextDialog" timestamp="1583119084388">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2288" y="0" key="DiffContextDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583119084388" />
-    <state x="2907" y="325" key="FileChooserDialogImpl" timestamp="1583823829588">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="694" y="314" key="EnvironmentVariablesDialog" timestamp="1586168402647">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="2907" y="325" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583823829588" />
+    <state x="694" y="314" key="EnvironmentVariablesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586168402647" />
+    <state x="987" y="325" key="FileChooserDialogImpl" timestamp="1587009260176">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="987" y="325" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1586962644527" />
+    <state x="987" y="325" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587009260176" />
+    <state x="2907" y="325" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761816499" />
     <state x="2992" y="318" key="Github.ShareDialog" timestamp="1583120064540">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2992" y="318" key="Github.ShareDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120064540" />
-    <state width="1899" height="261" key="GridCell.Tab.0.bottom" timestamp="1583920379809">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom" timestamp="1586962347229">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1231" height="267" key="GridCell.Tab.0.bottom/0.0.1252.560@0.0.1252.560" timestamp="1583720353835" />
-    <state width="1899" height="253" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583857644508" />
-    <state width="1899" height="261" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583920379809" />
-    <state width="1899" height="261" key="GridCell.Tab.0.center" timestamp="1583920379809">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1231" height="237" key="GridCell.Tab.0.bottom/0.0.1252.560@0.0.1252.560" timestamp="1585110087142" />
+    <state width="1345" height="241" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585572530666" />
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586962347229" />
+    <state width="1899" height="243" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586914586837" />
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761765023" />
+    <state width="1899" height="348" key="GridCell.Tab.0.center" timestamp="1586962347229">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1231" height="267" key="GridCell.Tab.0.center/0.0.1252.560@0.0.1252.560" timestamp="1583720353835" />
-    <state width="1899" height="253" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583857644508" />
-    <state width="1899" height="261" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583920379809" />
-    <state width="1899" height="261" key="GridCell.Tab.0.left" timestamp="1583920379808">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1231" height="237" key="GridCell.Tab.0.center/0.0.1252.560@0.0.1252.560" timestamp="1585110087142" />
+    <state width="1345" height="241" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585572530666" />
+    <state width="1899" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586962347229" />
+    <state width="1899" height="243" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586914586837" />
+    <state width="1899" height="348" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761765023" />
+    <state width="1899" height="348" key="GridCell.Tab.0.left" timestamp="1586962347229">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1231" height="267" key="GridCell.Tab.0.left/0.0.1252.560@0.0.1252.560" timestamp="1583720353835" />
-    <state width="1899" height="253" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583857644508" />
-    <state width="1899" height="261" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583920379808" />
-    <state width="1899" height="261" key="GridCell.Tab.0.right" timestamp="1583920379809">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1231" height="237" key="GridCell.Tab.0.left/0.0.1252.560@0.0.1252.560" timestamp="1585110087142" />
+    <state width="1345" height="241" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585572530666" />
+    <state width="1899" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586962347229" />
+    <state width="1899" height="243" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586914586837" />
+    <state width="1899" height="348" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761765023" />
+    <state width="1899" height="348" key="GridCell.Tab.0.right" timestamp="1586962347229">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1231" height="267" key="GridCell.Tab.0.right/0.0.1252.560@0.0.1252.560" timestamp="1583720353835" />
-    <state width="1899" height="253" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583857644508" />
-    <state width="1899" height="261" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583920379809" />
-    <state width="1899" height="342" key="GridCell.Tab.1.bottom" timestamp="1583899153304">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1231" height="237" key="GridCell.Tab.0.right/0.0.1252.560@0.0.1252.560" timestamp="1585110087142" />
+    <state width="1345" height="241" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585572530666" />
+    <state width="1899" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586962347229" />
+    <state width="1899" height="243" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1586914586837" />
+    <state width="1899" height="348" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761765023" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1586962347230">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="339" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583555348717" />
-    <state width="1899" height="342" key="GridCell.Tab.1.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583899153304" />
-    <state width="1899" height="342" key="GridCell.Tab.1.center" timestamp="1583899153304">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586962347230" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761765023" />
+    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1586962347229">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="339" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583555348717" />
-    <state width="1899" height="342" key="GridCell.Tab.1.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583899153304" />
-    <state width="1899" height="342" key="GridCell.Tab.1.left" timestamp="1583899153304">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1899" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586962347229" />
+    <state width="1899" height="348" key="GridCell.Tab.1.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761765023" />
+    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1586962347229">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="339" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583555348716" />
-    <state width="1899" height="342" key="GridCell.Tab.1.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583899153304" />
-    <state width="1899" height="342" key="GridCell.Tab.1.right" timestamp="1583899153304">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1899" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586962347229" />
+    <state width="1899" height="348" key="GridCell.Tab.1.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761765023" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1586962347229">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="339" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583555348717" />
-    <state width="1899" height="342" key="GridCell.Tab.1.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583899153304" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586962347229" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761765023" />
     <state x="2104" y="90" key="MergeDialog" timestamp="1583200635576">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -311,26 +394,37 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2592" y="240" key="MultipleFileMergeDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583200636784" />
-    <state x="2628" y="213" key="SettingsEditor" timestamp="1583200655329">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2628" y="213" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583200655329" />
-    <state x="2714" y="158" key="Vcs.Push.Dialog.v2" timestamp="1583225284845">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2714" y="158" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583225284845" />
-    <state x="606" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583251482341">
+    <state x="756" y="242" key="RollbackChangesDialog" timestamp="1583947030567">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="606" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1583251482341" />
-    <state x="2936" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583920440435">
+    <state x="756" y="242" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583947030567" />
+    <state x="537" y="190" key="SettingsEditor" timestamp="1586367396494">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="537" y="190" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586367396494" />
+    <state x="2628" y="213" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583200655329" />
+    <state x="2714" y="158" key="Vcs.Push.Dialog.v2" timestamp="1583920482801">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="1016" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1583158189028" />
+    <state x="2714" y="158" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583920482801" />
+    <state x="606" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1585922085498">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="606" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1585922085498" />
+    <state x="1016" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586153718001">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1016" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586153718001" />
     <state x="2936" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583920440435" />
-    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1583292695981">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="8" y="22" width="1671" height="835" maximized="true" key="dock-window-1" timestamp="1585126339517">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="92" y="92" width="1736" height="856" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1584871303489" />
+    <state x="8" y="22" width="1671" height="835" maximized="true" key="dock-window-1/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1585126339517" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1584262559389">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1584262559389" />
     <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583292695981" />
   </component>
   <component name="XDebuggerManager">
@@ -347,9 +441,9 @@
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/game.py</url>
-          <line>1749</line>
-          <option name="timeStamp" value="35" />
+          <url>file://$PROJECT_DIR$/game_test.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,7 +1,7 @@
 from config import bot, provider_token
 import requests
 from telebot.types import LabeledPrice
-from data import textbuy
+from data import textbuy, textsell
 from keyboard import keyboard_main_menu
 import os
 global amount, user
@@ -131,17 +131,18 @@ def find_location():
 PATH = find_location()
 
 def save_buy():
-    global users
-    with open(PATH + "tmp/" + 'users.json', 'w', encoding="utf-16") as f:
-        json.dump(users, f)
+    global resource
+    with open(PATH + "tmp/" + 'resource.json', 'w', encoding="utf-16") as f:
+        json.dump(resource, f)
 def open_buy():
-    global users
-    with open(PATH + "tmp/" + 'users.json', 'rb') as f:
-            users = json.load(f)
+    global resource
+    with open(PATH + "tmp/" + 'resource.json', 'rb') as f:
+            resource = json.load(f)
 
 def buy_amount(message):
-    if message.text == "Tranzzo":
-        bot.send_message(text=textbuy, chat_id=message.chat.id)
+    print("ffff"+message.text[0 :7])
+    if message.text == "Tranzzo" or message.text[0 :7] == "Магазин" or message.text[0 :7] =="У вас н" or message.text[0 :7] =="Для под":
+        bot.send_message(text=textsell + textbuy, chat_id=message.chat.id)
         bot.register_next_step_handler(message, buy_amount)
     else:
         str = message.text
@@ -169,7 +170,7 @@ def buy_tranzzo(message):
         prices = [LabeledPrice(label='Heroes Life', amount=int(amount) * 1000)]
 
         #    bot.send_message(message.chat.id, "Нажмите для оплаты /buy")
-        bot.send_invoice(message.chat.id, title='Покупка золота в Heroes Life',
+        bot.send_invoice(message.chat.id, title='Покупку алмазов в Heroes Life',
                          description='Для оплаты нажмите на кнопку ниже.',
                          provider_token=provider_token,
                          currency='rub',
@@ -184,9 +185,9 @@ def buy_tranzzo(message):
                          )
 
 def succefull_tranzzo(message):
-    global users
+    global resource
     open_buy()
-    users[str(message.chat.id)]["diamond"] += int(message.successful_payment.total_amount / 1000)
+    resource[str(message.chat.id)]["diamond"] += int(message.successful_payment.total_amount / 1000)
     save_buy()
     bot.send_message(message.chat.id,
                      'Ура! Спасибо за оплату! Мы выполним ваш заказ на сумму `{} {}` как можно быстрее! '

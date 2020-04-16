@@ -1,48 +1,8 @@
-#from games import *
-#import games
-#from games import bot,random,threading,pprint,telebot, time, save
-from keyboard import keyboardmap, keyboard_map
-from data import weapons,fight_text_all,fight_trans
+from config import bot
+import random
+from pprint import pprint
 
-
-#from pprint import pprint
-#from game import *
-"""
 class Battle():
-    def __init__(self, message, call=""):
-        self.id = message.chat.id
-        self.text = message.text
-        self.first_name = message.from_user.username
-        self.user = users[str(self.id)]
-        self.maps = Maps(message)
-        self.user_bot = User(message)
-
-    def attak(self):
-        global users, maps, attak
-        pprint(attak)
-        r = random.randrange(1, 3)
-        pprint(r)
-        if r == 1:
-            #                self.user["energy_used"] -= 1
-            self.user_bot.energy()
-            bot.send_message(text="Вы проиграли", chat_id=self.id, reply_markup=self.maps.output_map())
-        else:
-            self.user["experience_used"] += 5
-            #               self.user["energy_used"] -= 1
-            maps[attak]["resource"] = "null"
-            self.user_bot.update_statistic(data="experiens")
-            self.user_bot.energy()
-            bot.send_message(text="Вы победили и получили 5 опыта", chat_id=self.id,
-                             reply_markup=self.maps.output_map())
-        #                self.resource(attak)
-
-        pprint("всё ок")
-        save("users")
-
-
-    
-    
-    
     def __init__(self, message, call=""):
         global battlemap, st, attak
         self.id = message.chat.id
@@ -90,8 +50,6 @@ class Battle():
 #        pprint(battlemap)
         self.print_battle()
 
-
-
     def print_battle(self):
         global battlemap, st
 
@@ -111,7 +69,7 @@ class Battle():
                                   reply_markup=keyboard)
         else:
             pprint("22")
-            bot.send_message(text="Battle", chat_id=self.id, reply_markup=keyboard)
+            bot.send_message(text="Battle", chat_id=765333440, reply_markup=keyboard)
 
 
     def dat_pos(self, value):
@@ -262,4 +220,3 @@ class Battle():
             return battlemap[str(x) + "-" + str(8)]
         else:
             return battlemap[str(x) + "-" + str(y)]
-"""

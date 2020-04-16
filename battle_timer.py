@@ -4,175 +4,275 @@ from threading import Thread
 import os
 import json
 import random
+from data import training
+
 
 def find_location():
     return os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))).replace('\\', '/') + '/'
+
+
 PATH = find_location()
 
-
-
 null = 0
-def save_battle():
-    global allbattle
-    with open(PATH + "tmp/" + 'allbattle.json', 'w', encoding="utf-16") as f:
-        json.dump(allbattle, f)
-    with open(PATH + "tmp/" + 'allbattle.json', 'rb') as f:
-        allbattle = json.load(f)
+
+
+def save():
+    global tower_end, tower
+    with open(PATH + "tmp/" + 'tower_end.json', 'w', encoding="utf-16") as f:
+        json.dump(tower_end, f)
+    with open(PATH + "tmp/" + 'tower.json', 'w', encoding="utf-16") as f:
+        json.dump(tower, f)
+    with open(PATH + "tmp/" + 'statistics.json', 'w', encoding="utf-16") as f:
+        json.dump(statistics, f)
+
 
 def open_start():
-    global allbattle
-    with open(PATH + "tmp/" + 'allbattle.json', 'rb') as f:
-        allbattle = json.load(f)
+    global tower, tower_old, statistics
+    with open(PATH + "tmp/" + 'tower.json', 'rb') as f:
+        tower = json.load(f)
+    with open(PATH + "tmp/" + 'tower.json', 'rb') as f:
+        tower_old = json.load(f)
+    #    with open(PATH + "tmp/" + 'users.json', 'rb') as f:
+    #            users = json.load(f)
 
-def job(data=""):
-    global users, allbattle, lvl, kol, ran, max
-    open_start()
+    statistics = {}
+    try:
+        with open(PATH + "tmp/" + 'statistics.json', 'rb') as f:
+            statistics = json.load(f)
+    except:
+        with open(PATH + "tmp/" + 'statistics.json', 'w', encoding="utf-16") as f:
+            json.dump(statistics, f)
+        with open(PATH + "tmp/" + 'statistics.json', 'rb') as f:
+            statistics = json.load(f)
 
-    lvl = {}
-    kol = 0
-    ran = []
-    i = 1
-    for key, value in allbattle.items():
-        null=0
-        for key_old, value_old in value.items():
-            if (key_old == "archer" and value_old > 0) or (key_old == "warrior" and value_old > 0) or (
-                    key_old == "cavalry" and value_old > 0):
-                pass
-#                print("Воины есть")
-            else:
-                null += 1
-#                print("нет воинов")
-#        print(null)
-        if null < 3:
-            ran.append(i)
-            lvl[i] = {"name":key, "data":value}
+
+class BattleTower():
+    def __init__(self):
+        global tower, tower_end
+        self.tower = tower
+
+    def count_user(self):
+        open_start()
+        if self.tower == {}:
+            print("Никто не зареган на башнюю")
+        else:
+            barracks = {}
+            shooting = {}
+            stable = {}
+            k = 0.2
+            for key, value in self.tower.items():
+                for key_old, value_old in value.items():
+                    if key_old == "barracks":
+                        for key_b in value_old:
+                            try:
+                                barracks[key_b] += self.tower[key][key_old][key_b] - int(
+                                    self.tower[key][key_old][key_b] * k)  # складываем значения
+                            except KeyError:  # если ключа еще нет - создаем
+                                barracks[key_b] = self.tower[key][key_old][key_b]
+                    elif key_old == "shooting ":
+                        for key_b in value_old:
+                            try:
+                                shooting[key_b] += self.tower[key][key_old][key_b] - int(
+                                    self.tower[key][key_old][key_b] * k)  # складываем значения
+                            except KeyError:  # если ключа еще нет - создаем
+                                shooting[key_b] = self.tower[key][key_old][key_b]
+                    if key_old == "stable":
+                        for key_b in value_old:
+                            try:
+                                stable[key_b] += self.tower[key][key_old][key_b] - int(
+                                    self.tower[key][key_old][key_b] * k)  # складываем значения
+                            except KeyError:  # если ключа еще нет - создаем
+                                stable[key_b] = self.tower[key][key_old][key_b]
+            self.tow_all = {"barracks": barracks, "shooting ": shooting, "stable": stable}
+            print(self.tow_all)
+            self.tower_battle()
+            self.tower_comparison()
+#            tower = {}
+            save()
+
+    def tower_comparison(self):
+        global tower_end
+        tower_end = {}
+        for key, value in tower_old.items():  # весь списо
+            for key_old, value_old in value.items():  # какой то юзер
+                for key_olding, value_olding in value[key_old].items():
+                    if tower_old[key][key_old][key_olding] != self.tower[key][key_old][key_olding]:
+                        num = tower_old[key][key_old][key_olding] - self.tower[key][key_old][key_olding]
+                        #                        print(tower_old[key])
+                        print("Убито " + key_old + " уровня " + str(key_olding) + " в количестве " + str(num))
+                        try:
+                            tower_end[key][key_old][key_olding] += int(num * 0.2)  # складываем значения
+                        except KeyError:  # если ключа еще нет - создаем
+                            tower_end[key] = self.tower[key]
+                            tower_end[key][key_old][key_olding] += int(num * 0.2)
+        save()
+
+    def tower_battle(self):
+        global statistics
+        i = 1
+        for k, v in self.tower.items():
+            text = ""
+            for key, value in self.tower[k].items():
+                for key_old, value_old in value.items():
+                    if value_old > 0:
+                        text += training[key]["name"] + " " + str(key_old) + " лвл " + str(value_old) + "\n"
+            print(str(k) + " \n" + text)
+
+        while i < 3:
+            for key, value in self.tower.items():  # весь списо
+                try:
+                    statistics[str(key)]["dead_one"] = 0
+                except KeyError:
+                    statistics[str(key)] = {"dead_all": 0, "dead_one": 0}
+
+                for key_old, value_old in value.items():  # какой то юзер
+                    for key_olding, value_olding in value[key_old].items():
+                        if key_olding == str(i):
+                            if value_olding != 0:
+                                if key_old == "barracks":
+                                    self.tower_battle_boy(key, key_old, value_olding, i)
+                                elif key_old == "shooting ":
+                                    self.tower_battle_boy(key, key_old, value_olding, i)
+                                elif key_old == "stable":
+                                    self.tower_battle_boy(key, key_old, value_olding, i)
+                            else:
+                                pass
+                        else:
+                            pass
             i += 1
 
-#    print(lvl)
-    max = len(lvl)
-    if max % 2 == 0:
-        battle()
-    else:
-        lvl[i] = {"name": 123456789, "data": {"archer": 500, "warrior": 500, "cavalry": 500}}
-        ran.append(i)
-        battle()
+        for k, v in self.tower.items():
+            text = ""
+            for key, value in self.tower[k].items():
+                for key_old, value_old in value.items():
+                    if value_old > 0:
+                        text += training[key]["name"] + " " + str(key_old) + " лвл " + str(value_old) + "\n"
+            print(str(k) + " \n" + text)
 
-  #  randi()
-def koll(example, old):
+    def tower_battle_boy(self, key, key_old, value_olding, i):
+        global statistics
+        try:
+            statistics[str(key)]
 
-    return allbattle[example][old]
+        except:
+            statistics[str(key)] = {"dead_all": 0, "dead_one": 0}
 
+        if self.tow_all == {'barracks': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0},
+                            'shooting ': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0},
+                            'stable': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0}}:
+            print("Ураа")
+            return
 
-def battle():
-    global lvl, allbattle, kol, ran, max, null
-#    print(ran)
-    if len(ran) > 0:
-        numberheroes = random.choice(ran)
-        selectionher = rand()
-        numberarmyher = lvl[numberheroes]["data"][selectionher]
-        heroes = str(lvl[numberheroes]["name"])
-        if numberarmyher >= 0:
-            if lvl[numberheroes]["data"]["archer"] > 0:
-                selectionher = "archer"
-                numberarmyher = lvl[numberheroes]["data"]["archer"]
-            elif lvl[numberheroes]["data"]["warrior"] > 0:
-                selectionher = "warrior"
-                numberarmyher = lvl[numberheroes]["data"]["warrior"]
-            elif lvl[numberheroes]["data"]["cavalry"] > 0:
-                selectionher = "cavalry"
-                numberarmyher = lvl[numberheroes]["data"]["cavalry"]
+        if i == 1:
+            s = 1
+        elif i == 2:
+            s = 1.69
+        r = random.randint(1, 3)
+        if r == 1:
+            if key_old == "shooting ":
+                k = 1.25 * s
+            elif key_old == "stable":
+                k = 0.5 * s
             else:
-                print("У игрока нет войск "+ str(numberheroes))
-        lvl.pop(numberheroes)
-        ran.remove(numberheroes)
-    #    print(ran)
-        numberenemy = random.choice(ran)
-        selection = rand()
-        numberarmy = lvl[numberenemy]["data"][selection]
-        enemy = str(lvl[numberenemy]["name"])
-        if numberarmy >= 0:
-            if lvl[numberenemy]["data"]["archer"] > 0:
-                selection = "archer"
-                numberarmy = lvl[numberenemy]["data"]["archer"]
-            elif lvl[numberenemy]["data"]["warrior"] > 0:
-                selection = "warrior"
-                numberarmy = lvl[numberenemy]["data"]["warrior"]
-            elif lvl[numberenemy]["data"]["cavalry"] > 0:
-                selection = "cavalry"
-                numberarmy = lvl[numberenemy]["data"]["cavalry"]
+                k = 1 * s
+            #            print(key_old+" "+str(i)+" "  + str(value_olding)+" - barracks "+str(self.tow_all["barracks"][str(i)]))
+            k = int(int(value_olding) * k)
+            try:
+                if self.tow_all["barracks"][str(i)] > 0:
+                    if self.tow_all["barracks"][str(i)] - k < 0:
+                        statistics[str(key)]["dead_all"] += self.tow_all["barracks"][str(i)]
+                        statistics[str(key)]["dead_one"] += self.tow_all["barracks"][str(i)]
+                        self.tower[key][key_old][str(i)] -= self.tow_all["barracks"][str(i)]
+                        if self.tower[key][key_old][str(i)] < 0:
+                            self.tower[key][key_old][str(i)] = 0
+
+                        else:
+                            self.tow_all["barracks"][str(i)] = 0
+                            value_olding = self.tower[key][key_old][str(i)]
+                            self.tower_battle_boy(key, key_old, value_olding, i)
+                    else:
+                        statistics[str(key)]["dead_all"] += k
+                        statistics[str(key)]["dead_one"] += k
+                        self.tow_all["barracks"][str(i)] -= k
+                        self.tower[key][key_old][str(i)] = 0
+                else:
+                    self.tower_battle_boy(key, key_old, value_olding, i)
+            except:
+                print("В башне нет таких войск")
+                pass
+
+        elif r == 2:
+            #            print("Лучники "+str(i)+" против "+ name)
+            if key_old == "barracks":
+                k = 0.5 * s
+            elif key_old == "stable":
+                k = 1.25 * s
             else:
-                print("У игрока нет войск " + str(numberenemy))
-        lvl.pop(numberenemy)
-        ran.remove(numberenemy)
-    #    print(ran)
-        print("Нападает "+heroes+ " войска "+selectionher+" колличество "+str(numberarmyher))
-        print("Защищает " + enemy + " войска " + selection + " колличество " + str(numberarmy))
+                k = 1 * s
+            #            print(key_old+" "+str(i)+" "  + str(value_olding)+" - shooting "+str(self.tow_all["shooting "][str(i)]))
+            k = int(int(value_olding) * k)
+            try:
+                if self.tow_all["shooting "][str(i)] > 0:
+                    if self.tow_all["shooting "][str(i)] - k < 0:
+                        statistics[str(key)]["dead_all"] += self.tow_all["shooting "][str(i)]
+                        statistics[str(key)]["dead_one"] += self.tow_all["shooting "][str(i)]
+                        self.tower[key][key_old][str(i)] -= self.tow_all["shooting "][str(i)]
+                        if self.tower[key][key_old][str(i)] < 0:
+                            self.tower[key][key_old][str(i)] = 0
+                        else:
+                            self.tow_all["shooting "][str(i)] = 0
+                            value_olding = self.tower[key][key_old][str(i)]
+                            self.tower_battle_boy(key, key_old, value_olding, i)
+                    else:
+                        statistics[str(key)]["dead_all"] += k
+                        statistics[str(key)]["dead_one"] += k
+                        self.tow_all["shooting "][str(i)] -= k
+                        self.tower[key][key_old][str(i)] = 0
 
-        koef = numberarmyher / numberarmy
-        print(koef)
-        if koef > 1:
-            print(">1")
-            itog = int((numberarmyher - numberarmy) / koef)
-            itog = numberarmyher - itog
-            print("Вернулось " + str(itog))
-            try:
-                allbattle[heroes][selectionher] = itog
-            except: pass
-            try:
-                allbattle[enemy][selection] = 0
-            except: pass
-        elif 1 > koef >= 0:
-            print("1>koef>0")
-            itog = int((numberarmy - numberarmyher)*koef)
-            print(itog)
-            print("Вы убили "+str(itog) + " вернулось 0")
-            try:
-                allbattle[heroes][selectionher] = 0
-            except:pass
-            try:
-                allbattle[enemy][selection] -= itog
-            except:pass
-        elif koef == 1:
-            itog = int(numberarmyher - numberarmy * 0.75)
-            if heroes == '123456789':
-                allbattle[enemy][selection] = itog
-            elif enemy == '123456789':
-                allbattle[heroes][selectionher] = itog
+                else:
+                    self.tower_battle_boy(key, key_old, value_olding, i)
+            except:
+                print("В башне нет таких войск")
+                pass
+        elif r == 3:
+            #            print("Всадники "+str(i)+" против "+name)
+            if key_old == "barracks":
+                k = 1.25 * s
+            elif key_old == "shooting ":
+                k = 0.5 * s
             else:
-                allbattle[heroes][selectionher] = itog
-                allbattle[enemy][selection] = itog
-        save_battle()
-        battle()
-    else:
-        print("Всё закончено")
-    #    null += 1
-    #        while null < 1:
-    #            job(data="old")
+                k = 1 * s
+            #            print(key_old+" "+str(i)+" "  + str(value_olding)+" - stable "+str(self.tow_all["stable"][str(i)]))
+            k = int(int(value_olding) * k)
+            try:
+                if self.tow_all["stable"][str(i)] > 0:
+                    if self.tow_all["stable"][str(i)] - k < 0:
+                        statistics[str(key)]["dead_all"] += self.tow_all["stable"][str(i)]
+                        statistics[str(key)]["dead_one"] += self.tow_all["stable"][str(i)]
+                        self.tower[key][key_old][str(i)] -= self.tow_all["stable"][str(i)]
+                        if self.tower[key][key_old][str(i)] < 0:
+                            self.tower[key][key_old][str(i)] = 0
+                        else:
+                            # self.tower[key][key_old][str(i)] -= self.tow_all["barracks"][str(i)]
+                            self.tow_all["stable"][str(i)] = 0
+                            value_olding = self.tower[key][key_old][str(i)]
+                            self.tower_battle_boy(key, key_old, value_olding, i)
+                    else:
+                        statistics[str(key)]["dead_all"] += k
+                        statistics[str(key)]["dead_one"] += k
+                        self.tow_all["stable"][str(i)] -= k
+                        self.tower[key][key_old][str(i)] = 0
+
+                else:
+                    self.tower_battle_boy(key, key_old, value_olding, i)
+            except:
+                print("В башне нет таких войск")
+                pass
 
 
-def rand():
-    r = random.randint(1, 3)
-    if r == 1:
-        key = "archer"
-    elif r == 2:
-        key = "warrior"
-    elif r == 3:
-        key = "cavalry"
-    return key
-
-def shed():
-#    schedule.every(10).minutes.do(job)
-    schedule.every().day.at("22:22").do(job)
-    schedule.every().day.at("22:23").do(job)
-    schedule.every().day.at("22:24").do(job)
-    schedule.every().day.at("22:25").do(job)
-
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
-#start()
-#job()
-#Thread(target=shed(), args=()).start()
-
-
+def timer_tower():
+    schedule.every().day.at("02:00").do(BattleTower().count_user())
+    schedule.every().day.at("12:00").do(BattleTower().count_user())
+    schedule.every().day.at("16:00").do(BattleTower().count_user())
+    schedule.every().day.at("18:00").do(BattleTower().count_user())
+    schedule.every().day.at("22:00").do(BattleTower().count_user())
