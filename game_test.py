@@ -1558,7 +1558,6 @@ class Fight():
                     print("Ошибка")
 
 
-
 class Shop():
     def __init__(self, call="", message=""):
         global users
@@ -2323,7 +2322,7 @@ def send_text(message):
         Build(message=message).building()
     elif message.text == texting.button_setting:
         menu = "info"
-        bot.send_message(text=texting.texthelp, chat_id=message.chat.id, reply_markup=keyboard.keyboard_info())
+        bot.send_message(text=texting.text_setting, chat_id=message.chat.id, reply_markup=keyboard.keyboard_info())
     elif message.text == "Обратная связь":
         menu = "feedback"
         bot.send_message(
