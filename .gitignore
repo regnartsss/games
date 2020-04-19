@@ -3,3 +3,4 @@ venv
 config.py
 .idea/
 app_old.txt
+tmp

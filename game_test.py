@@ -1,5 +1,5 @@
 from config import bot
-from data import lvlrudnic,step,heroes,enemy,weapons,weapons_data,fight_text_all,fight_trans,buildings,training
+from data import lvlrudnic, step, heroes, enemy, weapons, weapons_data, fight_text_all, fight_trans, buildings, training
 import telebot
 import time
 import random
@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pprint import pprint
 import threading
 import buy
-#from buy import buy_amount, buy_tranzzo, succefull_tranzzo
+# from buy import buy_amount, buy_tranzzo, succefull_tranzzo
 import schedule
 import tower_battle
 import logging
@@ -20,15 +20,15 @@ import map
 import config
 import os
 
-ADMIN = 7653334401
+ADMIN = 765333440
 global fight_text, combat, st
 global maps, users, resource, warrior, build, hero, comb, field
 menu = 0
 barracks = 0
 fight_text, combat = {}, {}
 
-logging.basicConfig(filename='app.txt', format='%(name)s - %(levelname)s - [%(asctime)s] %(message)s',
-                    level=logging.INFO)
+# logging.basicConfig(filename='app.txt', format='%(name)s - %(levelname)s - [%(asctime)s] %(message)s',
+#                      level=logging.INFO)
 
 
 def find_location():
@@ -370,142 +370,148 @@ def mining(message):
 # new
 def timer_mining(message):
     global maps, users
-    ss, sum, text = 1, 0, ""
-    user_mining = resource[str(message.chat.id)]["mining"]
-    res = user_mining["resource"]
-    kol_timer = user_mining["number"]
-    lvl_timer = lvlrudnic[user_mining["lvl"]]
-    timer_all = int(user_mining["number"]) // lvlrudnic[user_mining["lvl"]]
-    for i in range(timer_all + 2, 0, -1):
-        pprint(str(message.chat.id) + " " + str(user_mining["cell"]) + " " + str(ss * lvl_timer))
-        if resource[str(message.chat.id)]["start"] == 0:
-            break
-        elif sum >= kol_timer:
-            break
-        ss += 1
-        sum = ss * lvl_timer
-        time.sleep(1)
+    try:
+        ss, sum, text = 1, 0, ""
+        user_mining = resource[str(message.chat.id)]["mining"]
+        res = user_mining["resource"]
+        kol_timer = user_mining["number"]
+        lvl_timer = lvlrudnic[user_mining["lvl"]]
+        timer_all = int(user_mining["number"]) // lvlrudnic[user_mining["lvl"]]
+        for i in range(timer_all + 2, 0, -1):
+            pprint(str(message.chat.id) + " " + str(user_mining["cell"]) + " " + str(ss * lvl_timer))
+            if resource[str(message.chat.id)]["start"] == 0:
+                break
+            elif sum >= kol_timer:
+                break
+            ss += 1
+            sum = ss * lvl_timer
+            time.sleep(1)
 
-    cell_res = str(user_mining["cell"])
-    if int(maps[cell_res]["number"]) - int(sum) <= 0:
-        resource[str(message.chat.id)][res] += maps[str(user_mining["cell"])]["number"]
-        try:
-            resource[str(message.chat.id)]["production"] += maps[str(user_mining["cell"])]["number"]
-        except:
-            resource[str(message.chat.id)]["production"] = maps[str(user_mining["cell"])]["number"]
-        text = "⚡️Вы завершили добычу ⚡️\nСобрано " + str(maps[str(user_mining["cell"])]["number"])
-        maps[str(user_mining["cell"])]["resource"] = "null"
-        maps[str(user_mining["cell"])].pop("lvl")
-        maps[str(user_mining["cell"])].pop("number")
-        cell()
-    elif int(maps[cell_res]["number"]) - int(sum) >= 0:
-        maps[str(user_mining["cell"])]["number"] -= sum
-        resource[str(message.chat.id)][res] += sum
-        try:
-            resource[str(message.chat.id)]["production"] += sum
-        except:
-            resource[str(message.chat.id)]["production"] = sum
-        text = "⚡️Вы вышли и собрали " + str(sum) + " ⚡ "
+        cell_res = str(user_mining["cell"])
+        if int(maps[cell_res]["number"]) - int(sum) <= 0:
+            resource[str(message.chat.id)][res] += maps[str(user_mining["cell"])]["number"]
+            try:
+                resource[str(message.chat.id)]["production"] += maps[str(user_mining["cell"])]["number"]
+            except:
+                resource[str(message.chat.id)]["production"] = maps[str(user_mining["cell"])]["number"]
+            text = "⚡️Вы завершили добычу ⚡️\nСобрано " + str(maps[str(user_mining["cell"])]["number"])
+            maps[str(user_mining["cell"])]["resource"] = "null"
+            maps[str(user_mining["cell"])].pop("lvl")
+            maps[str(user_mining["cell"])].pop("number")
+            cell()
+        elif int(maps[cell_res]["number"]) - int(sum) >= 0:
+            maps[str(user_mining["cell"])]["number"] -= sum
+            resource[str(message.chat.id)][res] += sum
+            try:
+                resource[str(message.chat.id)]["production"] += sum
+            except:
+                resource[str(message.chat.id)]["production"] = sum
+            text = "⚡️Вы вышли и собрали " + str(sum) + " ⚡ "
 
-    else:
-        pprint("ошибка")
-    lvl_storage = build[str(message.chat.id)]["storage"]
-    if resource[str(message.chat.id)][res] > buildings["storage"][lvl_storage]["capacity"]:
-        resource[str(message.chat.id)][res] = buildings["storage"][lvl_storage]["capacity"]
-        text = "⚡️Вы завершили добычу ⚡ \nСобрано " + str(sum) + "\nСклад полон"
+        else:
+            pprint("ошибка")
+        lvl_storage = build[str(message.chat.id)]["storage"]
+        if resource[str(message.chat.id)][res] > buildings["storage"][lvl_storage]["capacity"]:
+            resource[str(message.chat.id)][res] = buildings["storage"][lvl_storage]["capacity"]
+            text = "⚡️Вы завершили добычу ⚡ \nСобрано " + str(sum) + "\nСклад полон"
 
-    resource[str(message.chat.id)]["start"] = 0
-    resource[str(message.chat.id)]["mining"] = {}
-    save("maps")
-    save("resource")
+        resource[str(message.chat.id)]["start"] = 0
+        resource[str(message.chat.id)]["mining"] = {}
+        save("maps")
+        save("resource")
 
-    bot.send_message(text=text, chat_id=message.chat.id, reply_markup=keyboard.keyboardmap())
-    Maps(message=message).goto()
+        bot.send_message(text=text, chat_id=message.chat.id, reply_markup=keyboard.keyboardmap())
+        Maps(message=message).goto()
+    except Exception as n:
+        bot.send_message(chat_id=ADMIN, text= "timer_mining - %s" %n)
+
+
 
 def mining_ataka(message):
-        global users
-        user_mining = resource[str(message.chat.id)]["mining"]
-        field[str(message.chat.id)] = {}
-        lvl = user_mining["lvl"]
-        print(222)
-        k = [4, 2.5, 2, 1.75, 1.6]
-        k_k = int(k[lvl - 1] * lvl)
-        i = 1
-        print(k_k * k_k)
-        #    a = np.ones(k_k*k_k, 'int')
-        a = [1 for i in range(0, k_k * k_k)]
-        #    print("Размер поля %s" %k_k)
-        k = 0
-        next = random.randint(k, k_k)
-        #    print("Начальная ячейка %s" % next)
-        a[next] = 2
-        d = [0, k_k]
-        stop, r_min, r_max = 10, 1, 10
-        while 1 < stop:
-            #        print(r_min, r_max)
-            r = random.randint(r_min, r_max)
-            #        print("Следующий ход %s" % r)
-            #        print("%s --- %s" % (d[0], d[1]))
-            if r == 2 or r == 3 or r == 4:
-                #            print("%s ход на %s" % (d[0],next - 1))
-                if d[0] <= next - 1:
-                    a[next - 1] = 0
-                    #                print("Перешли с %s на ячейку %s" % (next, next - 1))
-                    next = next - 1
-                    r_min, r_max = 1, 4
-                else:
-                    r_min, r_max = 5, 6
-                    pass
-            elif r == 5 or r == 6:
-                try:
-                    a[next + k_k] = 0
-                except:
-                    print("Error_123")
-                    stop = 1
-                #            print("Перешли с %s на ячейку %s" % (next, next+k_k))
-                next = next + k_k
-                d[0] += k_k
-                d[1] += k_k
-                r_min, r_max = 1, 10
+    global users
+    user_mining = resource[str(message.chat.id)]["mining"]
+    field[str(message.chat.id)] = {}
+    lvl = user_mining["lvl"]
+    print(222)
+    k = [4, 2.5, 2, 1.75, 1.6]
+    k_k = int(k[lvl - 1] * lvl)
+    i = 1
+    print(k_k * k_k)
+    #    a = np.ones(k_k*k_k, 'int')
+    a = [1 for i in range(0, k_k * k_k)]
+    #    print("Размер поля %s" %k_k)
+    k = 0
+    next = random.randint(k, k_k)
+    #    print("Начальная ячейка %s" % next)
+    a[next] = 2
+    d = [0, k_k]
+    stop, r_min, r_max = 10, 1, 10
+    while 1 < stop:
+        #        print(r_min, r_max)
+        r = random.randint(r_min, r_max)
+        #        print("Следующий ход %s" % r)
+        #        print("%s --- %s" % (d[0], d[1]))
+        if r == 2 or r == 3 or r == 4:
+            #            print("%s ход на %s" % (d[0],next - 1))
+            if d[0] <= next - 1:
+                a[next - 1] = 0
+                #                print("Перешли с %s на ячейку %s" % (next, next - 1))
+                next = next - 1
+                r_min, r_max = 1, 4
+            else:
+                r_min, r_max = 5, 6
+                pass
+        elif r == 5 or r == 6:
+            try:
+                a[next + k_k] = 0
+            except:
+                print("Error_123")
+                stop = 1
+            #            print("Перешли с %s на ячейку %s" % (next, next+k_k))
+            next = next + k_k
+            d[0] += k_k
+            d[1] += k_k
+            r_min, r_max = 1, 10
 
-            elif r == 7 or r == 8 or r == 9:
-                if d[1] > next + 1:
-                    a[next + 1] = 0
-                    #                print("Перешли с %s на ячейку %s" % (next, next + 1))
-                    next = next + 1
-                    r_min, r_max = 7, 10
-                else:
-                    r_min, r_max = 5, 6
-                    pass
-        #   print(a)
+        elif r == 7 or r == 8 or r == 9:
+            if d[1] > next + 1:
+                a[next + 1] = 0
+                #                print("Перешли с %s на ячейку %s" % (next, next + 1))
+                next = next + 1
+                r_min, r_max = 7, 10
+            else:
+                r_min, r_max = 5, 6
+                pass
+    #   print(a)
 
-        r = int(a.count(0) / lvl - 1)
+    r = int(a.count(0) / lvl - 1)
 
-        x = 1
-        s = 0
-        r_r = r
-        n = 0
-        while n <= len(a) - 1:
-            if a[n] == 0:
-                if s == r_r:
-                    a[n] = 3
+    x = 1
+    s = 0
+    r_r = r
+    n = 0
+    while n <= len(a) - 1:
+        if a[n] == 0:
+            if s == r_r:
+                a[n] = 3
 
-                    r_r += r
-                s += 1
-            n += 1
-        r_num = a.count(3)
-        resource[str(message.chat.id)]["mining"]["enem_num"] = r_num
-   #     resource[str(message.chat.id)]["mining"]["enem"] = r_num
-        resource[str(message.chat.id)]["mining"]["enem_num_resource"] = int(resource[str(message.chat.id)]["mining"]["number"]/r_num)
-        data_resource = {"wood": "🌲", "stone": "🧱", "iron": "⛓"}
-        res = resource[str(message.chat.id)]["mining"]["resource"]
-        resource[str(message.chat.id)]["mining"]["avatar"] = data_resource[res]
-        field[str(message.chat.id)] = a
-        print("err1223")
-        save("field")
-        print("err122errr3")
-        print(field)
-        Fight(message=message).field_goto()
+                r_r += r
+            s += 1
+        n += 1
+    r_num = a.count(3)
+    resource[str(message.chat.id)]["mining"]["enem_num"] = r_num
+    #     resource[str(message.chat.id)]["mining"]["enem"] = r_num
+    resource[str(message.chat.id)]["mining"]["enem_num_resource"] = int(
+        resource[str(message.chat.id)]["mining"]["number"] / r_num)
+    data_resource = {"wood": "🌲", "stone": "🧱", "iron": "⛓"}
+    res = resource[str(message.chat.id)]["mining"]["resource"]
+    resource[str(message.chat.id)]["mining"]["avatar"] = data_resource[res]
+    field[str(message.chat.id)] = a
+    print("err1223")
+    save("field")
+    print("err122errr3")
+    print(field)
+    Fight(message=message).field_goto()
 
 
 # new Обновление шагов, опыта
@@ -576,6 +582,8 @@ def move(message):
         users[str(message.chat.id)]["wolk_used"] += 1
 
     update_statistic(message, data="step")
+
+
 #    save("maps")
 #    save("users")
 
@@ -812,11 +820,11 @@ class Maps():
 
     @benchmark
     def database(self, cell_user, value_call, s):
-#rudnic
+        # rudnic
         if value_call == "iron" or value_call == "wood" or value_call == "stone":
             bot.delete_message(chat_id=self.message_chat_id, message_id=self.call_message_id)
             self.rudnic(int(self.call))
-#enemy
+        # enemy
         elif value_call == "enemy":
             if users[str(self.message_chat_id)]["energy_used"] == 0:
                 bot.send_message(text="У вас нет энергии", chat_id=self.message_chat_id)
@@ -1050,7 +1058,6 @@ class Build():
                 text=texting.text_building_update % (info_heroes(self.message, key="build")),
                 chat_id=self.message_chat_id,
                 message_id=self.call_message_id, reply_markup=self.print_building())
-
 
     def print_building(self):
         keyboard = telebot.types.InlineKeyboardMarkup()
@@ -1382,7 +1389,7 @@ class Fight():
     def figth_mining(self):
         user_mining = resource[str(self.message_chat_id)]["mining"]
         res = user_mining["resource"]
-        enem_num_resource= user_mining["enem_num_resource"]
+        enem_num_resource = user_mining["enem_num_resource"]
         maps[str(user_mining["cell"])]["number"] -= enem_num_resource
         if maps[str(user_mining["cell"])]["number"] < 10:
             maps[str(user_mining["cell"])]["resource"] = "null"
@@ -1395,9 +1402,8 @@ class Fight():
             resource[str(self.message_chat_id)][res] = buildings["storage"][lvl_storage]["capacity"]
         celli = users[str(self.message_chat_id)]["enemy_cell"]
         resource[str(self.message_chat_id)]["f_m"] = 0
-        self.field[celli]=0
+        self.field[celli] = 0
         self.r_print_r("new")
-
 
     def combat_battle(self, user):
         global comb, her, ene
@@ -1444,9 +1450,6 @@ class Fight():
                 self.user["enemy_health"] -= heroes[self.lvl_heroes]["hit"]
         combat[user] = {}
         return text
-
-
-
     def r_print_r(self, st=""):
         keyboard = telebot.types.InlineKeyboardMarkup()
         a = self.field
@@ -1464,17 +1467,19 @@ class Fight():
             keyfield = []
             y = 1
             while y <= k_k:
-                    tab.append(a[n])
-#                    print("error_2")
-                    keyfield.append(telebot.types.InlineKeyboardButton(text="%s" % dd[a[n]], callback_data="field_%s_%s" % (a[n], n)))
-                    y += 1
-                    n += 1
+                tab.append(a[n])
+                #                    print("error_2")
+                keyfield.append(
+                    telebot.types.InlineKeyboardButton(text="%s" % dd[a[n]], callback_data="field_%s_%s" % (a[n], n)))
+                y += 1
+                n += 1
             x += 1
             f.append(tab)
             keyboard.row(*keyfield)
-#        pprint(f)
+        #        pprint(f)
         if st == "new":
-            step = telebot.types.InlineKeyboardButton(text="🚶‍♂️Ходов: " + str(users[str(self.message_chat_id)]["step_used"]),
+            step = telebot.types.InlineKeyboardButton(
+                text="🚶‍♂️Ходов: " + str(users[str(self.message_chat_id)]["step_used"]),
                 callback_data=" ")
             energy = telebot.types.InlineKeyboardButton(
                 text="🔋 ️Энергии: " + str(users[str(self.message_chat_id)]["energy_used"]),
@@ -1482,8 +1487,8 @@ class Fight():
             health = telebot.types.InlineKeyboardButton(
                 text="❤ Здоровье: " + str(users[str(self.message_chat_id)]["health_used"]),
                 callback_data=" ")
-            keyboard.row(step, energy,health)
-            bot.send_message(text="Ходите", chat_id=self.message_chat_id,reply_markup=keyboard)
+            keyboard.row(step, energy, health)
+            bot.send_message(text="Ходите", chat_id=self.message_chat_id, reply_markup=keyboard)
         else:
             try:
                 step = telebot.types.InlineKeyboardButton(
@@ -1496,9 +1501,10 @@ class Fight():
                     text="❤ Здоровье: " + str(users[str(self.message_chat_id)]["health_used"]),
                     callback_data=" ")
                 keyboard.row(step, energy, health)
-                bot.edit_message_text(text="Ходите", chat_id=self.message_chat_id, message_id=self.call_message_id, reply_markup=keyboard)
-            except: pass
-
+                bot.edit_message_text(text="Ходите", chat_id=self.message_chat_id, message_id=self.call_message_id,
+                                      reply_markup=keyboard)
+            except:
+                pass
 
     def field_goto(self):
         print(self.text)
@@ -1506,22 +1512,22 @@ class Fight():
             print("errrrr")
             self.r_print_r("new")
         else:
-#            print(self.call.data)
+            #            print(self.call.data)
             i = 0
             print("her_1")
             a = len(self.field) ** 0.5
 
             while i <= len(self.field):
-#                print(self.field[i])
+                #                print(self.field[i])
                 if self.field[i] == 2:
                     her = i
                     break
-                i +=1
+                i += 1
             print("ewrwe")
             cell = int(self.call_data.split("_")[2])
             result = int(self.call_data.split("_")[1])
             print(result)
-            print("Игрок %s ходит на %s" %(her, cell))
+            print("Игрок %s ходит на %s" % (her, cell))
             if result == 1:
                 print("dddd")
                 try:
@@ -1531,7 +1537,7 @@ class Fight():
             elif result == 0 or result == 3:
                 print("num_2")
                 if her - cell == 1 or cell - her == 1 or cell - her == a or her - cell == a:
-                    print("rez %s" %result)
+                    print("rez %s" % result)
                     move(self.message)
                     if result == 3:
                         print(result)
@@ -1543,7 +1549,7 @@ class Fight():
                         users[str(self.message_chat_id)]["enemy_lvl"] = lvl
                         users[str(self.message_chat_id)]["enemy_health"] = enemy[lvl]["health"]
 
-#                        users[str(self.message_chat_id)]["enemy_exr"] = 5 * lvl
+                        #                        users[str(self.message_chat_id)]["enemy_exr"] = 5 * lvl
                         users[str(self.message_chat_id)]["enemy_cell"] = cell
                         users[str(self.message_chat_id)]["enemy_hit"] = enemy[lvl]["hit"]
                         resource[str(self.message_chat_id)]["f_m"] = 1
@@ -1963,9 +1969,9 @@ class Location():
         i = 1
         while i <= 5:
             text += "%s %s %s" % (
-            training["barracks"]["name"], i, warrior[str(self.message_chat_id)]["barracks"][str(i)])
+                training["barracks"]["name"], i, warrior[str(self.message_chat_id)]["barracks"][str(i)])
             text += "%s %s %s" % (
-            training["shooting"]["name"], i, warrior[str(self.message_chat_id)]["shooting"][str(i)])
+                training["shooting"]["name"], i, warrior[str(self.message_chat_id)]["shooting"][str(i)])
             text += "%s %s %s\n" % (training["stable"]["name"], i, warrior[str(self.message_chat_id)]["stable"][str(i)])
 
             #                text += training["barracks"]["name"] + " " + str(i) + " уровня: " + str(
@@ -1990,6 +1996,7 @@ class Location():
             return "False"
         else:
             return "True"
+
 
 #
 # def alert_tower():
@@ -2226,10 +2233,10 @@ def start_message(message):
                 return
     except:
         pass
-    if message.chat.id == ADMIN:
-        #        bot.send_message(text="Админское меню", chat_id=message.chat.id, reply_markup=texting.keyadmin())
-        pass
-    elif message.text.split(" ")[0] == "/start":
+    # if message.chat.id == ADMIN:
+    #     #        bot.send_message(text="Админское меню", chat_id=message.chat.id, reply_markup=texting.keyadmin())
+    #     pass
+    if message.text.split(" ")[0] == "/start":
         start_user(message)
     elif message.text == "/button":
         resource[str(message.chat.id)]["start"] = 0
@@ -2275,13 +2282,13 @@ def send_text(message):
         hero[str(message.chat.id)]["username"] = message.from_user.username
 
     if resource[str(message.chat.id)]["start"] == 1:
-            print("Копаю %s" % message.chat.id)
-            print(message.text)
-            if message.text == texting.button_mining_map:
-                print("C,hjc")
-                resource[str(message.chat.id)]["start"] = 0
-            else:
-                bot.send_message(text="Вы заняты добычей", chat_id=message.chat.id)
+        print("Копаю %s" % message.chat.id)
+        print(message.text)
+        if message.text == texting.button_mining_map:
+            print("C,hjc")
+            resource[str(message.chat.id)]["start"] = 0
+        else:
+            bot.send_message(text="Вы заняты добычей", chat_id=message.chat.id)
     elif message.text == '🗺 Карта' or message.text == texting.button_maps or message.text == texting.button_goto_two or message.text == "🗺 Вернуться на карту":
         users[str(message.chat.id)]["mess_id"] = message.message_id + 2
         bot.send_message(text="⏱ Вывод карты ⏱", chat_id=message.chat.id, reply_markup=keyboard.keyboardmap())
@@ -2289,14 +2296,15 @@ def send_text(message):
     elif message.text == texting.button_castle:
         bot.send_message(text="🏘 Домой", chat_id=message.chat.id, reply_markup=keyboard.keyboard_main_menu())
 
-# Копать
+    # Копать
     elif message.text == texting.button_mining:
         resource[str(message.chat.id)]["start"] = 1
         save("resource")
         bot.send_message(text=texting.text_mining_start, chat_id=message.chat.id, reply_markup=keyboard.keyboard_map())
         mining(message)
-#
+    #
     elif message.text == texting.button_mining_ataka:
+        users[str(message.chat.id)]["mess_id"] = message.message_id + 1
         bot.send_message(text=texting.text_mining_ataka, chat_id=message.chat.id, reply_markup=keyboard.keyboard_map())
         mining_ataka(message)
 
@@ -2347,7 +2355,7 @@ def send_text(message):
         bot.send_message(message.chat.id, "https://telegram.me/heroeslifebot?start=" + str(message.chat.id))
     elif message.text == texting.button_help:
         pass
-#        help(message)
+    #        help(message)
     elif message.text == texting.button_location:
         menu = "Location"
         Location(message=message).keyboard_warrior()
@@ -2394,8 +2402,8 @@ def callback_inline(call):
     #       buy_bot.buy_check_qiwi()
     elif call.data == "null":
         bot.answer_callback_query(callback_query_id=call.id, text='Не активное поле')
-#    elif call.data.split("_")[0] == "help":
-#        help(message=call.message, call=call)
+    #    elif call.data.split("_")[0] == "help":
+    #        help(message=call.message, call=call)
     #    elif call.data.split("_")[0] == "gotobattle":
     #        all_battle()
     elif call.data.split("_")[0] == "entry":
