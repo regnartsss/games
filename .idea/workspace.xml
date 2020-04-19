@@ -6,23 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="365f61d7-4a9b-41aa-abf0-ad93122c4694" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app_old.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config_old.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/req.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/texting.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/texting.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/build.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/field.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/hero.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/resource.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/statistics.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/tower.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/tower_old.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/warrior.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/weapons.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_old.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app_old.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/resource.json" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/resource.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,8 +257,33 @@
       <option name="project" value="LOCAL" />
       <updated>1587056912630</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="v17 04">
+      <created>1587057306608</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587057306608</updated>
+    </task>
+    <task id="LOCAL-00009" summary="v17 04">
+      <created>1587271078842</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1587271078842</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="v0203" />
@@ -316,10 +327,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="679" y="146" key="#config/0.0.1920.1040@0.0.1920.1040" timestamp="1586173035044" />
-    <state x="469" y="165" key="CommitChangelistDialog2" timestamp="1587056912157">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="469" y="163" key="CommitChangelistDialog2" timestamp="1587271078147">
+      <screen x="0" y="0" width="1920" height="1028" />
     </state>
-    <state x="469" y="165" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587056912157" />
+    <state x="469" y="163" key="CommitChangelistDialog2/0.0.1920.1028@0.0.1920.1028" timestamp="1587271078147" />
+    <state x="469" y="165" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587057303119" />
     <state x="2389" y="165" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587024946513" />
     <state x="2288" y="0" key="DiffContextDialog" timestamp="1583119084388">
       <screen x="1920" y="0" width="1920" height="1040" />
@@ -329,15 +341,16 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="694" y="314" key="EnvironmentVariablesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586168402647" />
-    <state x="987" y="325" key="FileChooserDialogImpl" timestamp="1587056693038">
+    <state x="987" y="325" key="FileChooserDialogImpl" timestamp="1587091750793">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="987" y="325" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1587056693038" />
-    <state x="987" y="325" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587009260176" />
+    <state x="987" y="325" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1587091750793" />
     <state x="2907" y="325" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1586761816499" />
-    <state x="2992" y="318" key="Github.ShareDialog" timestamp="1583120064540">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="1072" y="318" key="Github.ShareDialog" timestamp="1587057183125">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="1072" y="318" key="Github.ShareDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587057183125" />
     <state x="2992" y="318" key="Github.ShareDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583120064540" />
     <state width="1899" height="231" key="GridCell.Tab.0.bottom" timestamp="1587056652594">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -399,19 +412,20 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2592" y="240" key="MultipleFileMergeDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583200636784" />
-    <state x="756" y="242" key="RollbackChangesDialog" timestamp="1583947030567">
+    <state x="756" y="242" key="RollbackChangesDialog" timestamp="1587057147940">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="756" y="242" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583947030567" />
+    <state x="756" y="242" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587057147940" />
     <state x="537" y="190" key="SettingsEditor" timestamp="1586367396494">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="537" y="190" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586367396494" />
     <state x="2628" y="213" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1583200655329" />
-    <state x="794" y="158" key="Vcs.Push.Dialog.v2" timestamp="1587056961912">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="794" y="156" key="Vcs.Push.Dialog.v2" timestamp="1587271084724">
+      <screen x="0" y="0" width="1920" height="1028" />
     </state>
-    <state x="794" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587056961912" />
+    <state x="794" y="156" key="Vcs.Push.Dialog.v2/0.0.1920.1028@0.0.1920.1028" timestamp="1587271084724" />
+    <state x="794" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587057364185" />
     <state x="2714" y="158" key="Vcs.Push.Dialog.v2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1587024953650" />
     <state x="606" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1585922085498">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -449,11 +463,6 @@
           <url>file://$PROJECT_DIR$/../games — копия/games.py</url>
           <line>207</line>
           <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/game_test.py</url>
-          <line>53</line>
-          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

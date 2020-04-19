@@ -7962,3 +7962,13 @@ schedule - INFO - [2020-04-17 00:02:29,701] Running job Every 1 minute do shedul
 schedule - INFO - [2020-04-17 00:02:36,710] Running job Every 1 minute do sheduler_save() (last run: 2020-04-17 00:01:36, next run: 2020-04-17 00:02:36)
 schedule - INFO - [2020-04-17 00:03:29,789] Running job Every 1 minute do sheduler_farm() (last run: 2020-04-17 00:02:29, next run: 2020-04-17 00:03:29)
 schedule - INFO - [2020-04-17 00:03:36,797] Running job Every 1 minute do sheduler_save() (last run: 2020-04-17 00:02:36, next run: 2020-04-17 00:03:36)
+root - INFO - [2020-04-19 11:37:15,165] Запуск игры
+root - INFO - [2020-04-19 11:37:16,951] Здоровье, шаги, энергия восстановлены
+schedule - INFO - [2020-04-19 11:38:17,136] Running job Every 1 minute do sheduler_farm() (last run: [never], next run: 2020-04-19 11:38:16)
+schedule - INFO - [2020-04-19 11:38:17,136] Running job Every 1 minute do sheduler_save() (last run: [never], next run: 2020-04-19 11:38:16)
+schedule - INFO - [2020-04-19 11:39:17,864] Running job Every 1 minute do sheduler_farm() (last run: 2020-04-19 11:38:17, next run: 2020-04-19 11:39:17)
+schedule - INFO - [2020-04-19 11:39:17,864] Running job Every 1 minute do sheduler_save() (last run: 2020-04-19 11:38:17, next run: 2020-04-19 11:39:17)
+schedule - INFO - [2020-04-19 11:40:17,981] Running job Every 1 minute do sheduler_farm() (last run: 2020-04-19 11:39:17, next run: 2020-04-19 11:40:17)
+schedule - INFO - [2020-04-19 11:40:17,982] Running job Every 1 minute do sheduler_save() (last run: 2020-04-19 11:39:17, next run: 2020-04-19 11:40:17)
+TeleBot - ERROR - [2020-04-19 11:40:55,048] A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
